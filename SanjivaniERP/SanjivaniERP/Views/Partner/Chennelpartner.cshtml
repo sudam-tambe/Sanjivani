@@ -1,0 +1,204 @@
+﻿@model SanjivaniModalView.ChennelpartnerModel
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
+}
+
+<h2>Channel Partner</h2>
+<section class="content">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Channel Partner Personnal Details</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+                   
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">User Name</label>
+                            @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="User Id">*@
+                            @Html.AntiForgeryToken()
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Confirm Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Partnar Name</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mobile Number</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email ID</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Cp Category</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Address</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>   <!-- /.row -->
+
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="box box-warning">
+                <div class="box-header">
+                    <h3 class="box-title">Bank Details</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Bank Name</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Bank Account Number</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>IFSC Code</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Bank card Name</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Last 4 digit Card Number</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Mode</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Account Type</label>
+                            <input type="text" class="form-control" placeholder="Enter ..." />
+                        </div>
+
+                    </form>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+        </div>   <!-- /.row -->
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Channel Partner Business Details</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Company Name</label>
+                            @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="User Id">*@
+                            @Html.AntiForgeryToken()
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Company Type</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Confirm Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Reg Number</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">GST Reg Number</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Company WebSite</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Cp Category</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Address</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div><!-- /.box -->
+        </div>   <!-- /.row -->
+
+        <div class="col-md-6">
+            <!-- general form elements disabled -->
+            <div class="box box-warning">
+                <div class="box-header">
+                    <h3 class="box-title">Channel partner Document Details</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        
+                    </form>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!--/.col (right) -->
+    </div>   <!-- /.row -->
+</section><!-- /.content -->
