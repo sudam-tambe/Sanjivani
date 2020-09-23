@@ -827,10 +827,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutSanjivani.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Partner\Chennelpartnerold.cshtml" />
     <Content Include="Views\Partner\Chennelpartner.cshtml" />
+    <Content Include="Views\Partner\SaveChennelPartnerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documents\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -841,6 +844,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SanjivaniBusinessLayer\SanjivaniBusinessLayer.csproj">
+      <Project>{84B2098D-1D0E-4B10-8CEF-BEA8E2752BFF}</Project>
+      <Name>SanjivaniBusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SanjivaniModalView\SanjivaniModalView.csproj">
       <Project>{ddc7d6b9-873a-4881-9c4e-a6a9a594d52b}</Project>
       <Name>SanjivaniModalView</Name>
