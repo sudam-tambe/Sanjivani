@@ -1,4 +1,5 @@
 ﻿@model SanjivaniModalView.ChennelpartnerModel
+
 @{
     ViewBag.Title = "Test";
     Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
@@ -6,206 +7,275 @@
 
 <h2>Channel Partner</h2>
 <section class="content">
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Channel Partner Personnal Details</h3>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-                <form role="form">
+    @*<form action="@Url.Action("","")" class="form-validate form-horizontal" id="register_form" name="register" method="POST">*@
+    @using (Html.BeginForm("SaveChennelPartnerDetails", "Partner", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Channel Partner Personnal Details</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
 
+                    @Html.AntiForgeryToken()
                     <div class="box-body">
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">User Name</label>
                             @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="User Id">*@
-                            @Html.AntiForgeryToken()
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Confirm Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Address</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="exampleInputPassword1">Partnar Name</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Mobile Number</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Email ID</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Cp Category</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control",} })
                         </div>
                         <div class="form-group">
-                           
+                            <label for="exampleInputPassword1">Password</label>
+                            @Html.EditorFor(model => model.pwd, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Confirm Password</label>
+                            @Html.EditorFor(model => model.Cpwd, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Partnar Name</label>
+                            @Html.EditorFor(model => model.chennelpartName, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mobile Number</label>
+                            @Html.EditorFor(model => model.mobileNo, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Alternate Mobile Number</label>
+                            @Html.EditorFor(model => model.AlterMobileNo, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email ID</label>
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Cp Category</label>
+                            @Html.DropDownListFor(model => model.CpCategory, new SelectList(ViewBag.BindCPCategory, "Value", "Text"), "--Select CPCategory--", new { @class = "form-control", })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Address</label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">State</label>
+                           @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
                         </div>
 
                     </div><!-- /.box-body -->
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div><!-- /.box -->
-        </div>   <!-- /.row -->
 
-        <div class="col-md-6">
-            <!-- general form elements disabled -->
-            <div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">Bank Details</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <form role="form">
+
+                </div><!-- /.box -->
+            </div>   <!-- /.row -->
+
+            <div class="col-md-6">
+                <!-- general form elements disabled -->
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Bank Details</h3>
+                    </div><!-- /.box-header -->
+
+                    <div class="box-body">
+
                         <!-- text input -->
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>Bank Name</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.BankName, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>Bank Account Number</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.AccountNumber, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>IFSC Code</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.IFSCcode, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>Payment Bank card Name</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.PaymentBankCardName, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>Last 4 digit Card Number</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.cardnumber, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label>Payment Mode</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.paymentMode, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
                         <div class="form-group">
                             <label>Account Type</label>
-                            <input type="text" class="form-control" placeholder="Enter ..." />
+                            @Html.EditorFor(model => model.ObjBackDetails.AccountType, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
 
-                    </form>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!--/.col (right) -->
-    </div>   <!-- /.row -->
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-6">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header">
-                    <h3 class="box-title">Channel Partner Business Details</h3>
-                </div><!-- /.box-header -->
-                <!-- form start -->
-                <form role="form">
+
+                    </div><!-- /.box-body -->
+
+                </div><!-- /.box -->
+            </div><!--/.col (right) -->
+        </div>   <!-- /.row -->
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h3 class="box-title">Channel Partner Business Details</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+
 
                     <div class="box-body">
-                        <div class="form-group col-md-6">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Company Name</label>
                             @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="User Id">*@
                             @Html.AntiForgeryToken()
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Company Type</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Confirm Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Reg Number</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">GST Reg Number</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Company WebSite</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Cp Category</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1">Address</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            @Html.EditorFor(model => model.ObjBusinessDetails.CommanyName, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Address</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <label for="exampleInputPassword1">Company Type</label>
+                           @Html.EditorFor(model => model.ObjBusinessDetails.CommanyType, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Reg Number</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.RegNumber, new { htmlAttributes = new { @class = "form-control", } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">GST Reg Number</label>
+                           @Html.EditorFor(model => model.ObjBusinessDetails.GSTRegNumber, new { htmlAttributes = new { @class = "form-control",} })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Company WebSite</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.webSite, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Line Of Business</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.LineofBusiness, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Annual Turnover</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.Annulturnoveer, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Contact Person Name </label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.webSite, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Designation</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.Designation, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Contact Number</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.BContactnumber, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Alternate Contact Number</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.ABContactnumber, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email Id </label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.Emailid, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Current ERP</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.ERP, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Current Hosting Provider</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.HostingProvider, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Hosting Platfrom</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.HostingPlatform, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Type of Hosting</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.TypeofHosting, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">No.of WebSite Hosted</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.NoOfWebSiteHos, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Current Email Provider</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.CurrentEmailProvider, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Count Of Emails</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.CountofEmail, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Current Domain Provider</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.CurrentDomainProvide, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Count Of Domains</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.CurrentDomainCount, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Count Of SSL Certificate</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.SSLCertificateCount, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Office Address</label>
+                            @Html.EditorFor(model => model.ObjBusinessDetails.OfficeAddres, new { htmlAttributes = new { @class = "form-control", @Placeholder = "User Name" } })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">State</label>
+                           @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
                         </div>
                     </div><!-- /.box-body -->
 
-                  
-                </form>
-            </div><!-- /.box -->
-        </div>   <!-- /.row -->
 
-        <div class="col-md-6">
-            <!-- general form elements disabled -->
-            <div class="box box-warning">
-                <div class="box-header">
-                    <h3 class="box-title">Channel partner Document Details</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <form role="form">
+                </div><!-- /.box -->
+            </div>   <!-- /.row -->
+
+            <div class="col-md-6">
+                <!-- general form elements disabled -->
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Channel partner Document Details</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+
                         <!-- text input -->
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="exampleInputFile">Upload Company Logo</label>
+                            <input type="file" name="postedFile" webkitdirectory mozdirectory class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="exampleInputFile">Upload Company PAN Card</label>
+                            
+                            <input type="file" name="postedFile" webkitdirectory mozdirectory class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="exampleInputFile">Upload Company Reg Document</label>
+                          
+                            <input type="file" name="postedFile" webkitdirectory mozdirectory class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="exampleInputFile">Upload Account Profile Photo</label>
+                           
+                            <input type="file" name="postedFile" webkitdirectory mozdirectory class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="exampleInputFile">Upload Company Owner Signature</label>
+                            
+                            <input type="file" name="postedFile" webkitdirectory mozdirectory class="form-control" />
                         </div>
 
-                    </form>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!--/.col (right) -->
-    </div>   <!-- /.row -->
+
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!--/.col (right) -->
+        </div>   <!-- /.row -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        @*</form>*@
+    }
 </section><!-- /.content -->
