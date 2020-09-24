@@ -14,8 +14,8 @@ namespace SanjivaniDataLinkLayer
         int SaveChennelPartnerDetails(ChennelpartnerModel model, HttpPostedFileBase[] postedFile);
         List<State> GetBindState();
         List<CPCategory> GetBindCPCategory();
+        List<CompanyType> GetBindCompanyType();
         List<ChennelpartnerModel> GetChennelPartnerList();
-
-
+        int SaveUploadChennelPartnerDocument(string filename1, int CustID, int type);
     }
 }

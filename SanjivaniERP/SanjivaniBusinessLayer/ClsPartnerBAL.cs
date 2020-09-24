@@ -11,7 +11,7 @@ using System.Web;
 
 namespace SanjivaniBusinessLayer
 {
-   public class ClsPartnerBAL
+    public class ClsPartnerBAL
     {
         InfPartner objInfPub = new SanjivaniDataLinkLayer.ImpPartner();
 
@@ -29,9 +29,20 @@ namespace SanjivaniBusinessLayer
             return objInfPub.GetBindCPCategory();
         }
 
+        public List<CompanyType> BindCompanyType()
+        {
+            return objInfPub.GetBindCompanyType();
+        }
+
+
         public List<ChennelpartnerModel> GetChennelPartnerList()
         {
             return objInfPub.GetChennelPartnerList();
+        }
+
+        public int SaveUploadChennelPartnerDoc(string filename1, int CustID, int type)
+        {
+            return objInfPub.SaveUploadChennelPartnerDocument(filename1, CustID, type);
         }
     }
 }

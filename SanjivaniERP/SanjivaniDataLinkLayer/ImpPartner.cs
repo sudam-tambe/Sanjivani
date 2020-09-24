@@ -13,7 +13,7 @@ using System.IO;
 
 namespace SanjivaniDataLinkLayer
 {
-   public class ImpPartner:InfPartner
+    public class ImpPartner : InfPartner
     {
         DBConnection objcon = new DBConnection();
 
@@ -53,6 +53,25 @@ namespace SanjivaniDataLinkLayer
             }
             return list;
         }
+        public List<CompanyType> GetBindCompanyType()
+        {
+            SqlCommand dinsert = new SqlCommand("Sp_CompanyType");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<CompanyType> list = new List<CompanyType>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    CompanyType objCompanyType = new CompanyType();
+                    objCompanyType.Compid = int.Parse(dr["Compid"].ToString());
+                    objCompanyType.CompanyName = dr["CompanyName"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+        }
+        
 
         public List<ChennelpartnerModel> GetChennelPartnerList()
         {
@@ -65,9 +84,9 @@ namespace SanjivaniDataLinkLayer
                 foreach (DataRow dr in dtList.Rows)
                 {
                     ChennelpartnerModel objChennelpartnerList = new ChennelpartnerModel();
-                    
+
                     objChennelpartnerList.RegiDate = dr["RegistrationDate"].ToString();
-                    objChennelpartnerList.UserName  = dr["UserId"].ToString();
+                    objChennelpartnerList.UserName = dr["UserId"].ToString();
                     objChennelpartnerList.mobileNo = dr["MobileNo"].ToString();
                     objChennelpartnerList.EmailID = dr["Email"].ToString();
                     objChennelpartnerList.Address = dr["Address"].ToString();
@@ -81,9 +100,9 @@ namespace SanjivaniDataLinkLayer
 
         public int SaveChennelPartnerDetails(ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
-           
+
             SqlCommand dinsert = new SqlCommand("Sp_InsertPartnerDetails");
-            dinsert.Parameters.AddWithValue("@UserId", SqlDbType.VarChar).Value =model.UserName;
+            dinsert.Parameters.AddWithValue("@UserId", SqlDbType.VarChar).Value = model.UserName;
             dinsert.Parameters.AddWithValue("@Password", SqlDbType.VarChar).Value = model.pwd;
             dinsert.Parameters.AddWithValue("@MobileNo", SqlDbType.VarChar).Value = model.mobileNo;
             dinsert.Parameters.AddWithValue("@AlternateMobileNo", SqlDbType.VarChar).Value = model.AlterMobileNo;
@@ -95,11 +114,11 @@ namespace SanjivaniDataLinkLayer
             //dinsert.Parameters.AddWithValue("@CustomerType", SqlDbType.NVarChar).Value = model.CpCategory;
             //dinsert.Parameters.AddWithValue("@DomainAddress", SqlDbType.NVarChar).Value = model.Address;
             var Result = objcon.GetExcuteScaler(dinsert);
-          
-            if (Result!=null)
+
+            if (Result != null)
             {
                 SqlCommand dinsert1 = new SqlCommand("Sp_SaveBankDetails");
-                dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value =Result;
+                dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = Result;
                 dinsert1.Parameters.AddWithValue("@BankName", SqlDbType.VarChar).Value = model.ObjBackDetails.BankName;
                 dinsert1.Parameters.AddWithValue("@AccountNo", SqlDbType.VarChar).Value = model.ObjBackDetails.AccountNumber;
                 dinsert1.Parameters.AddWithValue("@IFSCCode", SqlDbType.VarChar).Value = model.ObjBackDetails.IFSCcode;
@@ -113,40 +132,45 @@ namespace SanjivaniDataLinkLayer
             {
                 SqlCommand dinsert1 = new SqlCommand("Sp_SaveBusinessDetails");
                 dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = Result;
-                dinsert1.Parameters.AddWithValue("@CompanyName",SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyName;
-                dinsert1.Parameters.AddWithValue("@CompanyType",SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyType;
-                dinsert1.Parameters.AddWithValue("@CompRegNo",SqlDbType.VarChar).Value = model.ObjBusinessDetails.RegNumber;
-                dinsert1.Parameters.AddWithValue("@CompGSTNo",SqlDbType.VarChar).Value = model.ObjBusinessDetails.GSTRegNumber; ;
-                dinsert1.Parameters.AddWithValue("@CompWebsite",SqlDbType.VarChar).Value = model.ObjBusinessDetails.webSite;
-                dinsert1.Parameters.AddWithValue("@LineOfBusiness",SqlDbType.VarChar).Value = model.ObjBusinessDetails.LineofBusiness;
-                dinsert1.Parameters.AddWithValue("@AnnualTurnOver",SqlDbType.Decimal).Value = model.ObjBusinessDetails.Annulturnoveer;
-                dinsert1.Parameters.AddWithValue("@ContactPersonName",SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyName;
+                dinsert1.Parameters.AddWithValue("@CompanyName", SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyName;
+                dinsert1.Parameters.AddWithValue("@CompanyType", SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyType;
+                dinsert1.Parameters.AddWithValue("@CompRegNo", SqlDbType.VarChar).Value = model.ObjBusinessDetails.RegNumber;
+                dinsert1.Parameters.AddWithValue("@CompGSTNo", SqlDbType.VarChar).Value = model.ObjBusinessDetails.GSTRegNumber; ;
+                dinsert1.Parameters.AddWithValue("@CompWebsite", SqlDbType.VarChar).Value = model.ObjBusinessDetails.webSite;
+                dinsert1.Parameters.AddWithValue("@LineOfBusiness", SqlDbType.VarChar).Value = model.ObjBusinessDetails.LineofBusiness;
+                dinsert1.Parameters.AddWithValue("@AnnualTurnOver", SqlDbType.Decimal).Value = model.ObjBusinessDetails.Annulturnoveer;
+                dinsert1.Parameters.AddWithValue("@ContactPersonName", SqlDbType.VarChar).Value = model.ObjBusinessDetails.CommanyName;
                 dinsert1.Parameters.AddWithValue("@DesignationId", SqlDbType.Int).Value = model.ObjBusinessDetails.Designation;
-                dinsert1.Parameters.AddWithValue("@ContactNo",SqlDbType.VarChar).Value = model.ObjBusinessDetails.BContactnumber;
-                dinsert1.Parameters.AddWithValue("@AlternatContactNo",SqlDbType.VarChar).Value = model.ObjBusinessDetails.ABContactnumber;
-                dinsert1.Parameters.AddWithValue("@EmailId",SqlDbType.VarChar).Value = model.ObjBusinessDetails.Emailid;
-                dinsert1.Parameters.AddWithValue("@CurrentERP",SqlDbType.VarChar).Value = model.ObjBusinessDetails.ERP;
-                dinsert1.Parameters.AddWithValue("@HostingPlatForm",SqlDbType.VarChar).Value = model.ObjBusinessDetails.HostingPlatform;
-                dinsert1.Parameters.AddWithValue("@TypeOfHosting",SqlDbType.VarChar).Value = model.ObjBusinessDetails.TypeofHosting;
-                dinsert1.Parameters.AddWithValue("@NoOfWebSiteHosted",SqlDbType.Int).Value = model.ObjBusinessDetails.NoOfWebSiteHos;
-                dinsert1.Parameters.AddWithValue("@CurrentEmailProvider",SqlDbType.VarChar).Value = model.ObjBusinessDetails.CurrentEmailProvider;
-                dinsert1.Parameters.AddWithValue("@CountOfEmail",SqlDbType.Int).Value = model.ObjBusinessDetails.CountofEmail;
-                dinsert1.Parameters.AddWithValue("@CurrentDomailProvider",SqlDbType.VarChar).Value = model.ObjBusinessDetails.CurrentDomainProvide;
-                dinsert1.Parameters.AddWithValue("@CountOfDomain",SqlDbType.Int).Value = model.ObjBusinessDetails.CurrentDomainCount;
-                dinsert1.Parameters.AddWithValue("@CountOfSSL",SqlDbType.Int).Value = model.ObjBusinessDetails.SSLCertificateCount;
-                dinsert1.Parameters.AddWithValue("@OfficeAddress",SqlDbType.VarChar).Value = model.ObjBusinessDetails.OfficeAddres;
-                dinsert1.Parameters.AddWithValue("@StateId",SqlDbType.Int).Value = model.ObjBusinessDetails.Bstate;
+                dinsert1.Parameters.AddWithValue("@ContactNo", SqlDbType.VarChar).Value = model.ObjBusinessDetails.BContactnumber;
+                dinsert1.Parameters.AddWithValue("@AlternatContactNo", SqlDbType.VarChar).Value = model.ObjBusinessDetails.ABContactnumber;
+                dinsert1.Parameters.AddWithValue("@EmailId", SqlDbType.VarChar).Value = model.ObjBusinessDetails.Emailid;
+                dinsert1.Parameters.AddWithValue("@CurrentERP", SqlDbType.VarChar).Value = model.ObjBusinessDetails.ERP;
+                dinsert1.Parameters.AddWithValue("@HostingPlatForm", SqlDbType.VarChar).Value = model.ObjBusinessDetails.HostingPlatform;
+                dinsert1.Parameters.AddWithValue("@TypeOfHosting", SqlDbType.VarChar).Value = model.ObjBusinessDetails.TypeofHosting;
+                dinsert1.Parameters.AddWithValue("@NoOfWebSiteHosted", SqlDbType.Int).Value = model.ObjBusinessDetails.NoOfWebSiteHos;
+                dinsert1.Parameters.AddWithValue("@CurrentEmailProvider", SqlDbType.VarChar).Value = model.ObjBusinessDetails.CurrentEmailProvider;
+                dinsert1.Parameters.AddWithValue("@CountOfEmail", SqlDbType.Int).Value = model.ObjBusinessDetails.CountofEmail;
+                dinsert1.Parameters.AddWithValue("@CurrentDomailProvider", SqlDbType.VarChar).Value = model.ObjBusinessDetails.CurrentDomainProvide;
+                dinsert1.Parameters.AddWithValue("@CountOfDomain", SqlDbType.Int).Value = model.ObjBusinessDetails.CurrentDomainCount;
+                dinsert1.Parameters.AddWithValue("@CountOfSSL", SqlDbType.Int).Value = model.ObjBusinessDetails.SSLCertificateCount;
+                dinsert1.Parameters.AddWithValue("@OfficeAddress", SqlDbType.VarChar).Value = model.ObjBusinessDetails.OfficeAddres;
+                dinsert1.Parameters.AddWithValue("@StateId", SqlDbType.Int).Value = model.ObjBusinessDetails.Bstate;
 
                 var Result1 = objcon.GetExcuteScaler(dinsert1);
 
 
             }
-            if (Result != null)
-            {
-               
-            }
             return Result;
 
+        }
+        public int SaveUploadChennelPartnerDocument(string fileName, int CustID, int type)
+        {
+            SqlCommand dinsert1 = new SqlCommand("Sp_uploadUserDocuments");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = CustID;
+            dinsert1.Parameters.AddWithValue("@fileName", SqlDbType.VarChar).Value = fileName;
+            dinsert1.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+            var Result1 = objcon.GetExcuteScaler(dinsert1);
+            return Result1;
         }
     }
 }

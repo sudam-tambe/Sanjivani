@@ -91,4 +91,9 @@ namespace SanjivaniModalView
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
+    public class CompanyType
+    {
+        public int Compid { get; set; }
+        public string CompanyName { get; set; }
+    }
 }
