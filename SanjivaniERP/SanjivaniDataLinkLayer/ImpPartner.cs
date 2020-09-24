@@ -66,7 +66,7 @@ namespace SanjivaniDataLinkLayer
                 {
                     ChennelpartnerModel objChennelpartnerList = new ChennelpartnerModel();
                     
-                   objChennelpartnerList.RegiDate = dr["RegistrationDate"].ToString();
+                    objChennelpartnerList.RegiDate = dr["RegistrationDate"].ToString();
                     objChennelpartnerList.UserName  = dr["UserId"].ToString();
                     objChennelpartnerList.mobileNo = dr["MobileNo"].ToString();
                     objChennelpartnerList.EmailID = dr["Email"].ToString();
@@ -141,23 +141,10 @@ namespace SanjivaniDataLinkLayer
 
 
             }
-            //if (Result != null)
-            //{
-            //    foreach (HttpPostedFileBase file in postedFile)
-            //    {
-            //        //Checking file is available to save.  
-            //        if (file != null)
-            //        {
-            //            var InputFileName = Path.GetFileName(file.FileName);
-            //            var ServerSavePath = Path.Combine(Microsoft.SqlServer.Server.MapPath("~/Documents/") + InputFileName);
-            //            //Save file to server folder  
-            //            file.SaveAs(ServerSavePath);
-            //            //assigning file uploaded status to ViewBag for showing message to user.  
-            //            //ViewBag.UploadStatus = postedFile.Count().ToString() + " files uploaded successfully.";
-            //        }
-
-            //    }
-            //}
+            if (Result != null)
+            {
+               
+            }
             return Result;
 
         }

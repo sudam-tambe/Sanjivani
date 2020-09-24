@@ -833,7 +833,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Documents\" />
+    <Folder Include="Documents\Logo\" />
+    <Folder Include="Documents\OwnerSignature\" />
+    <Folder Include="Documents\Pan\" />
+    <Folder Include="Documents\ProfilePhoto\" />
+    <Folder Include="Documents\RegDocument\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,14 @@ namespace SanjivaniModalView
     public class ChennelpartnerModel
     {
         public string RegiDate { get; set; }
+        [Required]
         public string UserName { get; set; }
+        [Required]
         public string pwd { get; set; }
+        [Required]
         public string Cpwd { get; set; }
         public string chennelpartName { get; set; }
+        [Required]
         public string mobileNo { get; set; }
         public string AlterMobileNo { get; set; }
         public string EmailID { get; set; }
@@ -29,9 +34,13 @@ namespace SanjivaniModalView
     }
     public class BankDetails
     {
+        [Required]
         public string BankName { get; set; }
+        [Required]
         public int AccountNumber { get; set; }
+        [Required]
         public string IFSCcode { get; set; }
+
         public string PaymentBankCardName { get; set; }
         public string cardnumber { get; set; }
         public int paymentMode { get; set; }

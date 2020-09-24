@@ -162,6 +162,7 @@ D:\Projects\Sanjivani\SanjivaniERP\SanjivaniERP\bin\Microsoft.Owin.Security.Micr
 D:\Projects\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.csprojResolveAssemblyReference.cache
 D:\Projects\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.dll
 D:\Projects\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.pdb
+D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.csprojResolveAssemblyReference.cache
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\ApplicationInsights.config
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\roslyn\csc.exe
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -247,6 +248,5 @@ D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\Microsoft.Owin.Secu
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\bin\SanjivaniDataLinkLayer.pdb
-D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.csprojResolveAssemblyReference.cache
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.dll
 D:\Sanjivani Project\Sanjivani\SanjivaniERP\SanjivaniERP\obj\Debug\SanjivaniERP.pdb
