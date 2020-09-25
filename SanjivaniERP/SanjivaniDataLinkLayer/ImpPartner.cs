@@ -172,5 +172,41 @@ namespace SanjivaniDataLinkLayer
             var Result1 = objcon.GetExcuteScaler(dinsert1);
             return Result1;
         }
+        public List<Account> getAccountType()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetAccountype");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<Account> list = new List<Account>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    Account objCompanyType = new Account();
+                    objCompanyType.AccountTypeId = int.Parse(dr["AccountTypeId"].ToString());
+                    objCompanyType.AccountType = dr["AccountType"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+        }
+        public List<PaymentType> getPaymentmode()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetPaymentMode");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<PaymentType> list = new List<PaymentType>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    PaymentType objCompanyType = new PaymentType();
+                    objCompanyType.PaymentModeId = int.Parse(dr["PaymentModeId"].ToString());
+                    objCompanyType.PaymentMode = dr["PaymentMode"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+        }
     }
 }

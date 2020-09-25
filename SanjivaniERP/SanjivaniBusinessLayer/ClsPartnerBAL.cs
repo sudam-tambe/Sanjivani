@@ -20,6 +20,16 @@ namespace SanjivaniBusinessLayer
             return objInfPub.SaveChennelPartnerDetails(model, postedFile);
         }
 
+        public List<PaymentType> GetPaymentmode()
+        {
+            return objInfPub.getPaymentmode();
+        }
+
+        public List<Account> GetAccountType()
+        {
+            return objInfPub.getAccountType();
+        }
+
         public List<State> GetBindState()
         {
             return objInfPub.GetBindState();
