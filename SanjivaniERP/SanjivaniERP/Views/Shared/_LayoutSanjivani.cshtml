@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Sanjivani</title>
+    
+    <link rel="icon" href="~/Content/img/Sanjivani.png"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -34,7 +36,7 @@
 
 
 </head>
-<body class="skin-black">
+<body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.html" class="logo">
@@ -72,7 +74,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="~/Content/img/avatar3.png" class="img-circle" alt="User Image" />
+                        <img src="~/Content/img/Sanjivani.png" class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
                         <p>Rahul</p>
@@ -93,8 +95,8 @@
                 <ul class="sidebar-menu">
                     <li class="treeview active">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Dashboatd</span>
+                            <i class="fa fa-dashboard" style="color: crimson;"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">Dashboard</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -106,8 +108,8 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>CP Store Front</span>
+                            <i class="fa fa-laptop"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">CP Store Front</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -118,14 +120,14 @@
                    
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Partner</span>
+                            <i class="fa fa-html5"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">Partner</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="#"><i class="fa fa-share text-red"></i> Director</a></li>
                             <li><a href="#"><i class="fa fa-share text-red"></i> Customer</a></li>
-                            <li><a href="#"><i class="fa fa-share text-red"></i> Channel Partner</a></li>
+                            <li><a href="@Url.Action("ChannaPartnerList","Partner")"><i class="fa fa-share text-red"></i> Channel Partner</a></li>
                             <li><a href="#"><i class="fa fa-share text-red"></i> CP Customer</a></li>
                             <li><a href="#"><i class="fa fa-share text-red"></i> Freelancer</a></li>
                             <li><a href="#"><i class="fa fa-share text-red"></i> Affilate Marketer</a></li>
@@ -133,8 +135,8 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>HRMS & Payroll</span>
+                            <i class="fa fa-user-md"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">HRMS & Payroll</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -148,8 +150,8 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>General Register</span>
+                            <i class="fa fa-file-text-o"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">General Register</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -164,8 +166,8 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Account Register</span>
+                            <i class="fa fa-bitcoin"></i>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">Account Register</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -179,7 +181,7 @@
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-bar-chart-o"></i>
-                            <span>Orders</span>
+                            <span style="color: #367fa9;font-size: medium;font-weight: 900;">Orders</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">

@@ -10,21 +10,26 @@ namespace SanjivaniModalView
 {
     public class ChennelpartnerModel
     {
-        public string RegiDate { get; set; }
-        [Required]
+        public DateTime RegiDate { get; set; }
+        [Required(ErrorMessage = "Please enter User name.")]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Password.")]
         public string pwd { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Confirm Password.")]
         public string Cpwd { get; set; }
+        [Required(ErrorMessage = "Please enter Channel Partner Name")]
         public string chennelpartName { get; set; }
         [Required]
         public string mobileNo { get; set; }
         public string AlterMobileNo { get; set; }
         public string EmailID { get; set; }
-        public int CpCategory { get; set; }
+        public string CpCategory { get; set; }
+        public string CPId { get; set; }
         public string Address { get; set; }
-        public int State { get; set; }
+        public string State { get; set; }
+        public string AspUserId { get; set; }
+        public string ParentId { get; set; }
+        public string CustCategroryId { get; set; }
         public BankDetails ObjBackDetails { get; set; }
         public BusinessDetails ObjBusinessDetails { get; set; }
         public List<State> objState { get; set; }
@@ -34,17 +39,17 @@ namespace SanjivaniModalView
     }
     public class BankDetails
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter BankName")]
         public string BankName { get; set; }
-        [Required]
-        public int AccountNumber { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Account Number")]
+        public string AccountNumber { get; set; }
+        [Required(ErrorMessage = "Please enter IFSCcode")]
         public string IFSCcode { get; set; }
 
         public string PaymentBankCardName { get; set; }
         public string cardnumber { get; set; }
-        public int paymentMode { get; set; }
-        public int AccountType { get; set; }
+        public string paymentMode { get; set; }
+        public string AccountType { get; set; }
     }
 
     public class BusinessDetails
@@ -56,9 +61,9 @@ namespace SanjivaniModalView
         public string GSTRegNumber { get; set; }
         public string webSite { get; set; }
         public string LineofBusiness { get; set; }
-        public decimal Annulturnoveer { get; set; }
+        public string Annulturnoveer { get; set; }
         public string personalName { get; set; }
-        public int Designation { get; set; }
+        public string Designation { get; set; }
         public string BContactnumber { get; set; }
         public string ABContactnumber { get; set; }
         public string Emailid { get; set; }
@@ -68,16 +73,16 @@ namespace SanjivaniModalView
         public string HostingPlatform { get; set; }
         public string TypeofHosting { get; set; }
 
-        public int NoOfWebSiteHos { get; set; }
+        public string NoOfWebSiteHos { get; set; }
 
         public string CurrentEmailProvider { get; set; }
-        public int CountofEmail { get; set; }
+        public string CountofEmail { get; set; }
         public string CurrentDomainProvide { get; set; }
-        public int CurrentDomainCount { get; set; }
+        public string CurrentDomainCount { get; set; }
         public string SSLCertificateCount { get; set; }
 
         public string OfficeAddres { get; set; }
-        public int Bstate { get; set; }
+        public string Bstate { get; set; }
 
     }
     
@@ -95,5 +100,15 @@ namespace SanjivaniModalView
     {
         public int Compid { get; set; }
         public string CompanyName { get; set; }
+    }
+    public class Account
+    {
+        public int AccountTypeId { get; set; }
+        public string AccountType { get; set; }
+    }
+    public class PaymentType
+    {
+        public int PaymentModeId { get; set; }
+        public string PaymentMode { get; set; }
     }
 }

@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SanjivaniERP.Models;
+using SanjivaniModalView;
+using SanjivaniBusinessLayer;
+using System.IO;
 
 namespace SanjivaniERP.Controllers
 {
@@ -17,7 +20,7 @@ namespace SanjivaniERP.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        ClsPartnerBAL objPartnerBAL = new ClsPartnerBAL();
         public AccountController()
         {
         }
@@ -147,23 +150,77 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
+                var result = await UserManager.CreateAsync(user, model.pwd);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var UserId = user.Id;
+                    // if (ModelState.IsValid)
+                    {
+                        model.AspUserId = UserId;
+                        model.ParentId = "1";
+                        model.CustCategroryId = "2";
+                        var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
+                        var k = 0;
+                        foreach (HttpPostedFileBase file in postedFile)
+                        {
+                           
+                            if (file != null)
+                            {
+                                var filename = Path.GetFileName(file.FileName);
+                                if (k == 0)
+                                {
+                                    var filename1 = Path.GetFileName(file.FileName);
+                                    if (filename1 != null)
+                                    {
+                                        var Type = 0;
+                                        var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                        file.SaveAs(filePath);
+                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
+                                    }
+                                }
+                                else if (k == 1)
+                                {
+                                    var Type = 1;
+                                    var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                    file.SaveAs(filePath);
+                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                }
+                                else if (k == 2)
+                                {
+                                    var Type = 2;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                }
+                                else if (k == 3)
+                                {
+                                    var Type = 3;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                }
+                                else if (k == 4)
+                                {
+                                    var Type = 4;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                }
+                                k++;
+                            }
+                        }
+                        var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
+                        ViewBag.ChennelPartnerList = ChennelPartnerList;
+                    }
 
-                    return RedirectToAction("Index", "Home");
+                    string url = "http://bds.pioneersoft.co.in";
+                    return Redirect("http://bds.pioneersoft.co.in");
                 }
                 AddErrors(result);
             }
@@ -427,7 +484,7 @@ namespace SanjivaniERP.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
+        public IAuthenticationManager AuthenticationManager
         {
             get
             {
