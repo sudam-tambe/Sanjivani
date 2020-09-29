@@ -28,5 +28,23 @@ namespace SanjivaniERP.Controllers
             ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
         }
+
+        public ActionResult CPCChennelPartner()
+        {
+            ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+            ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
+            ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CustId", "UserId");
+            
+            return View();
+        }
+
+        public ActionResult CPCChennelPartnerList()
+        {
+            var CPCChennelPartnerList = objPartnerBAL.GetCPCChannelPartnerList();
+            ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
+            return View();
+        }
     }
 }

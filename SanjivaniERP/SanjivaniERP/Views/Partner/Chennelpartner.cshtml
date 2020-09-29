@@ -23,9 +23,14 @@
                     @Html.AntiForgeryToken()
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">User Name</label>
+                            <label for="exampleInputEmail1">Channel Partner Registration Date</label>
+                                @Html.EditorFor(model => model.RegiDate, "{dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", @type = "date", @required = "required", @value = System.DateTime.Now } })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">User ID</label>
                             @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="User Id">*@
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control",} })
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
@@ -61,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">State</label>
-                           @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
+                            @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
                         </div>
 
                     </div><!-- /.box-body -->
@@ -138,14 +143,14 @@
                             <label for="exampleInputPassword1">Company Type</label>
                             @Html.DropDownListFor(model => model.ObjBusinessDetails.CommanyType, new SelectList(ViewBag.BindCompanyType, "Value", "Text"), "--Select Commany Type--", new { @class = "form-control", })
                         </div>
-                       
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">Reg Number</label>
                             @Html.EditorFor(model => model.ObjBusinessDetails.RegNumber, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">GST Reg Number</label>
-                           @Html.EditorFor(model => model.ObjBusinessDetails.GSTRegNumber, new { htmlAttributes = new { @class = "form-control",} })
+                            @Html.EditorFor(model => model.ObjBusinessDetails.GSTRegNumber, new { htmlAttributes = new { @class = "form-control", } })
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Company WebSite</label>
@@ -226,7 +231,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">State</label>
-                           @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
+                            @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
                         </div>
                     </div><!-- /.box-body -->
 
@@ -249,22 +254,22 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Upload Company PAN Card</label>
-                            
+
                             <input type="file" name="postedFile" id="file2" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Upload Company Reg Document</label>
-                          
+
                             <input type="file" name="postedFile" multiple="" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Upload Account Profile Photo</label>
-                           
-                            <input type="file" name="postedFile" id="file4"/>
+
+                            <input type="file" name="postedFile" id="file4" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Upload Company Owner Signature</label>
-                            
+
                             <input type="file" name="postedFile" id="file5" />
                         </div>
 

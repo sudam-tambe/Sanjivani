@@ -23,36 +23,9 @@ namespace SanjivaniERP.Controllers
         {
             return View();
         }
-        public PartnerController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
+     
+       
+       
 
         public ActionResult Chennelpartner()
         {
@@ -74,12 +47,12 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         public ActionResult SaveChennelPartnerDetails1(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
-                var result =  UserManager.CreateAsync(user, model.pwd);
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
+            //    var result =  UserManager.CreateAsync(user, model.pwd);
               
-            }
+            //}
 
             ///If we got this far, something failed, redisplay form
             //return View(model);

@@ -228,6 +228,88 @@ namespace SanjivaniERP.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult>CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
+                var result = await UserManager.CreateAsync(user, model.pwd);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var UserId = user.Id;
+                    // if (ModelState.IsValid)
+                    {
+                        model.AspUserId = UserId;
+                        model.ParentId = model.CpCategory;
+                        model.CustCategroryId = "3";
+                        var CPCSaveList = objPartnerBAL.SaveCPCRegisterDetails(model, postedFile);
+                        var k = 0;
+                        foreach (HttpPostedFileBase file in postedFile)
+                        {
+
+                            if (file != null)
+                            {
+                                var filename = Path.GetFileName(file.FileName);
+                                if (k == 0)
+                                {
+                                    var filename1 = Path.GetFileName(file.FileName);
+                                    if (filename1 != null)
+                                    {
+                                        var Type = 0;
+                                        var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                        file.SaveAs(filePath);
+                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, CPCSaveList, Type);
+                                    }
+                                }
+                                else if (k == 1)
+                                {
+                                    var Type = 1;
+                                    var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                    file.SaveAs(filePath);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                                }
+                                else if (k == 2)
+                                {
+                                    var Type = 2;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/AdhaarCard/"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                                }
+                                else if (k == 3)
+                                {
+                                    var Type = 3;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/LightBill/"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                                }
+                                else if (k == 4)
+                                {
+                                    var Type = 4;
+                                    var path = Path.Combine(Server.MapPath("~/Documents/Passport/"), filename);
+                                    file.SaveAs(path);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                                }
+                                k++;
+                            }
+                        }
+                        var CPCChennelPartnerList = objPartnerBAL.GetCPCChannelPartnerList();
+                        ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
+                    }
+
+                   // string url = "http://bds.pioneersoft.co.in";
+                    //return Redirect("http://bds.pioneersoft.co.in");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("CPCChennelPartnerList", "CP");
+        }
 
         //
         // GET: /Account/ConfirmEmail

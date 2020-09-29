@@ -53,6 +53,25 @@ namespace SanjivaniDataLinkLayer
             }
             return list;
         }
+        public List<CPCustomer>GetBindCPCustomer()
+        {
+            SqlCommand dinsert = new SqlCommand("Sp_ChannelPartnerCustomerList");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<CPCustomer> list = new List<CPCustomer>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    CPCustomer objCPCust = new CPCustomer();
+                    objCPCust.CustID = int.Parse(dr["CustId"].ToString());
+                    objCPCust.Userid = dr["UserId"].ToString();
+                    list.Add(objCPCust);
+                }
+            }
+            return list;
+        }
+        
         public List<CompanyType> GetBindCompanyType()
         {
             SqlCommand dinsert = new SqlCommand("Sp_CompanyType");
@@ -95,7 +114,29 @@ namespace SanjivaniDataLinkLayer
             }
             return list;
         }
+        public List<CPCchannelPartnerModel> GetCPCChannelPartnerList()
+        {
+            SqlCommand dinsert = new SqlCommand("Sp_CPCChannelPartnerList");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<CPCchannelPartnerModel> list = new List<CPCchannelPartnerModel>();
 
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    CPCchannelPartnerModel objCPCChennelpartnerList = new CPCchannelPartnerModel();
+
+                    objCPCChennelpartnerList.RegiDate = Convert.ToDateTime(dr["RegistrationDate"].ToString());
+                    objCPCChennelpartnerList.UserId = dr["UserId"].ToString();
+                    objCPCChennelpartnerList.mobileNo = dr["MobileNo"].ToString();
+                    objCPCChennelpartnerList.EmailID = dr["Email"].ToString();
+                    objCPCChennelpartnerList.Address = dr["Address"].ToString();
+                    list.Add(objCPCChennelpartnerList);
+                }
+            }
+            return list;
+        }
+        
 
 
         public int SaveChennelPartnerDetails(ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
@@ -203,6 +244,54 @@ namespace SanjivaniDataLinkLayer
             return Result;
 
         }
+
+        public int SaveCPCDetails(CPCchannelPartnerModel model,HttpPostedFileBase[] postedFile)
+        {
+            SqlCommand dinsert = new SqlCommand("Sp_SaveCPCRegistrationDetails");
+            if (model.UserId.ToString() != "")
+                dinsert.Parameters.AddWithValue("@UserId", SqlDbType.VarChar).Value = model.UserId;
+            if (model.pwd.ToString() != null)
+                dinsert.Parameters.AddWithValue("@Password", SqlDbType.VarChar).Value = model.pwd;
+            if (model.mobileNo.ToString() != null)
+                dinsert.Parameters.AddWithValue("@MobileNo", SqlDbType.VarChar).Value = model.mobileNo;
+
+            dinsert.Parameters.AddWithValue("@AlternateMobileNo", SqlDbType.VarChar).Value = model.AlterMobileNo;
+
+            dinsert.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = model.EmailID;
+
+            dinsert.Parameters.AddWithValue("@Address", SqlDbType.VarChar).Value = model.Address;
+
+            dinsert.Parameters.AddWithValue("@StateId", SqlDbType.Int).Value = model.State;
+
+            dinsert.Parameters.AddWithValue("@CustomerName", SqlDbType.VarChar).Value = model.CustomerName;
+            dinsert.Parameters.AddWithValue("@CPCategeoryId", SqlDbType.VarChar).Value = model.CpCategory;
+            dinsert.Parameters.AddWithValue("@ParentId", SqlDbType.Int).Value = model.ParentId;
+            dinsert.Parameters.AddWithValue("@AspUserId", SqlDbType.NVarChar).Value = model.AspUserId;
+            dinsert.Parameters.AddWithValue("@CustCategroryId", SqlDbType.Int).Value = model.CustCategroryId;
+            //dinsert.Parameters.AddWithValue("@DomainAddress", SqlDbType.NVarChar).Value = model.Address;
+            var Result = objcon.GetExcuteScaler(dinsert);
+            if (Result != null)
+            {
+                SqlCommand dinsert1 = new SqlCommand("Sp_SaveBankDetails");
+                dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = Result;
+
+                dinsert1.Parameters.AddWithValue("@BankName", SqlDbType.VarChar).Value = model.ObjBackDetails.BankName;
+
+                dinsert1.Parameters.AddWithValue("@AccountNo", SqlDbType.VarChar).Value = model.ObjBackDetails.AccountNumber;
+
+                dinsert1.Parameters.AddWithValue("@IFSCCode", SqlDbType.VarChar).Value = model.ObjBackDetails.IFSCcode;
+
+                dinsert1.Parameters.AddWithValue("@CardName", SqlDbType.VarChar).Value = model.ObjBackDetails.PaymentBankCardName;
+
+                dinsert1.Parameters.AddWithValue("@FourDigitCardNo", SqlDbType.VarChar).Value = model.ObjBackDetails.cardnumber;
+
+                dinsert1.Parameters.AddWithValue("@PaymentModeId", SqlDbType.Int).Value = model.ObjBackDetails.paymentMode;
+
+                dinsert1.Parameters.AddWithValue("@AccountTypeId", SqlDbType.Int).Value = model.ObjBackDetails.AccountType;
+                var Result1 = objcon.GetExcuteScaler(dinsert1);
+            }
+            return Result;
+        }
         public int SaveUploadChennelPartnerDocument(string fileName, int CustID, int type)
         {
             SqlCommand dinsert1 = new SqlCommand("Sp_uploadUserDocuments");
@@ -212,6 +301,17 @@ namespace SanjivaniDataLinkLayer
             var Result1 = objcon.GetExcuteScaler(dinsert1);
             return Result1;
         }
+        public int SaveUploadCPCDocument(string fileName, int CustID, int type)
+        {
+            SqlCommand dinsert1 = new SqlCommand("Sp_uploadCPCUserDocuments");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = CustID;
+            dinsert1.Parameters.AddWithValue("@fileName", SqlDbType.VarChar).Value = fileName;
+            dinsert1.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+            var Result1 = objcon.GetExcuteScaler(dinsert1);
+            return Result1;
+        }
+        
+
         public List<Account> getAccountType()
         {
             SqlCommand dinsert = new SqlCommand("usp_GetAccountype");

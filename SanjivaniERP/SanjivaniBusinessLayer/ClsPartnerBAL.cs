@@ -19,6 +19,10 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SaveChennelPartnerDetails(model, postedFile);
         }
+        public int SaveCPCRegisterDetails(CPCchannelPartnerModel model,HttpPostedFileBase[] postedFile)
+        {
+            return objInfPub.SaveCPCDetails(model, postedFile);
+        }
 
         public List<PaymentType> GetPaymentmode()
         {
@@ -38,6 +42,11 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.GetBindCPCategory();
         }
+        public List<CPCustomer> GetBindCPCustomer()
+        {
+            return objInfPub.GetBindCPCustomer();
+        }
+        
 
         public List<CompanyType> BindCompanyType()
         {
@@ -49,10 +58,19 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.GetChennelPartnerList();
         }
+        public List<CPCchannelPartnerModel> GetCPCChannelPartnerList()
+        {
+            return objInfPub.GetCPCChannelPartnerList();
+        }
 
         public int SaveUploadChennelPartnerDoc(string filename1, int CustID, int type)
         {
             return objInfPub.SaveUploadChennelPartnerDocument(filename1, CustID, type);
         }
+        public int SaveUploadCPCDoc(string filename1, int CustID, int type)
+        {
+            return objInfPub.SaveUploadCPCDocument(filename1, CustID, type);
+        }
+        
     }
 }
