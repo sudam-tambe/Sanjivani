@@ -23,6 +23,11 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SaveCPCDetails(model, postedFile);
         }
+        public int UpdateCPCRegisterDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        {
+            return objInfPub.UpdateCPCRegisterDetails(model, postedFile);
+        }
+        
 
         public List<PaymentType> GetPaymentmode()
         {
@@ -71,6 +76,10 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SaveUploadCPCDocument(filename1, CustID, type);
         }
-        
+
+        public CPCchannelPartnerModel GetCPCChannelEdit(int custId)
+        {
+            return objInfPub.GetCPCChannelList(custId);
+        }
     }
 }

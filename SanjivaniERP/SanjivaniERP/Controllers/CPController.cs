@@ -1,4 +1,5 @@
 ﻿using SanjivaniBusinessLayer;
+using SanjivaniModalView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,30 @@ namespace SanjivaniERP.Controllers
             ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
         }
-
-        public ActionResult CPCChennelPartner()
+     
+        public ActionResult CPCChennelPartner(int CustId)
         {
+            CPCchannelPartnerModel list = new CPCchannelPartnerModel();
             ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
             ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
             ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
             ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
-            ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CustId", "UserId");
-            
+            ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CustId","UserId");
+            if(CustId>0)
+            {
+                if (!string.IsNullOrWhiteSpace(CustId.ToString()))
+                {
+                    list = objPartnerBAL.GetCPCChannelEdit(CustId);
+                    return View(list);
+
+                }
+            }
             return View();
+
         }
+
+
+     
 
         public ActionResult CPCChennelPartnerList()
         {

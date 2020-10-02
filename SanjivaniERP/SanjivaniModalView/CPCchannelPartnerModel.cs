@@ -9,6 +9,7 @@ namespace SanjivaniModalView
 {
    public class CPCchannelPartnerModel
     {
+        public int CustId { get; set; }
         public DateTime RegiDate { get; set; }
         [Required(ErrorMessage = "Please enter User name.")]
         public string CustomerId { get; set; }
@@ -23,7 +24,7 @@ namespace SanjivaniModalView
         public string AlterMobileNo { get; set; }
         public string EmailID { get; set; }
         public string CpCategory { get; set; }
-        public string CpCustomer { get; set; }
+        public int CpCustomer { get; set; }
         public string CPId { get; set; }
         public string Address { get; set; }
         public string State { get; set; }
