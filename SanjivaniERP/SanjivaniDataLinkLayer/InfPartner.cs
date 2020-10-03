@@ -14,6 +14,7 @@ namespace SanjivaniDataLinkLayer
     {
         int SaveChennelPartnerDetails(ChennelpartnerModel model, HttpPostedFileBase[] postedFile);
         int SaveCPCDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile);
+        int SaveDirectorBusinessDetails(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
         int UpdateCPCRegisterDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile);
         List<State> GetBindState();
         List<CPCategory> GetBindCPCategory();
@@ -27,5 +28,8 @@ namespace SanjivaniDataLinkLayer
         List<Account> getAccountType();
         List<PaymentType> getPaymentmode();
         CPCchannelPartnerModel GetCPCChannelList(int custId);
+        List<DirectorBusinessModel> GetDirectorBusinessOwnerList();
+        int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
+        DirectorBusinessModel GetDirectorBusinessOwners(int CustId);
     }
 }

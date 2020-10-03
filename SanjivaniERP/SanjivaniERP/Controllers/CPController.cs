@@ -29,7 +29,6 @@ namespace SanjivaniERP.Controllers
             ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
         }
-     
         public ActionResult CPCChennelPartner(int CustId)
         {
             CPCchannelPartnerModel list = new CPCchannelPartnerModel();
@@ -44,20 +43,36 @@ namespace SanjivaniERP.Controllers
                 {
                     list = objPartnerBAL.GetCPCChannelEdit(CustId);
                     return View(list);
-
                 }
             }
             return View();
-
         }
-
-
-     
-
         public ActionResult CPCChennelPartnerList()
         {
             var CPCChennelPartnerList = objPartnerBAL.GetCPCChannelPartnerList();
             ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
+            return View();
+        }
+        public ActionResult DirectorBusinessOwnersList()
+        {
+            List<DirectorBusinessModel> DirectorModel =objPartnerBAL.GetDirectorBusinessOwnerList();
+            ViewBag.DirectorBusinessOwnerList = DirectorModel;
+            return View();
+        }
+        public ActionResult DirectorBusinessOwners(int CustId)
+        {
+            DirectorBusinessModel list = new DirectorBusinessModel();
+            ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+            ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            if (CustId > 0)
+            {
+                if (!string.IsNullOrWhiteSpace(CustId.ToString()))
+                {
+                    list = objPartnerBAL.GetDirectorBusinessOwners(CustId);
+                    return View(list);
+                }
+            }
             return View();
         }
     }

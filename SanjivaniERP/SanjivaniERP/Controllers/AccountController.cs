@@ -12,6 +12,7 @@ using SanjivaniERP.Models;
 using SanjivaniModalView;
 using SanjivaniBusinessLayer;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SanjivaniERP.Controllers
 {
@@ -25,7 +26,7 @@ namespace SanjivaniERP.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -37,9 +38,9 @@ namespace SanjivaniERP.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -123,7 +124,7 @@ namespace SanjivaniERP.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,19 +159,17 @@ namespace SanjivaniERP.Controllers
                 var result = await UserManager.CreateAsync(user, model.pwd);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     var UserId = user.Id;
                     {
                         model.AspUserId = UserId;
                         model.ParentId = "1";
                         model.CustCategroryId = "2";
-                       
 
                         var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
                         var k = 0;
                         foreach (HttpPostedFileBase file in postedFile)
                         {
-                           
                             if (file != null)
                             {
                                 var filename = Path.GetFileName(file.FileName);
@@ -237,76 +236,75 @@ namespace SanjivaniERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
-                var result = await UserManager.CreateAsync(user, model.pwd);
-                if (result.Succeeded)
+                if (model.CustId > 0)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    var UserId = user.Id;
-                    // if (ModelState.IsValid)
+                    var CPCSaveList = objPartnerBAL.UpdateCPCRegisterDetails(model, postedFile);
+                    var J = 0;
+                    foreach (HttpPostedFileBase file in postedFile)
                     {
-                        model.AspUserId = UserId;
-                        model.ParentId = model.CpCategory;
-                        model.CustCategroryId = "3";
-                        if (!string.IsNullOrWhiteSpace(model.CustId.ToString()))
+                        if (file != null)
                         {
-                            var CPCSaveList = objPartnerBAL.UpdateCPCRegisterDetails(model, postedFile);
-                            var J = 0;
-                            foreach (HttpPostedFileBase file in postedFile)
+                            var filename = Path.GetFileName(file.FileName);
+                            if (J == 0)
                             {
-                                if (file != null)
+                                var filename1 = Path.GetFileName(file.FileName);
+                                if (filename1 != null)
                                 {
-                                    var filename = Path.GetFileName(file.FileName);
-                                    if (J == 0)
-                                    {
-                                        var filename1 = Path.GetFileName(file.FileName);
-                                        if (filename1 != null)
-                                        {
-                                            var Type = 0;
-                                            var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
-                                            file.SaveAs(filePath);
-                                            var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, CPCSaveList, Type);
-                                        }
-                                    }
-                                    else if (J == 1)
-                                    {
-                                        var Type = 1;
-                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
-                                        file.SaveAs(filePath);
-                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
-                                    }
-                                    else if (J == 2)
-                                    {
-                                        var Type = 2;
-                                        var path = Server.MapPath("~/Documents/AdhaarCard/"+ filename);
-                                        file.SaveAs(path);
-                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
-                                    }
-                                    else if (J == 3)
-                                    {
-                                        var Type = 3;
-                                        var path = Server.MapPath("~/Documents/LightBill/"+ filename);
-                                        file.SaveAs(path);
-                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
-                                    }
-                                    else if (J == 4)
-                                    {
-                                        var Type = 4;
-                                        var path =Server.MapPath("~/Documents/Passport/"+ filename);
-                                        file.SaveAs(path);
-                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
-                                    }
-                                    J++;
+                                    var Type = 0;
+                                    var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                    file.SaveAs(filePath);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, CPCSaveList, Type);
                                 }
                             }
+                            else if (J == 1)
+                            {
+                                var Type = 1;
+                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                file.SaveAs(filePath);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                            }
+                            else if (J == 2)
+                            {
+                                var Type = 2;
+                                var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                            }
+                            else if (J == 3)
+                            {
+                                var Type = 3;
+                                var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                            }
+                            else if (J == 4)
+                            {
+                                var Type = 4;
+                                var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
+                            }
+                            J++;
                         }
-                        else
+                    }
+                }
+                else
+                {
+                    var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
                         {
-                            var CPCSaveList = objPartnerBAL.SaveCPCRegisterDetails(model, postedFile);
+                            model.AspUserId = UserId;
+                            model.ParentId = model.CpCategory;
+                            model.CustCategroryId = "3";
+                            var CPCSaveList = objPartnerBAL.SaveCPCRegisterDetails(model,postedFile);
                             var k = 0;
                             foreach (HttpPostedFileBase file in postedFile)
                             {
-
                                 if (file != null)
                                 {
                                     var filename = Path.GetFileName(file.FileName);
@@ -331,7 +329,7 @@ namespace SanjivaniERP.Controllers
                                     else if (k == 2)
                                     {
                                         var Type = 2;
-                                        var path = Server.MapPath("~/Documents/AdhaarCard/"+ filename);
+                                        var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
@@ -345,7 +343,7 @@ namespace SanjivaniERP.Controllers
                                     else if (k == 4)
                                     {
                                         var Type = 4;
-                                        var path = Server.MapPath("~/Documents/Passport/"+ filename);
+                                        var path = Server.MapPath("~/Documents/Passport/" + filename);
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
@@ -353,18 +351,146 @@ namespace SanjivaniERP.Controllers
                                 }
                             }
                         }
-                        var CPCChennelPartnerList = objPartnerBAL.GetCPCChannelPartnerList();
-                        ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
                     }
-
-                   // string url = "http://bds.pioneersoft.co.in";
-                    //return Redirect("http://bds.pioneersoft.co.in");
+                    AddErrors(result);
                 }
-                AddErrors(result);
+                var CPCChennelPartnerList = objPartnerBAL.GetCPCChannelPartnerList();
+                ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
             }
-
             // If we got this far, something failed, redisplay form
             return RedirectToAction("CPCChennelPartnerList", "CP");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult>DirectorBusinessRegister(FormCollection fc, DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.CustId > 0)
+                {
+                    var UpdateDicrectorBusiness = objPartnerBAL.UpdateDirectorBusinessRegister(model, postedFile);
+                    var k = 0;
+                    foreach (HttpPostedFileBase file in postedFile)
+                    {
+                        if (file != null)
+                        {
+                            var filename = Path.GetFileName(file.FileName);
+                            if (k == 0)
+                            {
+                                var filename1 = Path.GetFileName(file.FileName);
+                                if (filename1 != null)
+                                {
+                                    var Type = 0;
+                                    var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                    file.SaveAs(filePath);
+                                    var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, UpdateDicrectorBusiness, Type);
+                                }
+                            }
+                            else if (k == 1)
+                            {
+                                var Type = 1;
+                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                file.SaveAs(filePath);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
+                            }
+                            else if (k == 2)
+                            {
+                                var Type = 2;
+                                var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
+                            }
+                            else if (k == 3)
+                            {
+                                var Type = 3;
+                                var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
+                            }
+                            else if (k == 4)
+                            {
+                                var Type = 4;
+                                var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
+                            }
+                            k++;
+                        }
+                    }
+                    // string url = "http://bds.pioneersoft.co.in";
+                    //return Redirect("http://bds.pioneersoft.co.in");
+                }
+                else
+                {
+                    var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
+                        {
+                            model.AspUserId = UserId;
+                            model.ParentId = "0";
+                            model.CustCategroryId = "1";
+                            var DirectorBusinessSaveList = objPartnerBAL.SaveDirectorBusinessDetails(model, postedFile);
+                            var J = 0;
+                            foreach (HttpPostedFileBase file in postedFile)
+                            {
+                                if (file != null)
+                                {
+                                    var filename = Path.GetFileName(file.FileName);
+                                    if (J == 0)
+                                    {
+                                        var filename1 = Path.GetFileName(file.FileName);
+                                        if (filename1 != null)
+                                        {
+                                            var Type = 0;
+                                            var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                            file.SaveAs(filePath);
+                                            var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, DirectorBusinessSaveList, Type);
+                                        }
+                                    }
+                                    else if (J == 1)
+                                    {
+                                        var Type = 1;
+                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                        file.SaveAs(filePath);
+                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
+                                    }
+                                    else if (J == 2)
+                                    {
+                                        var Type = 2;
+                                        var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
+                                    }
+                                    else if (J == 3)
+                                    {
+                                        var Type = 3;
+                                        var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
+                                    }
+                                    else if (J == 4)
+                                    {
+                                        var Type = 4;
+                                        var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
+                                    }
+                                    J++;
+                                }
+                            }
+                        }
+                    }
+                    AddErrors(result);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("DirectorBusinessOwnersList", "CP");
         }
 
         //

@@ -19,15 +19,24 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SaveChennelPartnerDetails(model, postedFile);
         }
-        public int SaveCPCRegisterDetails(CPCchannelPartnerModel model,HttpPostedFileBase[] postedFile)
+        public int SaveCPCRegisterDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             return objInfPub.SaveCPCDetails(model, postedFile);
         }
+
+        public int SaveDirectorBusinessDetails(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        {
+            return objInfPub.SaveDirectorBusinessDetails(model, postedFile);
+        }
+
         public int UpdateCPCRegisterDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             return objInfPub.UpdateCPCRegisterDetails(model, postedFile);
         }
-        
+        public int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        {
+            return objInfPub.UpdateDirectorBusinessRegister(model, postedFile);
+        }
 
         public List<PaymentType> GetPaymentmode()
         {
@@ -51,7 +60,7 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.GetBindCPCustomer();
         }
-        
+
 
         public List<CompanyType> BindCompanyType()
         {
@@ -80,6 +89,18 @@ namespace SanjivaniBusinessLayer
         public CPCchannelPartnerModel GetCPCChannelEdit(int custId)
         {
             return objInfPub.GetCPCChannelList(custId);
+        }
+
+        public List<DirectorBusinessModel> GetDirectorBusinessOwnerList()
+        {
+            return objInfPub.GetDirectorBusinessOwnerList();
+
+        }
+
+        public DirectorBusinessModel GetDirectorBusinessOwners(int custId)
+        {
+            return objInfPub.GetDirectorBusinessOwners(custId);
+           
         }
     }
 }
