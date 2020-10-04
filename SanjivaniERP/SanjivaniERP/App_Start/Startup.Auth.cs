@@ -6,7 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using SanjivaniERP.Models;
-
+using Hangfire;
+[assembly: OwinStartupAttribute(typeof(SanjivaniERP.Startup))]
 namespace SanjivaniERP
 {
     public partial class Startup
@@ -34,7 +35,7 @@ namespace SanjivaniERP
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -63,6 +64,15 @@ namespace SanjivaniERP
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            GlobalConfiguration.Configuration
+                 .UseSqlServerStorage("DefaultConnection");
+
+            //basic process to check
+            BackgroundJob.Enqueue(() => Console.WriteLine("Getting Started with HangFire!"));
+
+            //will create hangfire dashboard
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
         }
     }
 }

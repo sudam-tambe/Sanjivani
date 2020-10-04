@@ -36,7 +36,7 @@ namespace SanjivaniERP.Controllers
             ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
             ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
             ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
-            ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CustId","UserId");
+            ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CpCustomer", "CpCustomerName");
             if(CustId>0)
             {
                 if (!string.IsNullOrWhiteSpace(CustId.ToString()))

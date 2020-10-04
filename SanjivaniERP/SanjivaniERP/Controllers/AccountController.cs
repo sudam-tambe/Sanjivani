@@ -13,6 +13,7 @@ using SanjivaniModalView;
 using SanjivaniBusinessLayer;
 using System.IO;
 using System.Collections.Generic;
+using System.Data;
 
 namespace SanjivaniERP.Controllers
 {
@@ -76,14 +77,20 @@ namespace SanjivaniERP.Controllers
             {
                 return View(model);
             }
-
+            var userm = UserManager.FindByEmail(model.Email);
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(userm.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    DataTable dt = objPartnerBAL.GetLoginDetail(userm.Id);
+                    Session["UserId"] = Convert.ToString(dt.Rows[0]["CustId"]);
+                    Session["CustName"] = Convert.ToString(dt.Rows[0]["CustName"]);
+                    Session["CustCategeory"] = Convert.ToString(dt.Rows[0]["CustCategeory"]);
+                    Session["Completemsg"] = "No";
+                    Session["Dothis"] = "0";
+                    return RedirectToAction("ChannaPartnerList", "Partner");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -153,76 +160,145 @@ namespace SanjivaniERP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
-                var result = await UserManager.CreateAsync(user, model.pwd);
-                if (result.Succeeded)
+                if (string.IsNullOrWhiteSpace(model.CustId))
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    var UserId = user.Id;
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
                     {
-                        model.AspUserId = UserId;
-                        model.ParentId = "1";
-                        model.CustCategroryId = "2";
-
-                        var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
-                        var k = 0;
-                        foreach (HttpPostedFileBase file in postedFile)
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
                         {
-                            if (file != null)
+                            model.AspUserId = UserId;
+                            model.ParentId = "1";
+                            model.CustCategroryId = "2";
+                            var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
+                            var k = 0;
+                            foreach (HttpPostedFileBase file in postedFile)
                             {
-                                var filename = Path.GetFileName(file.FileName);
-                                if (k == 0)
-                                {
-                                    var filename1 = Path.GetFileName(file.FileName);
-                                    if (filename1 != null)
-                                    {
-                                        var Type = 0;
-                                        var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
-                                        file.SaveAs(filePath);
-                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
-                                    }
-                                }
-                                else if (k == 1)
-                                {
-                                    var Type = 1;
-                                    var filePath = Server.MapPath("~/Documents/Pan/" + filename);
-                                    file.SaveAs(filePath);
-                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
-                                }
-                                else if (k == 2)
-                                {
-                                    var Type = 2;
-                                    var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
-                                    file.SaveAs(path);
-                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
-                                }
-                                else if (k == 3)
-                                {
-                                    var Type = 3;
-                                    var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
-                                    file.SaveAs(path);
-                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
-                                }
-                                else if (k == 4)
-                                {
-                                    var Type = 4;
-                                    var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
-                                    file.SaveAs(path);
-                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
-                                }
-                                k++;
-                            }
-                        }
-                        var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
-                        ViewBag.ChennelPartnerList = ChennelPartnerList;
-                    }
 
-                    string url = "http://bds.pioneersoft.co.in";
-                    return Redirect("http://bds.pioneersoft.co.in");
+                                if (file != null)
+                                {
+                                    var filename = Path.GetFileName(file.FileName);
+                                    if (k == 0)
+                                    {
+                                        var filename1 = Path.GetFileName(file.FileName);
+                                        if (filename1 != null)
+                                        {
+                                            var Type = 0;
+                                            //var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                            // file.SaveAs(filePath);
+                                            var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
+                                        }
+                                    }
+                                    else if (k == 1)
+                                    {
+                                        var Type = 1;
+                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                        file.SaveAs(filePath);
+                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                    }
+                                    else if (k == 2)
+                                    {
+                                        var Type = 2;
+                                        var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                    }
+                                    else if (k == 3)
+                                    {
+                                        var Type = 3;
+                                        var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                    }
+                                    else if (k == 4)
+                                    {
+                                        var Type = 4;
+                                        var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
+                                        file.SaveAs(path);
+                                        var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                                    }
+                                    k++;
+                                }
+                            }
+                            var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
+                            ViewBag.ChennelPartnerList = ChennelPartnerList;
+                        }
+
+                        string url = "https://sanjivanitechnology.com";
+                        return Redirect("https://sanjivanitechnology.com");
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
+                else
+                {
+                   // model.AspUserId = UserId;
+                    model.ParentId = "1";
+                    model.CustCategroryId = "2";
+                    var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
+                    var k = 0;
+                    foreach (HttpPostedFileBase file in postedFile)
+                    {
+
+                        if (file != null)
+                        {
+                            var filename = Path.GetFileName(file.FileName);
+                            if (k == 0)
+                            {
+                                var filename1 = Path.GetFileName(file.FileName);
+                                if (filename1 != null)
+                                {
+                                    var Type = 0;
+                                    var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                    file.SaveAs(filePath);
+                                    var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
+                                }
+                            }
+                            else if (k == 1)
+                            {
+                                var Type = 1;
+                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                file.SaveAs(filePath);
+                                var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                            }
+                            else if (k == 2)
+                            {
+                                var Type = 2;
+                                var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                            }
+                            else if (k == 3)
+                            {
+                                var Type = 3;
+                                var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                            }
+                            else if (k == 4)
+                            {
+                                var Type = 4;
+                                var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
+                                file.SaveAs(path);
+                                var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
+                            }
+                            k++;
+                        }
+                    }
+                    //new Thread(() => {
+                    //    BackgroundJob.Enqueue(() => UpLoadStoreFront());
+                    //}).Start();
+
+                    //UpLoadStoreFront();
+                    Session["Completemsg"] = "No";
+                    Session["Dothis"] = "1";
+                    Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
+                    return RedirectToAction("UpL", "Partner");
+                }
             }
 
             // If we got this far, something failed, redisplay form
@@ -236,8 +312,10 @@ namespace SanjivaniERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.CustId > 0)
+                if (string.IsNullOrWhiteSpace(model.CustId))
                 {
+                    model.ParentId = model.CpCategory;
+                    model.CustCategroryId = "3";
                     var CPCSaveList = objPartnerBAL.UpdateCPCRegisterDetails(model, postedFile);
                     var J = 0;
                     foreach (HttpPostedFileBase file in postedFile)
@@ -368,8 +446,10 @@ namespace SanjivaniERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.CustId > 0)
+                if (string.IsNullOrWhiteSpace(model.CustId))
                 {
+                    model.ParentId = "0";
+                    model.CustCategroryId = "1";
                     var UpdateDicrectorBusiness = objPartnerBAL.UpdateDirectorBusinessRegister(model, postedFile);
                     var k = 0;
                     foreach (HttpPostedFileBase file in postedFile)

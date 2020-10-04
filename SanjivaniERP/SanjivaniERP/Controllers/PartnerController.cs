@@ -10,6 +10,9 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.Owin;
+using System.Net;
+using System.Data;
+using Hangfire;
 
 namespace SanjivaniERP.Controllers
 {
@@ -23,25 +26,183 @@ namespace SanjivaniERP.Controllers
         {
             return View();
         }
-     
-       
-       
+
+
+
 
         public ActionResult Chennelpartner()
         {
             ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
             ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
-            ViewBag.BindCompanyType= new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
+            ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
+        }
+        public bool DirectoryExists(string directory)
+        {
+            bool directoryExists;
+
+            var request = (FtpWebRequest)WebRequest.Create(directory);
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            request.Credentials = new NetworkCredential("pioneers", "d@8Pg~4Ea0Dv$9C");
+
+            try
+            {
+                using (request.GetResponse())
+                {
+                    directoryExists = true;
+                }
+            }
+            catch (WebException)
+            {
+                directoryExists = false;
+            }
+
+            return directoryExists;
+        }
+        public static bool CheckFileExistOnFTP(string ServerUri, string FTPUserName, string FTPPassword)
+        {
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ServerUri);
+            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            request.Credentials = new NetworkCredential(FTPUserName, FTPPassword);
+            //request.Method = WebRequestMethods.Ftp.GetFileSize;
+            // request.Method = WebRequestMethods.Ftp.GetDateTimestamp;
+
+            try
+            {
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                return true;
+            }
+            catch (WebException ex)
+            {
+                FtpWebResponse response = (FtpWebResponse)ex.Response;
+                if (response.StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public ActionResult ChannaPartnerList()
         {
+
+            var cssFiles = Directory.GetFiles(Server.MapPath("~/Views")
+                                         );
             var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
             ViewBag.ChennelPartnerList = ChennelPartnerList;
+            //UpLoadStoreFront();
+            // BackgroundJob.Enqueue(() => UpLoadStoreFront());
             return View();
+
         }
         public ActionResult ViewCP(int CustId)
         {
+            return View();
+        }
+        public ActionResult UpL()
+        {
+            if (Session["Dothis"].ToString() == "1")
+            {
+                string Domaim = Session["Domain"].ToString();
+                BackgroundJob.Enqueue(() => UpLoadStoreFront(Domaim));
+              //  UpLoadStoreFront(Domaim);
+               
+            }
+            //Session["Completemsg"] = "Yes";
+            Session["Dothis"] = "0";
+            return RedirectToAction("ChannaPartnerList", "Partner");
+        }
+        public void UpLoadStoreFront(string Domaim)
+        {
+
+
+            DataSet ds = new DataSet();
+            string SourceDomain = "ftp://pioneers@103.235.106.17/shop.pioneersoft.co.in";
+            string DestinationDomain = "ftp://pioneers@103.235.106.17/" + Domaim;
+            NetworkCredential credentials = new NetworkCredential("pioneers", "d@8Pg~4Ea0Dv$9C");
+            ds = objPartnerBAL.GetFolder();
+            //ds.Tables[0].Rows.Clear();
+            //ds.Tables[1].Rows.Clear();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                string directoryUrl = DestinationDomain + dr["Folder"].ToString();
+
+                if (!DirectoryExists(directoryUrl))
+                {
+                    try
+                    {
+                        //Console.WriteLine($"Creating {name}");
+                        FtpWebRequest requestDir = (FtpWebRequest)WebRequest.Create(directoryUrl);
+                        requestDir.Method = WebRequestMethods.Ftp.MakeDirectory;
+                        requestDir.Credentials = credentials;
+                        requestDir.GetResponse().Close();
+                    }
+                    catch (WebException ex)
+                    {
+                        FtpWebResponse response = (FtpWebResponse)ex.Response;
+                        if (response.StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+                        {
+                            // probably exists already
+                        }
+                        else
+                        {
+                            RedirectToAction("ChannaPartnerList", "Partner");
+                        }
+                    }
+
+                }
+            }
+            foreach (DataRow dr in ds.Tables[1].Rows)
+            {
+                try
+                {
+                    //NetworkCredential credentials = new NetworkCredential("pioneers", "d@8Pg~4Ea0Dv$9C");
+                    //var cssFiles = Directory.GetFiles(Server.MapPath("~/Views"));
+                    var cssFiles = Directory.GetFiles(System.Web.Hosting.HostingEnvironment.MapPath(dr["FileName"].ToString().Trim()));
+                    foreach (string file in cssFiles)
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            string url = "ftp://pioneers@103.235.106.17/" + Domaim + dr["DestinationFile"].ToString().Trim() + "/";
+                            if (!CheckFileExistOnFTP(url + Path.GetFileName(file), "pioneers", "d@8Pg~4Ea0Dv$9C"))
+                            {
+                                client.Credentials = credentials;
+                                client.UploadFile(url + Path.GetFileName(file), file);
+
+                            }
+                            //Console.WriteLine($"Uploading {file}");
+
+                        }
+                    }
+                    Session["Completemsg"] = "Yes";
+                    Session["Dothis"] = "0";
+                }
+                catch (Exception)
+                {
+
+                    RedirectToAction("ChannaPartnerList", "Partner");
+                }
+                
+            }
+           
+        }
+        public ActionResult EditChannalPartner(string CustId)
+        {
+            Session["CustId"] = CustId;
+            ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+            ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
+            ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
+            ChennelpartnerModel Cm = objPartnerBAL.GetChannalPartnerDtl(Convert.ToInt32(CustId));
+            return View(Cm);
+        }
+        public ActionResult NewCP()
+        {
+            ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+            ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
+            ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
         }
         [HttpPost]
@@ -51,7 +212,7 @@ namespace SanjivaniERP.Controllers
             //{
             //    var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
             //    var result =  UserManager.CreateAsync(user, model.pwd);
-              
+
             //}
 
             ///If we got this far, something failed, redisplay form
@@ -111,8 +272,8 @@ namespace SanjivaniERP.Controllers
                 ViewBag.ChennelPartnerList = ChennelPartnerList;
             }
 
-           string url = "http://bds.pioneersoft.co.in";
-           return Redirect("http://bds.pioneersoft.co.in");
+            string url = "http://bds.pioneersoft.co.in";
+            return Redirect("http://bds.pioneersoft.co.in");
         }
         [HttpPost]
         public ActionResult SaveChennelPartnerDetails(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
@@ -171,9 +332,41 @@ namespace SanjivaniERP.Controllers
                 var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
                 ViewBag.ChennelPartnerList = ChennelPartnerList;
             }
-              
+
 
             return View();
         }
+
+        public ActionResult RejectCP(string CustId)
+        {
+            bool res = objPartnerBAL.RejectChannalPartner(Convert.ToInt32(CustId));
+            return RedirectToAction("ChannaPartnerList", "Partner");
+        }
+        public ActionResult UserIntraction()
+        {
+            return View();
+        }
+        public ActionResult _PartialUserIntarction()
+        {
+            int CustId = Convert.ToInt32(Session["CustId"]);
+            ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(CustId);
+            return View();
+        }
+        public ActionResult SetUserIntraction(UserIntraction UsD)
+        {
+            UsD.CustId = Convert.ToInt32(Session["CustId"]);
+            bool res = objPartnerBAL.setUserIntarction(UsD);
+            if (res)
+            {
+                //int Res = Mb.UpdateMemPassword(UserId, Mp.Password);
+                return Json(new { Success = true, Messege = "Password Changed Successfully", Status = 200 });
+            }
+            else
+            {
+                return Json(new { Success = false, Messege = "Please Enter Valid Old Password", Status = 400 });
+            }
+            return View();
+        }
+
     }
 }

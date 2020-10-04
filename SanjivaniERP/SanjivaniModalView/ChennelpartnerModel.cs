@@ -10,10 +10,13 @@ namespace SanjivaniModalView
 {
     public class ChennelpartnerModel
     {
-        public DateTime RegiDate { get; set; }
+        public string RegiDate { get; set; }
         [Required(ErrorMessage = "Please enter User name.")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Please enter Password.")]
+       
+        [RegularExpression("([a-z]|[A-Z]|[0-9]|[\\W]){4}[a-zA-Z0-9\\W]{3,11}", ErrorMessage = "Invalid password format")]
+        [Display(Name = "pwd")]
         public string pwd { get; set; }
         [Required(ErrorMessage = "Please enter Confirm Password.")]
         public string Cpwd { get; set; }
@@ -27,9 +30,12 @@ namespace SanjivaniModalView
         public string CPId { get; set; }
         public string Address { get; set; }
         public string State { get; set; }
+        public string StatusId { get; set; }
+        public string CommanyName { get; set; }
         public string AspUserId { get; set; }
         public string ParentId { get; set; }
         public string CustCategroryId { get; set; }
+        public string CustId { get; set; }
         public BankDetails ObjBackDetails { get; set; }
         public BusinessDetails ObjBusinessDetails { get; set; }
         public List<State> objState { get; set; }
@@ -96,7 +102,11 @@ namespace SanjivaniModalView
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
-
+    public class UserIntraction
+    {
+        public int CustId { get; set; }
+        public string Intraction { get; set; }
+    }
     public class CPCustomer
     {
         public int CustID { get; set; }

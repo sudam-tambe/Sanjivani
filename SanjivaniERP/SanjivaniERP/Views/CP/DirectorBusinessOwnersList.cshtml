@@ -3,14 +3,15 @@
     ViewBag.Title = "DirectorBusinessOwnersList";
     Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
 }
+
 <section class="content-header">
     <h1>
-        Director Business Owner
+        Director
         <small>Control panel</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Director Business Owner</li>
+        <li class="active">   Director</li>
     </ol>
 </section>
 <section class="content">
@@ -22,7 +23,7 @@
             <div class="box box-danger" id="loading-example">
                 <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
                     <!-- tools box -->
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3" style="margin-top: 10px;">
 
 
                         <button class="btn btn-danger btn-lg"><a href="@Url.Action("DirectorBusinessOwners", "CP", new { CustId = 0 })" class=""><i class="fa fa-plus"></i>>Add New</button>
@@ -51,17 +52,19 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr style="color: white;background-color: #1c7faf;">
+
                                     <th align="center">Sr.No</th>
                                     <th>User Name</th>
                                     <th>Email Id</th>
                                     <th>Mobile No</th>
                                     <th>Address</th>
                                     <th>Operation</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @{ int rowNo = 0; }
-                               
+
                                 @foreach (var item in ViewBag.DirectorBusinessOwnerList)
                                 {
                                     <tr>
@@ -75,18 +78,17 @@
                                         <td align="center"><a href="@Url.Action("DirectorBusinessOwners", "CP", new { CustId = @item.CustId })" class=""><i class="fa fa-eye"></i>View</a></td>
                                     </tr>
                                 }
-
                             </tbody>
-                            @*<tfoot>
-                                    <tr>
-                                        <th align="center">Sr.No</th>
-                                        <th>User Name</th>
-                                        <th>Email Id</th>
-                                        <th>Mobile No</th>
-                                        <th>Address</th>
-                                        <th>Operation</th>
-                                    </tr>
-                                </tfoot>*@
+                            <tfoot>
+                                <tr>
+                                    <th align="center">Sr.No</th>
+                                    <th>User Name</th>
+                                    <th>Email Id</th>
+                                    <th>Mobile No</th>
+                                    <th>Address</th>
+                                    <th>Operation</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div><!-- /.box-body -->
@@ -132,4 +134,8 @@
         }
 
 </script>
+
+
+
+
 

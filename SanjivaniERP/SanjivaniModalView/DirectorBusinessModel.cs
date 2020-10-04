@@ -9,8 +9,8 @@ namespace SanjivaniModalView
 {
    public class DirectorBusinessModel
     {
-        public int CustId { get; set; }
-        public DateTime RegiDate { get; set; }
+        public string CustId { get; set; }
+        public string RegiDate { get; set; }
         [Required(ErrorMessage = "Please enter User name.")]
         public string OwnerID { get; set; }
         public string UserId { get; set; }

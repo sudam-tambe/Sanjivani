@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Web;
+using System.Data;
 
 namespace SanjivaniBusinessLayer
 {
@@ -56,7 +57,7 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.GetBindCPCategory();
         }
-        public List<CPCustomer> GetBindCPCustomer()
+        public List<CPCchannelPartnerModel> GetBindCPCustomer()
         {
             return objInfPub.GetBindCPCustomer();
         }
@@ -94,13 +95,38 @@ namespace SanjivaniBusinessLayer
         public List<DirectorBusinessModel> GetDirectorBusinessOwnerList()
         {
             return objInfPub.GetDirectorBusinessOwnerList();
+        }
+        public bool RejectChannalPartner(int CustId)
+        {
+            return objInfPub.rejectChannalPartner(CustId);
+        }
+        public DataTable GetLoginDetail(string id)
+        {
+            return objInfPub.getLoginDetail(id);
+        }
+        public DataSet GetFolder()
+        {
+            return objInfPub.getFolder();
+        }
 
+        public List<UserIntraction> GetUserIntraction(int custId)
+        {
+            return objInfPub.getUserIntraction(custId);
+        }
+        public bool setUserIntarction(UserIntraction usD)
+        { 
+            return objInfPub.SetUserIntarction(usD);
+
+        }
+        public ChennelpartnerModel GetChannalPartnerDtl(int custId)
+        {
+            return objInfPub.getChannalPartnerDtl(custId);
         }
 
         public DirectorBusinessModel GetDirectorBusinessOwners(int custId)
-        {
-            return objInfPub.GetDirectorBusinessOwners(custId);
-           
-        }
+    {
+        return objInfPub.GetDirectorBusinessOwners(custId);
+
     }
+}
 }
