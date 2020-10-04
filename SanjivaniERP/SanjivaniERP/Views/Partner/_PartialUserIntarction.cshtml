@@ -1,0 +1,40 @@
+﻿
+<div class="box-body no-padding">
+    <div class="box-body table-responsive" id="OrderDtl">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr style="color: white;background-color: #1c7faf;">
+                    <th align="center">Sr.No</th>
+                    <th>User Intractipon</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{ int rowNo = 0; }
+                @foreach (var item in ViewBag.UserIntract)
+                {
+                    <tr>
+                        @*<td>@item.RegistrationDate</td>*@
+                        <td>
+                            @(rowNo += 1)
+                        </td>
+                      
+                        <td>@item.Intraction</td>
+                        
+                    </tr>
+                }
+
+
+
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th align="center">Sr.No</th>
+                    <th>User Intractipon</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

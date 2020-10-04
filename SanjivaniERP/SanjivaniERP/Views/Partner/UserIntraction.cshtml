@@ -1,0 +1,64 @@
+﻿@model SanjivaniModalView.UserIntraction
+
+@using (Ajax.BeginForm("SetUserIntraction", "Partner", new AjaxOptions
+{
+    HttpMethod = "POST",
+    UpdateTargetId = "",
+    OnSuccess = "Success2",
+    OnFailure = "Failure2"
+}, new { @class = "" }))
+{
+
+    <div class="form-group col-md-6">
+        @Html.HiddenFor(model => model.CustId)
+        <label for="exampleInputFile">Upload Company Logo</label>
+        @Html.EditorFor(model => model.Intraction, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Intraction, "", new { @class = "text-danger" })
+    </div>
+        <div class="form-group col-md-6">
+
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary" style="margin-top: 13px;"><i class="fa fa-save"></i> ADD</button>
+
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-12" id="_IntractionList">
+
+
+
+        </div>
+
+}
+<script>
+
+    function Success2() {
+
+        var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", {});
+        $('#_IntractionList').html(d);
+
+    }
+    function Failure2() {
+        $('#errormsg4').html("Messege");
+        $('#trans4').html("Server error please try again");
+        $('#myModalEMB4').modal('show');
+
+    }
+
+    var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", {});
+    $('#_IntractionList').html(d);
+
+    $(function () {
+        $("#example1").dataTable();
+        $('#example2').dataTable({
+            "bPaginate": true,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+    });
+</script>
+
