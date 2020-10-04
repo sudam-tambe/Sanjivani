@@ -113,7 +113,7 @@ namespace SanjivaniERP.Controllers
         }
         public void UpLoadStoreFront(string Domaim)
         {
-
+            //RedirectToAction("NewCP", "Partner");
 
             DataSet ds = new DataSet();
             string SourceDomain = "ftp://pioneers@103.235.106.17/shop.pioneersoft.co.in";

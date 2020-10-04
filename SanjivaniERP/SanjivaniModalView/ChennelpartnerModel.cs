@@ -20,6 +20,7 @@ namespace SanjivaniModalView
         public string pwd { get; set; }
         [Required(ErrorMessage = "Please enter Confirm Password.")]
         public string Cpwd { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         [Required(ErrorMessage = "Please enter Channel Partner Name")]
         public string chennelpartName { get; set; }
         [Required]

@@ -441,17 +441,21 @@
         }
     }
     function CheckPassword(inputtxt) {
-        var pwd = document.getElementById("pwd").value;
-        var passw = /^(?=.*[0-9])(?=.*[!@@#$%^&*])[a-zA-Z0-9!@@#$%^&*]{7,15}$/;
-        if (pwd.match(passw)) {
-            
-            return true;
-        }
+        var res;
+        var str =
+            document.getElementById("pwd").value;
+        if (str.match(/[a-z]/g) && str.match(
+                /[A-Z]/g) && str.match(
+                /[0-9]/g) && str.match(
+                /[^a-zA-Z\d]/g) && str.length >= 8)
+            res = "TRUE";
         else {
-            alert('Please Enter Strong Password')
+            res = "FALSE";
+            alert("Password Should be Strong");
             $("#pwd").val('');
-            return false;
         }
+
+        document.getElementById("t2").value = res;
     }
     $("#MobileNo").change(function () {
         var MobileMo = $("#MobileNo").val();

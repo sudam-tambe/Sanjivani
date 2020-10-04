@@ -228,9 +228,12 @@ namespace SanjivaniERP.Controllers
                             var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
                             ViewBag.ChennelPartnerList = ChennelPartnerList;
                         }
-
-                        string url = "https://sanjivanitechnology.com";
-                        return Redirect("https://sanjivanitechnology.com");
+                        Session["Completemsg"] = "No";
+                        Session["Dothis"] = "1";
+                        Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
+                        return RedirectToAction("UpL", "Partner");
+                        //string url = "https://sanjivanitechnology.com";
+                        //return Redirect("https://sanjivanitechnology.com");
                     }
                     AddErrors(result);
                 }
@@ -253,8 +256,8 @@ namespace SanjivaniERP.Controllers
                                 if (filename1 != null)
                                 {
                                     var Type = 0;
-                                    var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
-                                    file.SaveAs(filePath);
+                                    //var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                    //file.SaveAs(filePath);
                                     var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                                 }
                             }
