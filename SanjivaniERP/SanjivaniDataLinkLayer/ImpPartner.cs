@@ -721,5 +721,108 @@ public ChennelpartnerModel getChannalPartnerDtl(int custId)
             }
             return List;
         }
+        public int _PartialCPSave(ChennelpartnerModel model)
+        {
+            SqlCommand dinsert = new SqlCommand("Sp_InsertPartnerDetails");
+            if (model.UserName.ToString() != "")
+                dinsert.Parameters.AddWithValue("@UserId", SqlDbType.VarChar).Value = model.UserName;
+            if (model.pwd.ToString() != null)
+                dinsert.Parameters.AddWithValue("@Password", SqlDbType.VarChar).Value = model.pwd;
+            if (model.mobileNo.ToString() != null)
+                dinsert.Parameters.AddWithValue("@MobileNo", SqlDbType.VarChar).Value = model.mobileNo;
+            if (!string.IsNullOrWhiteSpace(model.CustId))
+                dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = Convert.ToInt32(model.CustId);
+            else
+                dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = Convert.ToInt32(0);
+            if (!string.IsNullOrWhiteSpace(model.AlterMobileNo))
+                dinsert.Parameters.AddWithValue("@AlternateMobileNo", SqlDbType.VarChar).Value = model.AlterMobileNo;
+
+            dinsert.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = model.EmailID;
+
+            dinsert.Parameters.AddWithValue("@Address", SqlDbType.VarChar).Value = model.Address;
+
+            dinsert.Parameters.AddWithValue("@StateId", SqlDbType.VarChar).Value = model.State;
+            dinsert.Parameters.AddWithValue("@City", SqlDbType.VarChar).Value = model.City;
+            dinsert.Parameters.AddWithValue("@Country", SqlDbType.VarChar).Value = model.Country;
+            dinsert.Parameters.AddWithValue("@CustName", SqlDbType.VarChar).Value = model.chennelpartName;
+            dinsert.Parameters.AddWithValue("@CPCategeoryId", SqlDbType.VarChar).Value = model.CpCategory;
+            dinsert.Parameters.AddWithValue("@ParentId", SqlDbType.Int).Value = model.ParentId;
+            dinsert.Parameters.AddWithValue("@AspUserId", SqlDbType.NVarChar).Value = model.AspUserId;
+            dinsert.Parameters.AddWithValue("@CustCategroryId", SqlDbType.Int).Value = model.CustCategroryId;
+            var Result = objcon.GetExcuteScaler(dinsert);
+            return Result;
+        }
+        public bool setCPBusinessDtl(BusinessDetails bD)
+        {
+            SqlCommand dinsert1 = new SqlCommand("Sp_SaveBusinessDetails");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = bD.CustId;
+
+            dinsert1.Parameters.AddWithValue("@CompanyName", SqlDbType.VarChar).Value = bD.CommanyName;
+
+            dinsert1.Parameters.AddWithValue("@CompanyType", SqlDbType.VarChar).Value = bD.CommanyType;
+
+            dinsert1.Parameters.AddWithValue("@CompRegNo", SqlDbType.VarChar).Value = bD.RegNumber;
+
+            dinsert1.Parameters.AddWithValue("@CompGSTNo", SqlDbType.VarChar).Value = bD.GSTRegNumber;
+
+            dinsert1.Parameters.AddWithValue("@CompWebsite", SqlDbType.VarChar).Value = bD.webSite;
+
+            dinsert1.Parameters.AddWithValue("@LineOfBusiness", SqlDbType.VarChar).Value = bD.LineofBusiness;
+
+            dinsert1.Parameters.AddWithValue("@AnnualTurnOver", SqlDbType.Decimal).Value = bD.Annulturnoveer;
+
+            dinsert1.Parameters.AddWithValue("@ContactPersonName", SqlDbType.VarChar).Value = bD.CommanyName;
+
+            dinsert1.Parameters.AddWithValue("@DesignationId", SqlDbType.Int).Value = bD.Designation;
+
+            dinsert1.Parameters.AddWithValue("@ContactNo", SqlDbType.VarChar).Value = bD.BContactnumber;
+
+            dinsert1.Parameters.AddWithValue("@AlternatContactNo", SqlDbType.VarChar).Value = bD.ABContactnumber;
+
+            dinsert1.Parameters.AddWithValue("@EmailId", SqlDbType.VarChar).Value = bD.Emailid;
+
+            dinsert1.Parameters.AddWithValue("@CurrentERP", SqlDbType.VarChar).Value = bD.ERP;
+
+            dinsert1.Parameters.AddWithValue("@HostingPlatForm", SqlDbType.VarChar).Value = bD.HostingPlatform;
+
+            dinsert1.Parameters.AddWithValue("@TypeOfHosting", SqlDbType.VarChar).Value = bD.TypeofHosting;
+
+            dinsert1.Parameters.AddWithValue("@NoOfWebSiteHosted", SqlDbType.Int).Value = bD.NoOfWebSiteHos;
+
+            dinsert1.Parameters.AddWithValue("@CurrentEmailProvider", SqlDbType.VarChar).Value = bD.CurrentEmailProvider;
+
+            dinsert1.Parameters.AddWithValue("@CountOfEmail", SqlDbType.Int).Value = bD.CountofEmail;
+
+            dinsert1.Parameters.AddWithValue("@CurrentDomailProvider", SqlDbType.VarChar).Value = bD.CurrentDomainProvide;
+
+            dinsert1.Parameters.AddWithValue("@CountOfDomain", SqlDbType.Int).Value = bD.CurrentDomainCount;
+
+            dinsert1.Parameters.AddWithValue("@CountOfSSL", SqlDbType.Int).Value = bD.SSLCertificateCount;
+
+            dinsert1.Parameters.AddWithValue("@OfficeAddress", SqlDbType.VarChar).Value = bD.OfficeAddres;
+
+            dinsert1.Parameters.AddWithValue("@StateId", SqlDbType.Int).Value = bD.Bstate;
+
+            bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
+           // Session["Tab"] = "2";
+            return Result1;
+        }
+        public bool SetCPBankDtl(BankDetails bd)
+        {
+            SqlCommand dinsert1 = new SqlCommand("Sp_SaveBankDetails");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = bd.CustId;
+
+            dinsert1.Parameters.AddWithValue("@BankName", SqlDbType.VarChar).Value = bd.BankName;
+
+            dinsert1.Parameters.AddWithValue("@AccountNo", SqlDbType.VarChar).Value = bd.AccountNumber;
+
+            dinsert1.Parameters.AddWithValue("@IFSCCode", SqlDbType.VarChar).Value = bd.IFSCcode;
+
+            dinsert1.Parameters.AddWithValue("@PaymentModeId", SqlDbType.Int).Value = bd.paymentMode;
+
+            dinsert1.Parameters.AddWithValue("@AccountTypeId", SqlDbType.Int).Value = bd.AccountType;
+            bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
+            return Result1;
+        }
     }
 }

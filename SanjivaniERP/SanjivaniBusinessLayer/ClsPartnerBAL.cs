@@ -39,6 +39,11 @@ namespace SanjivaniBusinessLayer
             return objInfPub.UpdateDirectorBusinessRegister(model, postedFile);
         }
 
+        public bool SetCPBusinessDtl(BusinessDetails bD)
+        {
+            return objInfPub.setCPBusinessDtl(bD);
+        }
+
         public List<PaymentType> GetPaymentmode()
         {
             return objInfPub.getPaymentmode();
@@ -57,6 +62,12 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.GetBindCPCategory();
         }
+
+        public bool setCPBankDtl(BankDetails bd)
+        {
+            return objInfPub.SetCPBankDtl(bd);
+        }
+
         public List<CPCchannelPartnerModel> GetBindCPCustomer()
         {
             return objInfPub.GetBindCPCustomer();
@@ -128,5 +139,10 @@ namespace SanjivaniBusinessLayer
         return objInfPub.GetDirectorBusinessOwners(custId);
 
     }
-}
+
+        public int _partialCPSave(ChennelpartnerModel model)
+        {
+            return objInfPub._PartialCPSave(model);
+        }
+    }
 }

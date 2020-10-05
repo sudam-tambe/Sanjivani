@@ -152,7 +152,39 @@ namespace SanjivaniERP.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> _PartialCPRegister(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrWhiteSpace(model.CustId))
+                {
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
+                        {
+                            model.AspUserId = UserId;
+                            model.ParentId = "1";
+                            model.CustCategroryId = "2";
+                            var EventsTitleList = objPartnerBAL._partialCPSave(model);
+                            if(Convert.ToInt32(EventsTitleList)>0)
+                            {
+                                Session["Tab"] = "2";
+                                Session["CustId"] = EventsTitleList;
+                                return RedirectToAction("ChannelPartner", "CP");
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("ChannelPartner", "CP");
+        }
         //
         // POST: /Account/Register
         [HttpPost]
@@ -160,7 +192,7 @@ namespace SanjivaniERP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (string.IsNullOrWhiteSpace(model.CustId))
                 {
@@ -189,15 +221,18 @@ namespace SanjivaniERP.Controllers
                                         if (filename1 != null)
                                         {
                                             var Type = 0;
-                                            //var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                            //  var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
                                             // file.SaveAs(filePath);
+                                            var fileName = Path.GetFileName(file.FileName);
+                                            var path = Path.Combine(Server.MapPath("~/Documents/Logo"), fileName);
+                                            file.SaveAs(path);
                                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                                         }
                                     }
                                     else if (k == 1)
                                     {
                                         var Type = 1;
-                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                        var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
                                         file.SaveAs(filePath);
                                         var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                                     }
@@ -228,18 +263,18 @@ namespace SanjivaniERP.Controllers
                             var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
                             ViewBag.ChennelPartnerList = ChennelPartnerList;
                         }
-                        Session["Completemsg"] = "No";
-                        Session["Dothis"] = "1";
-                        Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
-                        return RedirectToAction("UpL", "Partner");
-                        //string url = "https://sanjivanitechnology.com";
-                        //return Redirect("https://sanjivanitechnology.com");
+                        //Session["Completemsg"] = "No";
+                        //Session["Dothis"] = "1";
+                        //Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
+                        //return RedirectToAction("UpL", "Partner");
+                        string url = "https://sanjivanitechnology.com";
+                        return Redirect("https://sanjivanitechnology.com");
                     }
                     AddErrors(result);
                 }
                 else
                 {
-                   // model.AspUserId = UserId;
+                    // model.AspUserId = UserId;
                     model.ParentId = "1";
                     model.CustCategroryId = "2";
                     var EventsTitleList = objPartnerBAL.SaveChennelPartnerDetails(model, postedFile);
@@ -256,16 +291,17 @@ namespace SanjivaniERP.Controllers
                                 if (filename1 != null)
                                 {
                                     var Type = 0;
-                                    //var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
-                                    //file.SaveAs(filePath);
+                                    var path = Path.Combine(Server.MapPath("~/Documents/Logo"), filename);
+                                    file.SaveAs(path);
                                     var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                                 }
                             }
                             else if (k == 1)
                             {
                                 var Type = 1;
-                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
-                                file.SaveAs(filePath);
+                                var path = Path.Combine(Server.MapPath("~/Documents/Pan"), filename);
+                                file.SaveAs(path);
+
                                 var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                             }
                             else if (k == 2)
@@ -311,7 +347,7 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult>CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        public async Task<ActionResult> CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             if (ModelState.IsValid)
             {
@@ -332,7 +368,7 @@ namespace SanjivaniERP.Controllers
                                 if (filename1 != null)
                                 {
                                     var Type = 0;
-                                    var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                    var filePath = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto" + filename1));
                                     file.SaveAs(filePath);
                                     var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, CPCSaveList, Type);
                                 }
@@ -340,28 +376,28 @@ namespace SanjivaniERP.Controllers
                             else if (J == 1)
                             {
                                 var Type = 1;
-                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
                                 file.SaveAs(filePath);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                             }
                             else if (J == 2)
                             {
                                 var Type = 2;
-                                var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/AdhaarCard" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                             }
                             else if (J == 3)
                             {
                                 var Type = 3;
-                                var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/LightBill" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                             }
                             else if (J == 4)
                             {
                                 var Type = 4;
-                                var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/Passport" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                             }
@@ -382,7 +418,7 @@ namespace SanjivaniERP.Controllers
                             model.AspUserId = UserId;
                             model.ParentId = model.CpCategory;
                             model.CustCategroryId = "3";
-                            var CPCSaveList = objPartnerBAL.SaveCPCRegisterDetails(model,postedFile);
+                            var CPCSaveList = objPartnerBAL.SaveCPCRegisterDetails(model, postedFile);
                             var k = 0;
                             foreach (HttpPostedFileBase file in postedFile)
                             {
@@ -395,7 +431,7 @@ namespace SanjivaniERP.Controllers
                                         if (filename1 != null)
                                         {
                                             var Type = 0;
-                                            var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                            var filePath = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto" + filename1));
                                             file.SaveAs(filePath);
                                             var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, CPCSaveList, Type);
                                         }
@@ -403,28 +439,28 @@ namespace SanjivaniERP.Controllers
                                     else if (k == 1)
                                     {
                                         var Type = 1;
-                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                        var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
                                         file.SaveAs(filePath);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
                                     else if (k == 2)
                                     {
                                         var Type = 2;
-                                        var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/AdhaarCard/" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
                                     else if (k == 3)
                                     {
                                         var Type = 3;
-                                        var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/LightBill" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
                                     else if (k == 4)
                                     {
                                         var Type = 4;
-                                        var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/Passport" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, CPCSaveList, Type);
                                     }
@@ -445,7 +481,7 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult>DirectorBusinessRegister(FormCollection fc, DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        public async Task<ActionResult> DirectorBusinessRegister(FormCollection fc, DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
         {
             if (ModelState.IsValid)
             {
@@ -466,7 +502,7 @@ namespace SanjivaniERP.Controllers
                                 if (filename1 != null)
                                 {
                                     var Type = 0;
-                                    var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                    var filePath = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto" + filename1));
                                     file.SaveAs(filePath);
                                     var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, UpdateDicrectorBusiness, Type);
                                 }
@@ -474,28 +510,28 @@ namespace SanjivaniERP.Controllers
                             else if (k == 1)
                             {
                                 var Type = 1;
-                                var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
                                 file.SaveAs(filePath);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
                             }
                             else if (k == 2)
                             {
                                 var Type = 2;
-                                var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/AdhaarCard" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
                             }
                             else if (k == 3)
                             {
                                 var Type = 3;
-                                var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/LightBill" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
                             }
                             else if (k == 4)
                             {
                                 var Type = 4;
-                                var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                var path = Path.Combine(Server.MapPath("~/Documents/Passport" + filename));
                                 file.SaveAs(path);
                                 var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, UpdateDicrectorBusiness, Type);
                             }
@@ -531,7 +567,7 @@ namespace SanjivaniERP.Controllers
                                         if (filename1 != null)
                                         {
                                             var Type = 0;
-                                            var filePath = Server.MapPath("~/Documents/ProfilePhoto/" + filename1);
+                                            var filePath = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto" + filename1));
                                             file.SaveAs(filePath);
                                             var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename1, DirectorBusinessSaveList, Type);
                                         }
@@ -539,28 +575,28 @@ namespace SanjivaniERP.Controllers
                                     else if (J == 1)
                                     {
                                         var Type = 1;
-                                        var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                                        var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
                                         file.SaveAs(filePath);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
                                     }
                                     else if (J == 2)
                                     {
                                         var Type = 2;
-                                        var path = Server.MapPath("~/Documents/AdhaarCard/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/AdhaarCard" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
                                     }
                                     else if (J == 3)
                                     {
                                         var Type = 3;
-                                        var path = Server.MapPath("~/Documents/LightBill/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/LightBill" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
                                     }
                                     else if (J == 4)
                                     {
                                         var Type = 4;
-                                        var path = Server.MapPath("~/Documents/Passport/" + filename);
+                                        var path = Path.Combine(Server.MapPath("~/Documents/Passport" + filename));
                                         file.SaveAs(path);
                                         var UploadDocument = objPartnerBAL.SaveUploadCPCDoc(filename, DirectorBusinessSaveList, Type);
                                     }

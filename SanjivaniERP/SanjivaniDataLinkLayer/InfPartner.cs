@@ -33,9 +33,12 @@ namespace SanjivaniDataLinkLayer
         DataTable getLoginDetail(string id);
         List<Account> getAccountType();
         List<PaymentType> getPaymentmode();
+        bool setCPBusinessDtl(BusinessDetails bD);
         CPCchannelPartnerModel GetCPCChannelList(int custId);
         List<DirectorBusinessModel> GetDirectorBusinessOwnerList();
         int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
         DirectorBusinessModel GetDirectorBusinessOwners(int CustId);
+        int _PartialCPSave(ChennelpartnerModel model);
+        bool SetCPBankDtl(BankDetails bd);
     }
 }

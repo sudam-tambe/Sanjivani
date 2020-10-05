@@ -60,6 +60,10 @@ body > .header {
   background-color: #f9f9f9;
   margin-left: 220px;
 }
+.right-side1 {
+  background-color: #f9f9f9;
+  
+}
 /*left side - contains sidebar*/
 .left-side {
   position: absolute;

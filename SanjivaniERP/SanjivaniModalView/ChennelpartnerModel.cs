@@ -11,7 +11,9 @@ namespace SanjivaniModalView
     public class ChennelpartnerModel
     {
         public string RegiDate { get; set; }
+        
         [Required(ErrorMessage = "Please enter User name.")]
+       
         public string UserName { get; set; }
         [Required(ErrorMessage = "Please enter Password.")]
        
@@ -31,6 +33,8 @@ namespace SanjivaniModalView
         public string CPId { get; set; }
         public string Address { get; set; }
         public string State { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
         public string StatusId { get; set; }
         public string CommanyName { get; set; }
         public string AspUserId { get; set; }
@@ -52,7 +56,7 @@ namespace SanjivaniModalView
         public string AccountNumber { get; set; }
         [Required(ErrorMessage = "Please enter IFSCcode")]
         public string IFSCcode { get; set; }
-
+        public string CustId { get; set; }
         public string PaymentBankCardName { get; set; }
         public string cardnumber { get; set; }
         public string paymentMode { get; set; }
@@ -63,10 +67,11 @@ namespace SanjivaniModalView
     {
         public string CommanyName { get; set; }
         public string CommanyType { get; set; }
-
+        public string State { get; set; }
         public string RegNumber { get; set; }
         public string GSTRegNumber { get; set; }
         public string webSite { get; set; }
+        public string CustId { get; set; }
         public string LineofBusiness { get; set; }
         public string Annulturnoveer { get; set; }
         public string personalName { get; set; }
