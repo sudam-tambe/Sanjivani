@@ -36,74 +36,17 @@
 </head>
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
-    <header class="header">
-        <a href="index.html" class="logo">
-            <!-- Add the class icon to your logo image or logo icon to add the margining -->
-            Sanjivani
-        </a>
+    <header class="">
+      
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <div class="navbar-right">
-                <ul class="nav navbar-nav">
-
-
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" style="color:red"><i class="fa fa-circle text-success"></i> LogOut</a>
-
-
-                    </li>
-                </ul>
-            </div>
+      
         </nav>
     </header>
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
-        <aside class="left-side sidebar-offcanvas">
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
-                <!-- Sidebar user panel -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/Content/img/avatar3.png" class="img-circle" alt="User Image" />
-                    </div>
-                    <div class="pull-left info">
-                        <p>Rahul</p>
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search..." />
-                        <span class="input-group-btn">
-                            <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-                    <li class="treeview active">
-                        <a href="#">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Channel Partner</span>
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </a>
-
-                    </li>
-
-                </ul>
-            </section>
-            <!-- /.sidebar -->
-        </aside>
+        
         <script src="~/Content/jquery.min.js"></script>
 
         <script src="~/Scripts/jquery.validate.js"></script>
@@ -115,7 +58,7 @@
         @Scripts.Render("~/bundles/ajax")
     
         <!-- Right side column. Contains the navbar and content of the page -->
-        <aside class="right-side">
+        <aside class="right-side1">
             @RenderBody()
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->

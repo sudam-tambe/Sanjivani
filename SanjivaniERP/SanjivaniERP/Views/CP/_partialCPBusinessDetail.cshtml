@@ -1,0 +1,125 @@
+﻿@model SanjivaniModalView.BusinessDetails
+@using (Html.BeginForm("_partialSetCPBusinessDetail", "CP", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+<div class="box box-danger" id="loading-example">
+    <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+        <!-- tools box -->
+        <div class="pull-right box-tools">
+
+            @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
+
+        </div><!-- /. tools -->
+        <i class="fa fa-calendar"></i>
+
+        <h3 class="box-title">Business Detail</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding" style="background-color: whitesmoke;">
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="exampleInputEmail1">Company Name</label>
+                @Html.EditorFor(model => model.CommanyName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Company Name" } })
+                @Html.ValidationMessageFor(model => model.CommanyName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Company Type</label>
+                @Html.DropDownListFor(model => model.CommanyType, new SelectList(ViewBag.BindCompanyType, "Value", "Text"), "--Select Commany Type--", new { @class = "form-control", })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Company Reg. Number</label>
+                @Html.EditorFor(model => model.RegNumber, new { htmlAttributes = new { @class = "form-control", } })
+                @Html.ValidationMessageFor(model => model.RegNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Company GST Reg Number</label>
+                @Html.EditorFor(model => model.GSTRegNumber, new { htmlAttributes = new { @class = "form-control", } })
+                @Html.ValidationMessageFor(model => model.GSTRegNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Company WebSite</label>
+                @Html.EditorFor(model => model.webSite, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Company WebSite" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Line Of Business</label>
+                @Html.EditorFor(model => model.LineofBusiness, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Line Of Business" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Annual Turnover</label>
+                @Html.EditorFor(model => model.Annulturnoveer, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Annual Turnover" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Contact Person Name </label>
+                @Html.EditorFor(model => model.webSite, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Contact Person Name" } })
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Designation</label>
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Designation" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Contact Number</label>
+                @Html.EditorFor(model => model.BContactnumber, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Contact Number" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Alternate Contact Number</label>
+                @Html.EditorFor(model => model.ABContactnumber, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Alternate Contact Number" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Email Id </label>
+                @Html.EditorFor(model => model.Emailid, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Email Id" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Current ERP</label>
+                @Html.EditorFor(model => model.ERP, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Current ERP" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Current Hosting Provider</label>
+                @Html.EditorFor(model => model.HostingProvider, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Current Hosting Provider" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Hosting Platfrom</label>
+                @Html.EditorFor(model => model.HostingPlatform, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Hosting Platfrom" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Type of Hosting</label>
+                @Html.EditorFor(model => model.TypeofHosting, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Type of Hosting" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">No.of WebSite Hosted</label>
+                @Html.EditorFor(model => model.NoOfWebSiteHos, new { htmlAttributes = new { @class = "form-control", @Placeholder = "No.of WebSite Hosted" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Current Email Provider</label>
+                @Html.EditorFor(model => model.CurrentEmailProvider, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Current Email Provider" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Count Of Emails</label>
+                @Html.EditorFor(model => model.CountofEmail, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Count Of Emails" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Current Domain Provider</label>
+                @Html.EditorFor(model => model.CurrentDomainProvide, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Current Domain Provider" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Count Of Domains</label>
+                @Html.EditorFor(model => model.CurrentDomainCount, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Count Of Domains" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Count Of SSL Certificate</label>
+                @Html.EditorFor(model => model.SSLCertificateCount, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Count Of SSL Certificate" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">Office Address</label>
+                @Html.EditorFor(model => model.OfficeAddres, new { htmlAttributes = new { @class = "form-control", @Placeholder = "Office Address" } })
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleInputPassword1">State</label>
+                @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.StateList, "Value", "Text"), "--Select State--", new { @class = "form-control", })
+            </div>
+        </div><!-- /.row - inside box -->
+    </div><!-- /.box-body -->
+
+</div>
+<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+}
