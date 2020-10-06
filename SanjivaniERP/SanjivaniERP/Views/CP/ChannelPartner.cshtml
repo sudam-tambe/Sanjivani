@@ -4,6 +4,11 @@
     ViewBag.Title = "ChannelPartner";
     Layout = "~/Views/Shared/_LayoutChannelPartner.cshtml";
 }
+<style>
+    .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
+    background-color: #b92a37;
+}
+</style>
 <div class="alert alert-info alert-dismissable" id="msg" style="display:none">
     <i class="fa fa-info"></i>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -16,11 +21,11 @@
         <div class="col-md-12">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs" id="tabUL">
-                    <li id="one" class="active"><a href="#tab_1" data-toggle="tab">Personal Detail</a></li>
-                    <li id="two" class=""><a href="#tab_2" data-toggle="tab">Business Detail</a></li>
-                    <li id="three" class=""><a href="#tab_3" data-toggle="tab">Bank Detail</a></li>
-                    <li id="four" class=""><a href="#tab_4" data-toggle="tab">Document Detail</a></li>
+                <ul class="nav nav-tabs" id="tabUL" style="background: #3c8dbc;">
+                    <li id="one" class="active"><a href="#tab_1" data-toggle="tab" style="color:white">Personal Detail</a></li>
+                    <li id="two" class=""><a href="#tab_2" data-toggle="tab" style="color:white">Business Detail</a></li>
+                    <li id="three" class=""><a href="#tab_3" data-toggle="tab" style="color:white">Bank Detail</a></li>
+                    <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
                     <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
@@ -94,7 +99,13 @@
         };
     };
 
-
+    function fnAllowNumeric() {
+        if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {
+            event.keyCode = 0;
+            alert("Accept only Integer..!");
+            return false;
+        }
+    }
 
     function IsMobileNumber() {
         var mob = /^[1-9]{1}[0-9]{9}$/;
@@ -128,6 +139,22 @@
 
     }
     function validateCaseSensitiveEmail() {
+
+        debugger;
+        var EmailId = $('#EmailID').val();
+        var data = {Email: EmailId };
+        credit = 0;
+
+        var d = getJsonResult("@Url.Action("checEmailIdExits", "CP")",data);
+        if(d.Status==400)
+        {
+           
+            alert('Email Id Already Exists Please Enter Another');
+
+            $('#EmailID').val('');
+            $('#EmailID').focus();
+        }
+
         var email = document.getElementById("EmailID").value;
 
 
@@ -153,7 +180,7 @@
             res = "TRUE";
         else {
             res = "FALSE";
-           // alert("Password Should be Strong");
+            // alert("Password Should be Strong");
             $("#pwd").val('');
             $("#msg").show();
             document.getElementById("span").innerHTML = "Password Should be Strong";
@@ -186,50 +213,105 @@
         });
     });
 
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
     $(document).ready(function () {
         var session = '@Session["Tab"]';
 
         debugger;
 
-$('.nav li').removeClass('active');
+        $('.nav li').removeClass('active');
 
-            if (session == '2')
-            {
+        if (session == '2')
+        {
+            $('#tab_1').html('');
+            $('#two').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_3').removeClass('active')
+            $('#tab_4').removeClass('active')
+            $('#tab_2').addClass('tab-pane active')
+        }
+        else if (session == '3')
+        {
 
-                $('#two').addClass('active')
-                $('#tab_1').removeClass('active')
-                $('#tab_3').removeClass('active')
-                $('#tab_4').removeClass('active')
-                $('#tab_2').addClass('tab-pane active')
-            }
-            else if (session == '3')
-            {
+            $('#three').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_4').removeClass('active')
+            $('#tab_3').addClass('tab-pane active')
+        }
+        else if (session == '4') {
 
-                $('#three').addClass('active')
-                $('#tab_1').removeClass('active')
-                $('#tab_2').removeClass('active')
-                $('#tab_4').removeClass('active')
-                $('#tab_3').addClass('tab-pane active')
-            }
-            else if (session == '4') {
-
-                $('#four').addClass('active')
-                $('#tab_1').removeClass('active')
-                $('#tab_2').removeClass('active')
-                $('#tab_3').removeClass('active')
-                $('#tab_4').addClass('tab-pane active')
-            }
-            else
-            {
-                $('#one').addClass('active')
-                $('#tab_4').removeClass('active')
-                $('#tab_2').removeClass('active')
-                $('#tab_3').removeClass('active')
-                $('#tab_1').addClass('tab-pane active')
-            }
-            //e.preventDefault();
+            $('#four').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_3').removeClass('active')
+            $('#tab_4').addClass('tab-pane active')
+        }
+        else
+        {
+            $('#one').addClass('active')
+            $('#tab_4').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_3').removeClass('active')
+            $('#tab_1').addClass('tab-pane active')
+        }
+        //e.preventDefault();
 
     });
 
 
+    $('#UserName').change(function(){
+
+        debugger;
+        var userId =$('#UserName').val();
+        var data={UserId:userId};
+        credit = 0;
+
+        var d = getJsonResult("@Url.Action("CheckUserIdExits", "CP")",data);
+        if(d.Status==400)
+        {
+           
+            alert('User Id Already Exists Please Enter Another');
+
+            $('#UserName').val('');
+            $('#UserName').focus();
+        }
+        else
+        {
+           
+        }
+
+    });
+
+
+    $('#EmailID').focusout(function () {
+
+        debugger;
+        var EmailId = $('#EmailID').val();
+        var data = { Email: EmailId };
+        credit = 0;
+
+        var d = getJsonResult("@Url.Action("CheckEmailExists", "CP")",data);
+        if(d.Status==400)
+        {
+           
+            alert('Email Id Already Exists Please Enter Another');
+
+            $('#EmailID').val('');
+            $('#EmailID').focus();
+        }
+        else
+        {
+           
+        }
+
+    });
 </script>
