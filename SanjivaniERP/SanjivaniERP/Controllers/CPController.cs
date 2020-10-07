@@ -137,6 +137,8 @@ namespace SanjivaniERP.Controllers
             ViewBag.BindCPCustomer = new SelectList(objPartnerBAL.GetBindCPCustomer(), "CpCustomer", "CpCustomerName");
             if (CustId > 0)
             {
+                Session["CustId"] = CustId;
+                list.CustId =Convert.ToString(CustId);
                 if (!string.IsNullOrWhiteSpace(CustId.ToString()))
                 {
                     list = objPartnerBAL.GetCPCChannelEdit(CustId);

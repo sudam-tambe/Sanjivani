@@ -29,6 +29,8 @@ namespace SanjivaniModalView
         public string CPId { get; set; }
         public string Address { get; set; }
         public string State { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
         public string AspUserId { get; set; }
         public string ParentId { get; set; }
         public string CustCategroryId { get; set; }

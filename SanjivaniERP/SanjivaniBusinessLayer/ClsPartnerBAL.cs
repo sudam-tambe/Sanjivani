@@ -67,6 +67,10 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SetCPBankDtl(bd);
         }
+        public bool setCPCBankDtl(BankDetails bd)
+        {
+            return objInfPub.SetCPCBankDtl(bd);
+        }
 
         public List<CPCchannelPartnerModel> GetBindCPCustomer()
         {
@@ -143,6 +147,11 @@ namespace SanjivaniBusinessLayer
         public int _partialCPSave(ChennelpartnerModel model)
         {
             return objInfPub._PartialCPSave(model);
+        }
+
+        public int _partialCPCSave(CPCchannelPartnerModel model)
+        {
+            return objInfPub._SaveCPCPartialView(model);
         }
     }
 }

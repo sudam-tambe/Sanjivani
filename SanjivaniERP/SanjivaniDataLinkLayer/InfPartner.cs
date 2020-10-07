@@ -39,6 +39,8 @@ namespace SanjivaniDataLinkLayer
         int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
         DirectorBusinessModel GetDirectorBusinessOwners(int CustId);
         int _PartialCPSave(ChennelpartnerModel model);
+        int _SaveCPCPartialView(CPCchannelPartnerModel model);
         bool SetCPBankDtl(BankDetails bd);
+        bool SetCPCBankDtl(BankDetails bd);
     }
 }

@@ -185,6 +185,52 @@ namespace SanjivaniERP.Controllers
             }
             return RedirectToAction("ChannelPartner", "CP");
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> _PartialCPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                int custid =Convert.ToInt32(model.CustId);
+                if (custid > 0)
+                {
+                    model.ParentId = model.CpCategory;
+                    model.CustCategroryId = "3";
+                    var CPCSaveList = objPartnerBAL.UpdateCPCRegisterDetails(model, postedFile);
+                    if (Convert.ToInt32(CPCSaveList) > 0)
+                    {
+                        Session["Tab"] = "2";
+                        Session["CustId"] = CPCSaveList;
+                    }
+                }
+                else
+                {
+                    var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
+                        {
+                            model.AspUserId = UserId;
+                            model.ParentId = model.CpCustomer;
+                            model.CustCategroryId = "3";
+                            var EventsTitleList = objPartnerBAL._partialCPCSave(model);
+                            if (Convert.ToInt32(EventsTitleList) > 0)
+                            {
+                                Session["Tab"] = "2";
+                                Session["CustId"] = EventsTitleList;
+                                return RedirectToAction("CPCChennelPartner", "CP", new { CustId = 0 });
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("CPCChennelPartner", "CP",new { CustId = 0});
+        }
         //
         // POST: /Account/Register
         [HttpPost]
@@ -347,7 +393,7 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        public async Task<ActionResult>CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             if (ModelState.IsValid)
             {
@@ -475,7 +521,7 @@ namespace SanjivaniERP.Controllers
                 ViewBag.CPCChennelPartnerList = CPCChennelPartnerList;
             }
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("CPCChennelPartnerList", "CP");
+            return RedirectToAction("CPCChennelPartnerList", "CP", new { CustId = 0 });
         }
 
         [HttpPost]

@@ -1,0 +1,49 @@
+﻿@model SanjivaniModalView.BankDetails
+@using (Html.BeginForm("_partialSetBankDeatil", "CPC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="box box-danger" id="loading-example">
+        <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
+
+                @*<a class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></a>*@
+
+            </div><!-- /. tools -->
+            <i class="fa fa-home"></i>
+
+            <h3 class="box-title">Bank Detail</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding" style="background-color: whitesmoke;">
+            <div class="row">
+                @Html.HiddenFor(model => model.CustId)
+                <div class="form-group col-md-3">
+                    <label for="exampleInputEmail1">Channel Partner Bank Name</label>
+                    @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Channel Partner Bank Name" } })
+                    @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputEmail1">Account No</label>
+                    @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Channel Partner Account No." } })
+                    @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">IFSC Code</label>
+                    @Html.EditorFor(model => model.IFSCcode, new { htmlAttributes = new { @class = "form-control", @placeholder = "IFSC Code" } })
+                    @Html.ValidationMessageFor(model => model.IFSCcode, "", new { @class = "text-danger" })
+                </div>
+              
+                <div class="form-group col-md-3">
+                    <label for="exampleInputPassword1">Channel Partner Payment Mode</label>
+                    @Html.DropDownListFor(model => model.paymentMode, new SelectList(ViewBag.PaymentMode, "Value", "Text"), "--Select Payment Mode--", new { @class = "form-control", })
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="exampleInputEmail1">Account Type</label>
+                    @Html.DropDownListFor(model => model.AccountType, new SelectList(ViewBag.Accountype, "Value", "Text"), "--Select Account Type--", new { @class = "form-control", })
+                </div>
+            </div><!-- /.row - inside box -->
+        </div><!-- /.box-body -->
+
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+}
