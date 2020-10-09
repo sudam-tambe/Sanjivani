@@ -25,9 +25,12 @@ namespace SanjivaniModalView
         public string EmailID { get; set; }
         public string Address { get; set; }
         public string State { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
         public string AspUserId { get; set; }
         public string ParentId { get; set; }
         public string CustCategroryId { get; set; }
+        public string HolderName { get; set; }
         public BankDetails ObjBackDetails { get; set; }
     }
 }

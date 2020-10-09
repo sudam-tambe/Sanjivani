@@ -25,16 +25,21 @@ namespace SanjivaniDataLinkLayer
         List<CPCchannelPartnerModel> GetCPCChannelPartnerList();
         int SaveUploadChennelPartnerDocument(string filename1, int CustID, int type);
         int SaveUploadCPCDocument(string filename1, int CustID, int type);
-         ChennelpartnerModel getChannalPartnerDtl(int custId);
+        int SaveUploadDirectorDoc(string filename1, int CustID, int type);
+
+        ChennelpartnerModel getChannalPartnerDtl(int custId);
         bool rejectChannalPartner(int custId);
         DataSet getFolder();
         List<UserIntraction> getUserIntraction(int custId);
         bool SetUserIntarction(UserIntraction usD);
         DataTable getLoginDetail(string id);
         List<Account> getAccountType();
+        List<BankName> GetBankName();
+
         List<PaymentType> getPaymentmode();
         bool setCPBusinessDtl(BusinessDetails bD);
         CPCchannelPartnerModel GetCPCChannelList(int custId);
+       DirectorBusinessModel GetDirectorChannelEdit(int custId);
         List<DirectorBusinessModel> GetDirectorBusinessOwnerList();
         int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
         DirectorBusinessModel GetDirectorBusinessOwners(int CustId);

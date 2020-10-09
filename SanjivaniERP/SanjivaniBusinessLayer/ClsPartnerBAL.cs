@@ -53,6 +53,12 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.getAccountType();
         }
+        public List<BankName> GetBankName()
+        {
+            return objInfPub.GetBankName();
+        }
+
+        
 
         public List<State> GetBindState()
         {
@@ -101,11 +107,21 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.SaveUploadCPCDocument(filename1, CustID, type);
         }
+        public int SaveUploadDirectorDoc(string filename1, int CustID, int type)
+        {
+            return objInfPub.SaveUploadDirectorDoc(filename1, CustID, type);
+        }
+        
 
         public CPCchannelPartnerModel GetCPCChannelEdit(int custId)
         {
             return objInfPub.GetCPCChannelList(custId);
         }
+        public DirectorBusinessModel GetDirectorChannelEdit(int custId)
+        {
+            return objInfPub.GetDirectorChannelEdit(custId);
+        }
+        
 
         public List<DirectorBusinessModel> GetDirectorBusinessOwnerList()
         {

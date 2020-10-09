@@ -173,7 +173,7 @@ namespace SanjivaniERP.Controllers
                             model.ParentId = "1";
                             model.CustCategroryId = "2";
                             var EventsTitleList = objPartnerBAL._partialCPSave(model);
-                            if(Convert.ToInt32(EventsTitleList)>0)
+                            if (Convert.ToInt32(EventsTitleList) > 0)
                             {
                                 Session["Tab"] = "2";
                                 Session["CustId"] = EventsTitleList;
@@ -193,7 +193,7 @@ namespace SanjivaniERP.Controllers
         {
             if (ModelState.IsValid)
             {
-                int custid =Convert.ToInt32(model.CustId);
+                int custid = Convert.ToInt32(model.CustId);
                 if (custid > 0)
                 {
                     model.ParentId = model.CpCategory;
@@ -229,7 +229,7 @@ namespace SanjivaniERP.Controllers
                     }
                 }
             }
-            return RedirectToAction("CPCChennelPartner", "CP",new { CustId = 0});
+            return RedirectToAction("CPCChennelPartner", "CP", new { CustId = 0 });
         }
         //
         // POST: /Account/Register
@@ -393,7 +393,7 @@ namespace SanjivaniERP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult>CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
+        public async Task<ActionResult> CPCRegister(FormCollection fc, CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             if (ModelState.IsValid)
             {
@@ -523,6 +523,53 @@ namespace SanjivaniERP.Controllers
             // If we got this far, something failed, redisplay form
             return RedirectToAction("CPCChennelPartnerList", "CP", new { CustId = 0 });
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult>_PartialDirectorRegister(FormCollection fc, DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                int custid = Convert.ToInt32(model.CustId);
+                if (custid > 0)
+                {
+                    model.ParentId = "0";
+                    model.CustCategroryId = "1";
+                    var UpdateDicrectorBusiness = objPartnerBAL.UpdateDirectorBusinessRegister(model, postedFile);
+                    if (Convert.ToInt32(UpdateDicrectorBusiness) > 0)
+                    {
+                        Session["Tab"] = "2";
+                        Session["CustId"] = UpdateDicrectorBusiness;
+                    }
+                }
+                else
+                {
+                    var user = new ApplicationUser { UserName = model.UserId, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
+                        {
+                            model.AspUserId = UserId;
+                            model.ParentId = "0";
+                            model.CustCategroryId = "1";
+                            var DirectorBusinessSaveList = objPartnerBAL.SaveDirectorBusinessDetails(model, postedFile);
+                            if (Convert.ToInt32(DirectorBusinessSaveList) > 0)
+                            {
+                                Session["Tab"] = "2";
+                                Session["CustId"] = DirectorBusinessSaveList;
+                                return RedirectToAction("DirectorBusinessOwners", "CP", new { CustId = 0 });
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("DirectorBusinessOwners", "CP", new { CustId = 0 });
+        }
+
 
         [HttpPost]
         [AllowAnonymous]

@@ -56,6 +56,7 @@ namespace SanjivaniModalView
         public string AccountNumber { get; set; }
         [Required(ErrorMessage = "Please enter IFSCcode")]
         public string IFSCcode { get; set; }
+        public string BankHolderName { get; set; }
         public string CustId { get; set; }
         public string PaymentBankCardName { get; set; }
         public string cardnumber { get; set; }
@@ -127,6 +128,11 @@ namespace SanjivaniModalView
     {
         public int AccountTypeId { get; set; }
         public string AccountType { get; set; }
+    }
+    public class BankName
+    {
+        public int BankId { get; set; }
+        public string bankname { get; set; }
     }
     public class PaymentType
     {
