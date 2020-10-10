@@ -2,8 +2,10 @@
 using SanjivaniModalView;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -29,6 +31,8 @@ namespace SanjivaniERP.Controllers
         }
         public ActionResult _partialCPBusinessDetail()
         {
+            ViewBag.TypeOfHosting = new SelectList(objPartnerBAL.GetTypeofHosting(), "TypeHostingId", "TypeofHosting");
+            ViewBag.HostingPlatForm= new SelectList(objPartnerBAL.GetHostingPlatform(), "HostingPlatformId", "HostingPlatForm");
             ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
             ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
             return View();
@@ -43,6 +47,7 @@ namespace SanjivaniERP.Controllers
         }
         public ActionResult _partialCPBankDetail()
         {
+            ViewBag.bank= new SelectList(objPartnerBAL.GetBank(), "BankId", "BankName");
             ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
             ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
             return View();
@@ -61,7 +66,7 @@ namespace SanjivaniERP.Controllers
         }
         public ActionResult _SetCPDocument(HttpPostedFileBase[] postedFile)
         {
-            Session["Tab"] = "4";
+            Session["Tab"] = "1";
             int EventsTitleList = Convert.ToInt32(Session["CustId"]);
             var k = 0;
             foreach (HttpPostedFileBase file in postedFile)
@@ -174,6 +179,26 @@ namespace SanjivaniERP.Controllers
                 }
             }
             return View();
+        }
+        public async Task<JsonResult>CheckUserIdExits(string UserId)
+        {
+            DataTable dt = objPartnerBAL.CheckUserIdExists(UserId);
+            if (dt.Rows.Count>0)
+            {
+                return Json(new { Messege = "Session timed out please try again", Status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(new { Messege = "Session timed out please try again", Status = 200 }, JsonRequestBehavior.AllowGet);
+        }
+        public async Task<JsonResult>checEmailIdExits(string Email)
+        {
+            DataTable dt = objPartnerBAL.CheckEmailExists(Email);
+            if (dt.Rows.Count > 0)
+            {
+                return Json(new { Messege = "Session timed out please try again", Status = 400 }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(new { Messege = "Session timed out please try again", Status = 200 }, JsonRequestBehavior.AllowGet);
         }
     }
 }

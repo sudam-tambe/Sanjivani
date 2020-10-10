@@ -8,57 +8,73 @@
     OnFailure = "Failure2"
 }, new { @class = "" }))
 {
+    <div class="box box-danger" id="loading-example">
+        <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
 
-    <div class="form-group col-md-6">
-        @Html.HiddenFor(model => model.CustId)
-        <label for="exampleInputFile">Upload Company Logo</label>
-        @Html.EditorFor(model => model.Intraction, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Intraction, "", new { @class = "text-danger" })
-    </div>
-        <div class="form-group col-md-6">
+                @*<a class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></a>*@
 
-            <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-primary" style="margin-top: 13px;"><i class="fa fa-save"></i> ADD</button>
+            </div><!-- /. tools -->
+            <i class="fa fa-home"></i>
 
+            <h3 class="box-title">Bank Detail</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding" style="background-color: whitesmoke;">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.HiddenFor(model => model.CustId)
+                    <label for="exampleInputFile">Upload Company Logo</label>
+                    @Html.EditorFor(model => model.Intraction, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Intraction, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+
+                    <div class="form-group col-md-6">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 13px;"><i class="fa fa-save"></i> ADD</button>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group col-md-12" id="_IntractionList">
+
+
+
+                </div>
+                </div>
             </div>
-
         </div>
+                }
+                <script>
 
-        <div class="form-group col-md-12" id="_IntractionList">
+                    function Success2() {
+                        var userId = $('#CustId').val();
+                        var data = { CustId: userId };
+                        var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", data);
+                        $('#_IntractionList').html(d);
 
+                    }
+                    function Failure2() {
+                        $('#errormsg4').html("Messege");
+                        $('#trans4').html("Server error please try again");
+                        $('#myModalEMB4').modal('show');
 
+                    }
 
-        </div>
+                    var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", {});
+                    $('#_IntractionList').html(d);
 
-}
-<script>
-
-    function Success2() {
-
-        var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", {});
-        $('#_IntractionList').html(d);
-
-    }
-    function Failure2() {
-        $('#errormsg4').html("Messege");
-        $('#trans4').html("Server error please try again");
-        $('#myModalEMB4').modal('show');
-
-    }
-
-    var d = loadData("@Url.Action("_PartialUserIntarction", "Partner")", {});
-    $('#_IntractionList').html(d);
-
-    $(function () {
-        $("#example1").dataTable();
-        $('#example2').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": true,
-            "bAutoWidth": false
-        });
-    });
-</script>
+                    $(function () {
+                        $("#example1").dataTable();
+                        $('#example2').dataTable({
+                            "bPaginate": true,
+                            "bLengthChange": false,
+                            "bFilter": false,
+                            "bSort": true,
+                            "bInfo": true,
+                            "bAutoWidth": false
+                        });
+                    });
+                </script>
 

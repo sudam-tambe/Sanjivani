@@ -2,9 +2,13 @@
 
 @{
     ViewBag.Title = "CPCChannelPartner";
-    Layout = "~/Views/Shared/_LayoutChannelPartner.cshtml";
+    Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
 }
-
+<style>
+    .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
+        background-color: #b92a37;
+    }
+</style>
 <div class="alert alert-info alert-dismissable" id="msg" style="display:none">
     <i class="fa fa-info"></i>
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -12,39 +16,42 @@
 </div>
 
 <section class="content-header">
-    <h1></h1>
-    <section class="content">
-        <div class="col-md-12">
-            <!-- Custom Tabs -->
-            <div class="nav-tabs-custom">
-               @Html.HiddenFor(model => model.CustId)
-                <ul class="nav nav-tabs" id="tabUL">
-                    <li id="one" class="active"><a href="#tab_1" data-toggle="tab">Personal Detail</a></li>
-                    <li id="two" class=""><a href="#tab_2" data-toggle="tab">Bank Detail</a></li>
-                    <li id="three" class=""><a href="#tab_3" data-toggle="tab">Document Detail</a></li>
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                </ul>
-                <div class="tab-content">
+    <h1>Channal Partner Customer</h1>
+    <div class="row">
+        <section class="content">
 
-                    <div class="tab-pane active" id="tab_1">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    @Html.HiddenFor(model => model.CustId)
+                    <ul class="nav nav-tabs" id="tabUL">
+                        <li id="one" class="active"><a href="#tab_1" data-toggle="tab">Personal Detail</a></li>
+                        <li id="two" class=""><a href="#tab_2" data-toggle="tab">Bank Detail</a></li>
+                        <li id="three" class=""><a href="#tab_3" data-toggle="tab">Document Detail</a></li>
+                        <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    </ul>
+                    <div class="tab-content">
 
-                    </div><!-- /.tab-pane -->
+                        <div class="tab-pane active" id="tab_1">
+
+                        </div><!-- /.tab-pane -->
 
 
-                    <div class="tab-pane" id="tab_2">
+                        <div class="tab-pane" id="tab_2">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
 
-                    </div><!-- /.tab-pane -->
-                   <!-- /.tab-pane -->
+                        </div><!-- /.tab-pane -->
+                        <!-- /.tab-pane -->
 
-                </div><!-- /.tab-content -->
-            </div><!-- nav-tabs-custom -->
-        </div>
+                    </div><!-- /.tab-content -->
+                </div><!-- nav-tabs-custom -->
+            </div>
 
-    </section>
 
+        </section>
+    </div>
 </section>
 
 

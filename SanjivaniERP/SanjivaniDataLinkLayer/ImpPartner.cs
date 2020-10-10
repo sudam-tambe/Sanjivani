@@ -559,14 +559,12 @@ namespace SanjivaniDataLinkLayer
                 List.Address = DsList.Tables[0].Rows[0]["Address"].ToString();
                 List.CustCategroryId = DsList.Tables[0].Rows[0]["CustCategroryId"].ToString();
                 List.State = Convert.ToString(DsList.Tables[0].Rows[0]["StateId"]);
-                List.Country = Convert.ToString(DsList.Tables[0].Rows[0]["Country"]);
-                List.City = Convert.ToString(DsList.Tables[0].Rows[0]["City"]);
                 List.ObjBackDetails = getBankDetailsdata(CustID);
             }
             return List;
         }
 
-        
+
         public List<DirectorBusinessModel> GetDirectorBusinessOwnerList()
         {
 
@@ -629,25 +627,6 @@ namespace SanjivaniDataLinkLayer
             }
             return list;
         }
-        public List<BankName> GetBankName()
-        {
-            SqlCommand dinsert = new SqlCommand("usp_GetBank");
-            DataTable dtList = objcon.GetDtByCommand(dinsert);
-            List<BankName> list = new List<BankName>();
-
-            if (dtList.Rows.Count > 0)
-            {
-                foreach (DataRow dr in dtList.Rows)
-                {
-                    BankName objBankName = new BankName();
-                    objBankName.BankId = int.Parse(dr["BankId"].ToString());
-                    objBankName.bankname = dr["BankName"].ToString();
-                    list.Add(objBankName);
-                }
-            }
-            return list;
-        }
-        
         public List<PaymentType> getPaymentmode()
         {
             SqlCommand dinsert = new SqlCommand("usp_GetPaymentMode");
@@ -666,7 +645,42 @@ namespace SanjivaniDataLinkLayer
             }
             return list;
         }
+        public List<HostingPlatF> getHostingPlatform()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetHostingPlatform");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<HostingPlatF> list = new List<HostingPlatF>();
 
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    HostingPlatF objCompanyType = new HostingPlatF();
+                    objCompanyType.HostingPlatformId = int.Parse(dr["HostingPlatformId"].ToString());
+                    objCompanyType.HostingPlatForm = dr["HostingPlatForm"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+        }
+        public List<TypeOfHosting> getTypeofHosting()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_TypeOfHosting");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<TypeOfHosting> list = new List<TypeOfHosting>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    TypeOfHosting objCompanyType = new TypeOfHosting();
+                    objCompanyType.TypeHostingId = int.Parse(dr["TypeHostingId"].ToString());
+                    objCompanyType.TypeofHosting = dr["TypeofHosting"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+        }
         public int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
         {
             SqlCommand dinsert = new SqlCommand("Sp_InsertDirectorDetails");
@@ -686,7 +700,7 @@ namespace SanjivaniDataLinkLayer
             dinsert.Parameters.AddWithValue("@StateId", SqlDbType.VarChar).Value = model.State;
             dinsert.Parameters.AddWithValue("@Country", SqlDbType.VarChar).Value = model.Country;
             dinsert.Parameters.AddWithValue("@City", SqlDbType.VarChar).Value = model.City;
-            
+
             dinsert.Parameters.AddWithValue("@CustName", SqlDbType.VarChar).Value = model.OwnerName;
             dinsert.Parameters.AddWithValue("@ParentId", SqlDbType.Int).Value = model.ParentId;
             dinsert.Parameters.AddWithValue("@AspUserId", SqlDbType.NVarChar).Value = model.AspUserId;
@@ -853,7 +867,7 @@ namespace SanjivaniDataLinkLayer
 
             dinsert1.Parameters.AddWithValue("@PaymentModeId", SqlDbType.Int).Value = bd.paymentMode;
 
-            dinsert1.Parameters.AddWithValue("@AccountTypeId", SqlDbType.Int).Value = bd.AccountType;
+            dinsert1.Parameters.AddWithValue("@AccountHolderName", SqlDbType.VarChar).Value = bd.AccountHolderName;
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
         }
@@ -871,9 +885,167 @@ namespace SanjivaniDataLinkLayer
 
             dinsert1.Parameters.AddWithValue("@PaymentModeId", SqlDbType.Int).Value = bd.paymentMode;
 
-            dinsert1.Parameters.AddWithValue("@AccountTypeId", SqlDbType.Int).Value = bd.BankHolderName;
+            dinsert1.Parameters.AddWithValue("@AccountTypeId", SqlDbType.Int).Value = bd.AccountType;
+            bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
+            return Result1;
+        }
+        public DataTable checkUserIdExists(string userId)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_CheckUserIDExists");
+            dinsert.Parameters.AddWithValue("@UserId", SqlDbType.VarChar).Value = userId;
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            return dtList;
+        }
+        public DataTable checkEmailExists(string email)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_CheckEmailExists");
+            dinsert.Parameters.AddWithValue("@EmailId", SqlDbType.VarChar).Value = email;
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            return dtList;
+        }
+        public List<Bank> getBank()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetBank");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<Bank> list = new List<Bank>();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    Bank objCompanyType = new Bank();
+                    objCompanyType.BankId = int.Parse(dr["BankId"].ToString());
+                    objCompanyType.BankName = dr["BankName"].ToString();
+                    list.Add(objCompanyType);
+                }
+            }
+            return list;
+
+        }
+        public ChennelpartnerModel getCPForEdit(int custid)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetCPPersonalDtlEdit");
+            dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custid;
+            DataSet dtList = objcon.GetDsByCommand(dinsert);
+            ChennelpartnerModel list = new ChennelpartnerModel();
+
+            if (dtList.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Tables[0].Rows)
+                {
+
+
+                    list.RegiDate = (dr["RegistrationDate"].ToString());
+                    list.CPId = dr["CPId"].ToString();
+                    list.CpCategory = dr["CPCategeoryId"].ToString();
+                    list.UserName = dr["UserId"].ToString();
+                    list.pwd = dr["Password"].ToString();
+                    list.Cpwd = dr["Password"].ToString();
+                    list.CustId = dr["CustId"].ToString();
+                    list.chennelpartName = dr["CustName"].ToString();
+                    list.mobileNo = dr["MobileNo"].ToString();
+                    list.AlterMobileNo = dr["AlternateMobileNo"].ToString();
+                    list.EmailID = dr["Email"].ToString();
+                    list.Address = dr["Address"].ToString();
+                    list.State = dr["StateId"].ToString();
+                    // list.Address = dr["ParentId"].ToString();
+                    // list.CustCategroryId = dr["CustomerType"].ToString();
+                    list.CustCategroryId = dr["CustCategroryId"].ToString();
+                    // objCPCChennelpartnerList.Address = dr["CustCategroryId"].ToString();
+
+                }
+            }
+            return list;
+        }
+        public BusinessDetails _partialgetCPBusinessDtl(string custId)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetChannalPartnerBusinessDtlForEdit");
+            dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
+            DataSet dtList = objcon.GetDsByCommand(dinsert);
+            BusinessDetails list1 = new BusinessDetails();
+            foreach (DataRow dr in dtList.Tables[0].Rows)
+            {
+
+
+                list1.CommanyName = (dr["CompanyName"].ToString());
+                list1.CommanyType = dr["CompanyType"].ToString();
+                list1.RegNumber = dr["CompRegNo"].ToString();
+                list1.GSTRegNumber = dr["CompGSTNo"].ToString();
+                list1.webSite = dr["CompWebsite"].ToString();
+                list1.LineofBusiness = dr["LineOfBusiness"].ToString();
+                list1.Annulturnoveer = dr["AnnualTurnOver"].ToString();
+                list1.personalName = dr["ContactPersonName"].ToString();
+                list1.Designation = dr["DesignationId"].ToString();
+                list1.BContactnumber = dr["ContactNo"].ToString();
+                list1.ABContactnumber = dr["AlternatContactNo"].ToString();
+                list1.Emailid = dr["EmailId"].ToString();
+                list1.ERP = dr["CurrentERP"].ToString();
+                list1.HostingPlatform1 = Convert.ToInt32(dr["HostingPlatForm"].ToString());
+                list1.TypeofHosting1 = Convert.ToInt32(dr["TypeOfHosting"].ToString());
+                list1.NoOfWebSiteHos = dr["NoOfWebSiteHosted"].ToString();
+                list1.CurrentEmailProvider = dr["CurrentEmailProvider"].ToString();
+                list1.CountofEmail = dr["CountOfEmail"].ToString();
+                list1.CurrentEmailProvider = dr["CurrentDomailProvider"].ToString();
+                list1.CurrentDomainCount = dr["CountOfDomain"].ToString();
+                list1.SSLCertificateCount = dr["CountOfSSL"].ToString();
+                list1.OfficeAddres = dr["OfficeAddress"].ToString();
+                list1.Bstate = dr["StateId"].ToString();
+                
+
+            }
+            return list1;
+        }
+        public CountryState getCountryStateForCPPersonal(int custId)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_getcountryStateCPPersonalDtl");
+            dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            CountryState list = new CountryState();
+
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+
+                    list.StateId = (dr["StateId"].ToString());
+                    list.Country = dr["Country"].ToString();
+                    list.City = dr["City"].ToString();
+                    
+                }
+            }
+            return list;
+        }
+        public BankDetails _partialgetCPBankDtl(string custId)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetChannalPartnerBankDtl");
+            dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
+            DataSet dtList = objcon.GetDsByCommand(dinsert);
+            BankDetails list1 = new BankDetails();
+            foreach (DataRow dr in dtList.Tables[0].Rows)
+            {
+
+               // BankDetails list1 = new BankDetails();
+                list1.BankName1 = Convert.ToInt32(dr["BankName"].ToString());
+                list1.AccountNumber = dr["AccountNo"].ToString();
+                list1.IFSCcode = dr["IFSCCode"].ToString();
+                list1.PaymentBankCardName = dr["CardName"].ToString();
+                list1.cardnumber = dr["FourDigitCardNo"].ToString();
+                list1.paymentMode = dr["PaymentModeId"].ToString();
+                list1.AccountType = dr["AccountTypeId"].ToString();
+                list1.AccountHolderName = dr["AccountHolderName"].ToString();
+                //list.ObjBackDetails = list1;
+                // objCPCChennelpartnerList.Address = dr["CustCategroryId"].ToString();
+
+            }
+            return list1;
+        }
+        public bool deleteCp(int custId)
+        {
+            SqlCommand dinsert1 = new SqlCommand("usp_DeleteCP");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
         }
     }
 }
+

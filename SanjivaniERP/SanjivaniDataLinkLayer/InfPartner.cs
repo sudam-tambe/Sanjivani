@@ -26,7 +26,8 @@ namespace SanjivaniDataLinkLayer
         int SaveUploadChennelPartnerDocument(string filename1, int CustID, int type);
         int SaveUploadCPCDocument(string filename1, int CustID, int type);
         int SaveUploadDirectorDoc(string filename1, int CustID, int type);
-
+        List<TypeOfHosting> getTypeofHosting();
+        List<HostingPlatF> getHostingPlatform();
         ChennelpartnerModel getChannalPartnerDtl(int custId);
         bool rejectChannalPartner(int custId);
         DataSet getFolder();
@@ -42,10 +43,18 @@ namespace SanjivaniDataLinkLayer
        DirectorBusinessModel GetDirectorChannelEdit(int custId);
         List<DirectorBusinessModel> GetDirectorBusinessOwnerList();
         int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile);
+        List<Bank>getBank();
         DirectorBusinessModel GetDirectorBusinessOwners(int CustId);
         int _PartialCPSave(ChennelpartnerModel model);
         int _SaveCPCPartialView(CPCchannelPartnerModel model);
         bool SetCPBankDtl(BankDetails bd);
         bool SetCPCBankDtl(BankDetails bd);
+        DataTable checkUserIdExists(string userId);
+        DataTable checkEmailExists(string email);
+        ChennelpartnerModel getCPForEdit(int custid);
+        BusinessDetails _partialgetCPBusinessDtl(string custId);
+        CountryState getCountryStateForCPPersonal(int custId);
+        BankDetails _partialgetCPBankDtl(string custId);
+        bool deleteCp(int custId);
     }
 }

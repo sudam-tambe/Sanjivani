@@ -28,13 +28,42 @@ namespace SanjivaniERP.Controllers
         }
 
 
-
-
-        public ActionResult Chennelpartner()
+        public ActionResult _partialSetEditCPBusinessDetail(BusinessDetails BD)
         {
+            BD.TypeofHosting = Convert.ToString(BD.TypeofHosting1);
+            BD.HostingPlatform = Convert.ToString(BD.HostingPlatform1);
+            BD.CustId = Convert.ToString(Session["CustId"]);
+            bool res = objPartnerBAL.SetCPBusinessDtl(BD);
+
+            Session["Tab"] = "3";
+            return RedirectToAction("Chennelpartner", "Partner");
+        }
+        public ActionResult _partialSetEditBankDeatil(BankDetails bd)
+        {
+            bd.BankName = Convert.ToString(bd.BankName1);
+            bd.CustId = Convert.ToString(Session["CustId"]);
+            bool res = objPartnerBAL.setCPBankDtl(bd);
+
+            Session["Tab"] = "4";
+            return RedirectToAction("Chennelpartner", "Partner");
+        }
+        public ActionResult Chennelpartner(string CustId)
+        {
+            if (CustId != null)
+                Session["CustId"] = CustId;
+            else
+                CustId = Convert.ToString(Session["CustId"]);
+            ChennelpartnerModel dc = new ChennelpartnerModel();
+
+
             ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
             ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
             ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
+            if (CustId != null)
+            {
+                dc.CustId = CustId;
+                return View(dc);
+            }
             return View();
         }
         public bool DirectoryExists(string directory)
@@ -104,8 +133,8 @@ namespace SanjivaniERP.Controllers
             {
                 string Domaim = Session["Domain"].ToString();
                 BackgroundJob.Enqueue(() => UpLoadStoreFront(Domaim));
-              //  UpLoadStoreFront(Domaim);
-               
+                //  UpLoadStoreFront(Domaim);
+
             }
             //Session["Completemsg"] = "Yes";
             Session["Dothis"] = "0";
@@ -181,9 +210,9 @@ namespace SanjivaniERP.Controllers
 
                     RedirectToAction("ChannaPartnerList", "Partner");
                 }
-                
+
             }
-           
+
         }
         public ActionResult EditChannalPartner(string CustId)
         {
@@ -342,19 +371,22 @@ namespace SanjivaniERP.Controllers
             bool res = objPartnerBAL.RejectChannalPartner(Convert.ToInt32(CustId));
             return RedirectToAction("ChannaPartnerList", "Partner");
         }
-        public ActionResult UserIntraction()
+        public ActionResult UserIntraction(string CustId)
         {
+            UserIntraction cd = new UserIntraction();
+            cd.CustId = Convert.ToInt32(CustId);
             return View();
         }
-        public ActionResult _PartialUserIntarction()
+        public ActionResult _PartialUserIntarction(string CustId)
         {
-            int CustId = Convert.ToInt32(Session["CustId"]);
-            ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(CustId);
+            if(CustId!="")
+            
+            ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(Convert.ToInt32(CustId));
             return View();
         }
         public ActionResult SetUserIntraction(UserIntraction UsD)
         {
-            UsD.CustId = Convert.ToInt32(Session["CustId"]);
+           // UsD.CustId = Convert.ToInt32(Session["CustId"]);
             bool res = objPartnerBAL.setUserIntarction(UsD);
             if (res)
             {
@@ -367,6 +399,58 @@ namespace SanjivaniERP.Controllers
             }
             return View();
         }
+        public ActionResult _PartialCPPerstionalDtl(string CustId)
+        {
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            ViewBag.BindCPCategory = new SelectList(objPartnerBAL.GetBindCPCategory(), "CategoryId", "CategoryName");
+            if (CustId != "")
+            {
+                var d = objPartnerBAL.GetCPForEdit(Convert.ToInt32(CustId));
+                return View(d);
+            }
+            return View();
+        }
+        public ActionResult _PartialCPBusinessDtl(string CustId)
+        {
 
+            ViewBag.TypeOfHosting = new SelectList(objPartnerBAL.GetTypeofHosting(), "TypeHostingId", "TypeofHosting");
+            ViewBag.HostingPlatForm = new SelectList(objPartnerBAL.GetHostingPlatform(), "HostingPlatformId", "HostingPlatForm");
+            ViewBag.StateList = new SelectList(objPartnerBAL.GetBindState(), "StateId", "StateName");
+            ViewBag.BindCompanyType = new SelectList(objPartnerBAL.BindCompanyType(), "Compid", "CompanyName");
+            if (CustId != "")
+            {
+                var d = objPartnerBAL._partialGetCPBusinessDtl(CustId);
+                return View(d);
+            }
+            else
+                return View();
+        }
+        public JsonResult getuserdat(string CustId)
+        {
+            var list = objPartnerBAL.GetCountryStateForCPPersonal(Convert.ToInt32(CustId));
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult _PartialgetCPBankDtl(string CustId)
+        {
+            ViewBag.bank = new SelectList(objPartnerBAL.GetBank(), "BankId", "BankName");
+            ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+            ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
+            if (CustId != "")
+            {
+                var d = objPartnerBAL._partialGetCPBankDtl(CustId);
+                return View(d);
+            }
+            else
+                return View();
+        }
+        public ActionResult DeleteCp(int CustId)
+        {
+            bool res = objPartnerBAL.DeleteCP(CustId);
+            return RedirectToAction("ChannaPartnerList", "Partner");
+        }
+        public ActionResult _partialCPDocument(string CustId)
+        {
+            return View();
+        }
     }
 }

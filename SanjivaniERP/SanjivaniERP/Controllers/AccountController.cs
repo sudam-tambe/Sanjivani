@@ -90,6 +90,8 @@ namespace SanjivaniERP.Controllers
                     Session["CustCategeory"] = Convert.ToString(dt.Rows[0]["CustCategeory"]);
                     Session["Completemsg"] = "No";
                     Session["Dothis"] = "0";
+                    Session["CustId"] = "0";
+                    Session["Tab"] = "1";
                     return RedirectToAction("ChannaPartnerList", "Partner");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -182,10 +184,66 @@ namespace SanjivaniERP.Controllers
                         }
                     }
                 }
+                else
+                {
+                    model.ParentId = "1";
+                    model.CustCategroryId = "2";
+                    var EventsTitleList = objPartnerBAL._partialCPSave(model);
+                    if (Convert.ToInt32(EventsTitleList) > 0)
+                    {
+                        Session["Tab"] = "2";
+                        Session["CustId"] = EventsTitleList;
+                        return RedirectToAction("ChannelPartner", "CP");
+                    }
+                }
             }
             return RedirectToAction("ChannelPartner", "CP");
         }
-
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> _PartialCPAdminRegister(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrWhiteSpace(model.CustId))
+                {
+                    var user = new ApplicationUser { UserName = model.UserName, Email = model.EmailID };
+                    var result = await UserManager.CreateAsync(user, model.pwd);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        var UserId = user.Id;
+                        // if (ModelState.IsValid)
+                        {
+                            model.AspUserId = UserId;
+                            model.ParentId = "1";
+                            model.CustCategroryId = "2";
+                            var EventsTitleList = objPartnerBAL._partialCPSave(model);
+                            if (Convert.ToInt32(EventsTitleList) > 0)
+                            {
+                                Session["Tab"] = "2";
+                                Session["CustId"] = EventsTitleList;
+                                return RedirectToAction("Chennelpartner", "Partner");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    model.ParentId = "1";
+                    model.CustCategroryId = "2";
+                    var EventsTitleList = objPartnerBAL._partialCPSave(model);
+                    if (Convert.ToInt32(EventsTitleList) > 0)
+                    {
+                        Session["Tab"] = "2";
+                        Session["CustId"] = EventsTitleList;
+                        return RedirectToAction("Chennelpartner", "Partner");
+                    }
+                }
+            }
+            return RedirectToAction("Chennelpartner", "Partner");
+        }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

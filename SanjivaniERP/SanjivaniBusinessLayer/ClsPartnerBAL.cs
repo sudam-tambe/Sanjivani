@@ -30,6 +30,16 @@ namespace SanjivaniBusinessLayer
             return objInfPub.SaveDirectorBusinessDetails(model, postedFile);
         }
 
+        public List<TypeOfHosting> GetTypeofHosting()
+        {
+            return objInfPub.getTypeofHosting();
+        }
+
+        public List<HostingPlatF>GetHostingPlatform()
+        {
+            return objInfPub.getHostingPlatform();
+        }
+
         public int UpdateCPCRegisterDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             return objInfPub.UpdateCPCRegisterDetails(model, postedFile);
@@ -47,6 +57,11 @@ namespace SanjivaniBusinessLayer
         public List<PaymentType> GetPaymentmode()
         {
             return objInfPub.getPaymentmode();
+        }
+
+        public List<Bank> GetBank()
+        {
+            return objInfPub.getBank();
         }
 
         public List<Account> GetAccountType()
@@ -169,5 +184,54 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub._SaveCPCPartialView(model);
         }
+		
+ public DataTable CheckUserIdExists(string userId)
+        {
+            return objInfPub.checkUserIdExists(userId);
+        }
+
+        public DataTable CheckEmailExists(string email)
+        {
+            return objInfPub.checkEmailExists(email);
+        }
+
+        public ChennelpartnerModel GetCPForEdit(int Custid)
+        {
+            return objInfPub.getCPForEdit(Custid);
+        }
+
+        public BusinessDetails _partialGetCPBusinessDtl(string custId)
+        {
+            return objInfPub._partialgetCPBusinessDtl(custId);
+        }
+
+        public CountryState GetCountryStateForCPPersonal(int CustId)
+        {
+            return objInfPub.getCountryStateForCPPersonal(CustId);
+        }
+
+        public BankDetails _partialGetCPBankDtl(string custId)
+        {
+            return objInfPub._partialgetCPBankDtl(custId);
+        }
+
+        public bool DeleteCP(int custId)
+        {
+            return objInfPub.deleteCp(custId);
+        }
+
+        //public int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
+        //     {
+        //         return objInfPub.UpdateDirectorBusinessRegister(model, postedFile);
+        //     }
+        //public int SaveUploadDirectorDoc(string filename1, int CustID, int type)
+        //     {
+        //         return objInfPub.SaveUploadDirectorDoc(filename1, CustID, type);
+        //     }
+        //public DirectorBusinessModel GetDirectorChannelEdit(int custId)
+        //     {
+        //         return objInfPub.GetDirectorChannelEdit(custId);
+        //     }
+
     }
 }
