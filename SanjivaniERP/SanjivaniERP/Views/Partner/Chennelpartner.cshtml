@@ -33,6 +33,9 @@
                     <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
                     <li id="five" class=""><a href="#tab_5" data-toggle="tab" style="color:white">User Intraction</a></li>
                     <li id="six" class=""><a href="#tab_6" data-toggle="tab" style="color:white">Channal Partner Product</a></li>
+                    <li id="six" class=""><a href="#tab_7" data-toggle="tab" style="color:white"> CP Global Help Desk Tickets</a></li>
+                    <li id="six" class=""><a href="#tab_8" data-toggle="tab" style="color:white"> CP Finance & Accounting</a></li>
+                    
                     <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                 </ul>
                 <div class="tab-content">
@@ -59,10 +62,13 @@
                     </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
                 <div class="col-md-12" style="margin-top:10px">
-                    <div class="col-md-1"><button type="submit" class="btn btn-app"><i class="fa fa-save"></i> Approve</button></div>
-                    <div class="col-md-1"><button type="submit" class="btn btn-app"><i class="fa fa-edit"></i> Reject</button></div>
-                    <div class="col-md-1"><a href="@Url.Action("DeleteCp", "Partner",new { CustId=Model.CustId})" class="btn btn-app"><i class="fa fa-save"></i> Delete</a></div>
-                </div>
+                    <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                            <div class="col-md-2"><button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Approve</button></div>
+                            <div class="col-md-2"><button type="submit" class="btn btn-danger"><i class="fa fa-edit"></i> Reject</button></div>
+                            <div class="col-md-2"><a href="@Url.Action("DeleteCp", "Partner",new { CustId=Model.CustId})" class="btn btn-primary"><i class="fa fa-times"></i> Delete</a></div>
+                        </div>
+                    </div>
             </div><!-- nav-tabs-custom -->
         </div>
     </div>
@@ -85,8 +91,8 @@
     $('#tab_3').html(d);
     var d = loadData("@Url.Action("UserIntraction", "Partner")", data);
     $('#tab_5').html(d);
-    @*var d = loadData("@Url.Action("_partialCPDocument", "CP")", {});
-    $('#tab_4').html(d);*@
+    var d = loadData("@Url.Action("_partialCPDocument", "Partner")", {});
+    $('#tab_4').html(d);
 
     function fnAllowNumeric() {
         if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {

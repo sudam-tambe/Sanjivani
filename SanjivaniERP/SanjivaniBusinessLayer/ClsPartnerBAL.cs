@@ -159,6 +159,7 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.getUserIntraction(custId);
         }
+        
         public bool setUserIntarction(UserIntraction usD)
         { 
             return objInfPub.SetUserIntarction(usD);
@@ -219,6 +220,11 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.deleteCp(custId);
         }
+        public bool GetDeleteUserIntraction(int IntractionId)
+        {
+            return objInfPub.DeleteUserIntraction(IntractionId);
+        }
+        
 
         //public int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
         //     {

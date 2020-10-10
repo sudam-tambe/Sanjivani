@@ -17,14 +17,14 @@
 
             </div><!-- /. tools -->
             <i class="fa fa-home"></i>
-
-            <h3 class="box-title">Bank Detail</h3>
+         
+            <h3 class="box-title">CP Intraction</h3>
         </div><!-- /.box-header -->
         <div class="box-body no-padding" style="background-color: whitesmoke;">
             <div class="row">
                 <div class="form-group col-md-6">
-                    @Html.HiddenFor(model => model.CustId)
-                    <label for="exampleInputFile">Upload Company Logo</label>
+                    @Html.HiddenFor(model => model.IntractionId)
+                    <label for="exampleInputFile"></label>
                     @Html.EditorFor(model => model.Intraction, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Intraction, "", new { @class = "text-danger" })
                 </div>
@@ -76,5 +76,7 @@
                             "bAutoWidth": false
                         });
                     });
+
+                   
                 </script>
 

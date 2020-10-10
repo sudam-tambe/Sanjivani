@@ -261,7 +261,7 @@ namespace SanjivaniERP.Controllers
                             if (filename1 != null)
                             {
                                 var Type = 0;
-                                var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
+                                var filePath = Server.MapPath("~/Documents/Logo" + filename1);
                                 file.SaveAs(filePath);
                                 var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                             }
@@ -269,7 +269,7 @@ namespace SanjivaniERP.Controllers
                         else if (k == 1)
                         {
                             var Type = 1;
-                            var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                            var filePath = Server.MapPath("~/Documents/Pan" + filename);
                             file.SaveAs(filePath);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
@@ -374,16 +374,30 @@ namespace SanjivaniERP.Controllers
         public ActionResult UserIntraction(string CustId)
         {
             UserIntraction cd = new UserIntraction();
-            cd.CustId = Convert.ToInt32(CustId);
+            cd.CustID = Convert.ToInt32(CustId);
+            //if (IntractionId != "")
+            //    cd = objPartnerBAL.GetDeleteUserIntraction(Convert.ToInt32(IntractionId));
             return View();
+        }
+        public ActionResult DeleteUserIntraction(int IntractionId)
+        {
+            var CustId =Convert.ToString(Session["CustId"]);
+            bool res = objPartnerBAL.GetDeleteUserIntraction(IntractionId);
+            return RedirectToAction("UserIntraction", "Partner",new { CustId= CustId });
         }
         public ActionResult _PartialUserIntarction(string CustId)
         {
             if(CustId!="")
-            
             ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(Convert.ToInt32(CustId));
             return View();
         }
+
+        public ActionResult EditUserIntraction(string CustId)
+        {
+          
+            return View();
+        }
+
         public ActionResult SetUserIntraction(UserIntraction UsD)
         {
            // UsD.CustId = Convert.ToInt32(Session["CustId"]);
@@ -410,6 +424,7 @@ namespace SanjivaniERP.Controllers
             }
             return View();
         }
+        
         public ActionResult _PartialCPBusinessDtl(string CustId)
         {
 

@@ -31,6 +31,7 @@ namespace SanjivaniDataLinkLayer
         ChennelpartnerModel getChannalPartnerDtl(int custId);
         bool rejectChannalPartner(int custId);
         DataSet getFolder();
+       
         List<UserIntraction> getUserIntraction(int custId);
         bool SetUserIntarction(UserIntraction usD);
         DataTable getLoginDetail(string id);
@@ -56,5 +57,6 @@ namespace SanjivaniDataLinkLayer
         CountryState getCountryStateForCPPersonal(int custId);
         BankDetails _partialgetCPBankDtl(string custId);
         bool deleteCp(int custId);
+        bool DeleteUserIntraction(int IntractionId);
     }
 }

@@ -246,7 +246,24 @@ namespace SanjivaniDataLinkLayer
             return Result;
 
         }
+        public List<BankName> GetBankName()
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetBank");
+            DataTable dtList = objcon.GetDtByCommand(dinsert);
+            List<BankName> list = new List<BankName>();
 
+            if (dtList.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dtList.Rows)
+                {
+                    BankName objBankName = new BankName();
+                    objBankName.BankId = int.Parse(dr["BankId"].ToString());
+                    objBankName.bankname = dr["BankName"].ToString();
+                    list.Add(objBankName);
+                }
+            }
+            return list;
+        }
         public int SaveCPCDetails(CPCchannelPartnerModel model, HttpPostedFileBase[] postedFile)
         {
             SqlCommand dinsert = new SqlCommand("Sp_SaveCPCRegistrationDetails");
@@ -428,17 +445,21 @@ namespace SanjivaniDataLinkLayer
                 foreach (DataRow dr in dtList.Rows)
                 {
                     UserIntraction objCompanyType = new UserIntraction();
+                    objCompanyType.IntractionId = Convert.ToInt32(dr["IntractionId"]);
                     objCompanyType.Intraction = (dr["Intraction"].ToString());
+                    objCompanyType.Date = (dr["CreateDate"].ToString());
                     // objCompanyType.AccountType = dr["AccountType"].ToString();
                     list.Add(objCompanyType);
                 }
             }
             return list;
         }
+
+     
         public bool SetUserIntarction(UserIntraction usD)
         {
             SqlCommand dinsert1 = new SqlCommand("usp_SetUserIntarction");
-            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = usD.CustId;
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = usD.CustID;
             dinsert1.Parameters.AddWithValue("@Intraction", SqlDbType.VarChar).Value = usD.Intraction;
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
@@ -754,6 +775,7 @@ namespace SanjivaniDataLinkLayer
             dinsert.Parameters.AddWithValue("@Email", SqlDbType.VarChar).Value = model.EmailID;
 
             dinsert.Parameters.AddWithValue("@Address", SqlDbType.VarChar).Value = model.Address;
+            dinsert.Parameters.AddWithValue("@PostedCode", SqlDbType.Int).Value = model.PostedCode;
 
             dinsert.Parameters.AddWithValue("@StateId", SqlDbType.VarChar).Value = model.State;
             dinsert.Parameters.AddWithValue("@City", SqlDbType.VarChar).Value = model.City;
@@ -847,6 +869,7 @@ namespace SanjivaniDataLinkLayer
             dinsert1.Parameters.AddWithValue("@CountOfSSL", SqlDbType.Int).Value = bD.SSLCertificateCount;
 
             dinsert1.Parameters.AddWithValue("@OfficeAddress", SqlDbType.VarChar).Value = bD.OfficeAddres;
+            dinsert1.Parameters.AddWithValue("@PostedCode", SqlDbType.VarChar).Value = bD.PostedCode;
 
             dinsert1.Parameters.AddWithValue("@StateId", SqlDbType.Int).Value = bD.Bstate;
 
@@ -866,8 +889,10 @@ namespace SanjivaniDataLinkLayer
             dinsert1.Parameters.AddWithValue("@IFSCCode", SqlDbType.VarChar).Value = bd.IFSCcode;
 
             dinsert1.Parameters.AddWithValue("@PaymentModeId", SqlDbType.Int).Value = bd.paymentMode;
-
+            dinsert1.Parameters.AddWithValue("@FourDigitCardNo", SqlDbType.Int).Value = bd.cardnumber;
+            dinsert1.Parameters.AddWithValue("@PaymentBankCardName", SqlDbType.VarChar).Value = bd.PaymentBankCardName;
             dinsert1.Parameters.AddWithValue("@AccountHolderName", SqlDbType.VarChar).Value = bd.AccountHolderName;
+
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
         }
@@ -951,6 +976,7 @@ namespace SanjivaniDataLinkLayer
                     // list.Address = dr["ParentId"].ToString();
                     // list.CustCategroryId = dr["CustomerType"].ToString();
                     list.CustCategroryId = dr["CustCategroryId"].ToString();
+                    list.PostedCode = Convert.ToInt32(dr["PostedCode"]);
                     // objCPCChennelpartnerList.Address = dr["CustCategroryId"].ToString();
 
                 }
@@ -990,7 +1016,20 @@ namespace SanjivaniDataLinkLayer
                 list1.SSLCertificateCount = dr["CountOfSSL"].ToString();
                 list1.OfficeAddres = dr["OfficeAddress"].ToString();
                 list1.Bstate = dr["StateId"].ToString();
-                
+                list1.Country = Convert.ToString(dr["Country"]);
+                list1.City = Convert.ToString(dr["City"]);
+                list1.State = Convert.ToString(dr["State"]);
+                if (dr["PostedCode"] != "")
+                {
+                    list1.PostedCode = 0;
+                }
+                else
+                {
+                    list1.PostedCode = Convert.ToInt32(dr["PostedCode"]);
+                }
+
+
+
 
             }
             return list1;
@@ -1010,7 +1049,7 @@ namespace SanjivaniDataLinkLayer
                     list.StateId = (dr["StateId"].ToString());
                     list.Country = dr["Country"].ToString();
                     list.City = dr["City"].ToString();
-                    
+
                 }
             }
             return list;
@@ -1024,7 +1063,7 @@ namespace SanjivaniDataLinkLayer
             foreach (DataRow dr in dtList.Tables[0].Rows)
             {
 
-               // BankDetails list1 = new BankDetails();
+                // BankDetails list1 = new BankDetails();
                 list1.BankName1 = Convert.ToInt32(dr["BankName"].ToString());
                 list1.AccountNumber = dr["AccountNo"].ToString();
                 list1.IFSCcode = dr["IFSCCode"].ToString();
@@ -1033,6 +1072,7 @@ namespace SanjivaniDataLinkLayer
                 list1.paymentMode = dr["PaymentModeId"].ToString();
                 list1.AccountType = dr["AccountTypeId"].ToString();
                 list1.AccountHolderName = dr["AccountHolderName"].ToString();
+                list1.PaymentBankCardName = dr["PaymentBankCardName"].ToString();
                 //list.ObjBackDetails = list1;
                 // objCPCChennelpartnerList.Address = dr["CustCategroryId"].ToString();
 
@@ -1046,6 +1086,15 @@ namespace SanjivaniDataLinkLayer
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
         }
+        public bool DeleteUserIntraction(int IntractionId)
+        {
+            SqlCommand dinsert1 = new SqlCommand("usp_GetUserintractionDelete");
+            dinsert1.Parameters.AddWithValue("@IntractionId", SqlDbType.Int).Value = IntractionId;
+            bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
+            return Result1;
+        }
+
+        
     }
 }
 

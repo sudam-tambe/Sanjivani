@@ -32,6 +32,8 @@ namespace SanjivaniModalView
         public string CpCategory { get; set; }
         public string CPId { get; set; }
         public string Address { get; set; }
+        public int PostedCode { get; set; }
+        
         public string State { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
@@ -53,7 +55,9 @@ namespace SanjivaniModalView
         [Required(ErrorMessage = "Please enter BankName")]
         public string BankName { get; set; }
         [Required(ErrorMessage = "Please enter Account Number")]
+        
         public string AccountNumber { get; set; }
+        public int BankName1 { get; set; }
         [Required(ErrorMessage = "Please enter IFSCcode")]
         public string IFSCcode { get; set; }
         public string BankHolderName { get; set; }
@@ -62,6 +66,7 @@ namespace SanjivaniModalView
         public string cardnumber { get; set; }
         public string paymentMode { get; set; }
         public string AccountType { get; set; }
+        public string AccountHolderName { get; set; }
     }
 
     public class BusinessDetails
@@ -75,6 +80,7 @@ namespace SanjivaniModalView
         public string CustId { get; set; }
         public string LineofBusiness { get; set; }
         public string Annulturnoveer { get; set; }
+        public string ContactPersonName { get; set; }
         public string personalName { get; set; }
         public string Designation { get; set; }
         public string BContactnumber { get; set; }
@@ -84,7 +90,9 @@ namespace SanjivaniModalView
 
         public string HostingProvider { get; set; }
         public string HostingPlatform { get; set; }
+        public int HostingPlatform1 { get; set; }
         public string TypeofHosting { get; set; }
+        public int TypeofHosting1 { get; set; }
 
         public string NoOfWebSiteHos { get; set; }
 
@@ -95,7 +103,10 @@ namespace SanjivaniModalView
         public string SSLCertificateCount { get; set; }
 
         public string OfficeAddres { get; set; }
+        public int PostedCode { get; set; }
         public string Bstate { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
 
     }
     
@@ -111,8 +122,10 @@ namespace SanjivaniModalView
     }
     public class UserIntraction
     {
-        public int CustId { get; set; }
+        public int CustID { get; set; }
+        public int IntractionId { get; set; }
         public string Intraction { get; set; }
+        public string Date { get; set; }
     }
     public class CPCustomer
     {
@@ -138,5 +151,29 @@ namespace SanjivaniModalView
     {
         public int PaymentModeId { get; set; }
         public string PaymentMode { get; set; }
+    }
+   
+    public class HostingPlatF
+    {
+        public int HostingPlatformId { get; set; }
+        public string HostingPlatForm { get; set; }
+    }
+
+    public class CountryState
+    {
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string StateId { get; set; }
+    }
+
+    public class Bank
+    {
+        public int BankId { get; set; }
+        public string BankName { get; set; }
+    }
+    public class TypeOfHosting
+    {
+        public int TypeHostingId { get; set; }
+        public string TypeofHosting { get; set; }
     }
 }
