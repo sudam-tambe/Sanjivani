@@ -40,6 +40,7 @@ namespace SanjivaniERP.Controllers
         public ActionResult _partialSetCPBusinessDetail(BusinessDetails BD)
         {
             BD.CustId = Convert.ToString(Session["CustId"]);
+            BD.Annulturnoveer = "0";
             bool res = objPartnerBAL.SetCPBusinessDtl(BD);
 
             Session["Tab"] = "3";
@@ -84,7 +85,7 @@ namespace SanjivaniERP.Controllers
                             //  var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
                             // file.SaveAs(filePath);
                             var fileName = Path.GetFileName(file.FileName);
-                            var path = Path.Combine(Server.MapPath("~/Documents/Logo"), fileName);
+                            var path = Path.Combine(Server.MapPath("~/Documents/Logo/"), fileName);
                             file.SaveAs(path);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                         }
@@ -92,28 +93,28 @@ namespace SanjivaniERP.Controllers
                     else if (k == 1)
                     {
                         var Type = 1;
-                        var filePath = Path.Combine(Server.MapPath("~/Documents/Pan" + filename));
+                        var filePath = Path.Combine(Server.MapPath("~/Documents/Pan/"), filename);
                         file.SaveAs(filePath);
                         var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                     }
                     else if (k == 2)
                     {
                         var Type = 2;
-                        var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
+                        var path = Path.Combine(Server.MapPath("~/Documents/RegDocument/"), filename);
                         file.SaveAs(path);
                         var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                     }
                     else if (k == 3)
                     {
                         var Type = 3;
-                        var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
+                        var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto/"), filename);
                         file.SaveAs(path);
                         var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                     }
                     else if (k == 4)
                     {
                         var Type = 4;
-                        var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
+                        var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature/"), filename);
                         file.SaveAs(path);
                         var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                     }

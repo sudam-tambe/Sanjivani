@@ -92,7 +92,10 @@ namespace SanjivaniERP.Controllers
                     Session["Dothis"] = "0";
                     Session["CustId"] = "0";
                     Session["Tab"] = "1";
-                    return RedirectToAction("ChannaPartnerList", "Partner");
+                    if (Session["CustCategeory"].ToString() == "Director")
+                        return RedirectToAction("ChannaPartnerList", "Partner");
+                    else
+                        return RedirectToAction("Dashboard", "CPDashboard");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -159,7 +162,7 @@ namespace SanjivaniERP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> _PartialCPRegister(FormCollection fc, ChennelpartnerModel model, HttpPostedFileBase[] postedFile)
         {
-            if (ModelState.IsValid)
+            // if (ModelState.IsValid)
             {
                 if (string.IsNullOrWhiteSpace(model.CustId))
                 {
@@ -437,10 +440,10 @@ namespace SanjivaniERP.Controllers
                     //}).Start();
 
                     //UpLoadStoreFront();
-                    Session["Completemsg"] = "No";
-                    Session["Dothis"] = "1";
-                    Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
-                    return RedirectToAction("UpL", "Partner");
+                    //Session["Completemsg"] = "No";
+                    //Session["Dothis"] = "1";
+                    //Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
+                    //return RedirectToAction("UpL", "Partner");
                 }
             }
 

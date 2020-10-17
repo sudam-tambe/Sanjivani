@@ -3,50 +3,50 @@
 
 {
     @Html.AntiForgeryToken()
-<div class="box box-danger" id="loading-example">
-    <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
-        <!-- tools box -->
-        <div class="pull-right box-tools">
+    <div class="box box-danger" id="loading-example">
+        <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+            <!-- tools box -->
+            <div class="pull-right box-tools">
 
-            @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
+                @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
 
-        </div><!-- /. tools -->
-        <i class="fa fa-file"></i>
+            </div><!-- /. tools -->
 
-        <h3 class="box-title">Document Detail</h3>
-    </div><!-- /.box-header -->
-    <div class="box-body no-padding" style="background-color: whitesmoke;">
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="exampleInputFile">Upload Company Logo</label>
-                <input type="file" name="postedFile" class="form-control" id="fileuploaded" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
-            </div>
-            <div class="form-group col-md-6">
-                <label for="exampleInputFile">Upload Company PAN Card</label>
 
-                <input type="file" name="postedFile" class="form-control" id="fileuploaded1" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
-            </div>
-            <div class="form-group col-md-6">
-                <label for="exampleInputFile">Upload Company Reg Document</label>
+            <h3 class="box-title"></h3>
+        </div><!-- /.box-header -->
+        <div class="box-body no-padding" style="background-color: whitesmoke;">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="exampleInputFile">Upload Company Logo</label>
+                    <input type="file" name="postedFile" class="form-control" id="fileuploaded" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputFile">Upload Company PAN Card</label>
 
-                <input type="file" name="postedFile" class="form-control" id="fileuploaded2" accept="image/png,image/jpeg,image/jpg,application/pdf" required" />
-            </div>
-            <div class="form-group col-md-6">
-                <label for="exampleInputFile">Upload Account Profile Photo</label>
+                    <input type="file" name="postedFile" class="form-control" id="fileuploaded1" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputFile">Upload Company Reg Document</label>
 
-                <input type="file" name="postedFile" class="form-control" id="fileuploaded3" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
-            </div>
-            <div class="form-group col-md-6">
-                <label for="exampleInputFile">Upload Company Owner Signature</label>
+                    <input type="file" name="postedFile" class="form-control" id="fileuploaded2" accept="image/png,image/jpeg,image/jpg,application/pdf" required" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputFile">Upload Account Profile Photo</label>
 
-                <input type="file" name="postedFile" class="form-control" id="fileuploaded4" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
-            </div>
+                    <input type="file" name="postedFile" class="form-control" id="fileuploaded3" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputFile">Upload Company Owner Signature</label>
 
-        </div><!-- /.row - inside box -->
-    </div><!-- /.box-body -->
+                    <input type="file" name="postedFile" class="form-control" id="fileuploaded4" accept="image/png,image/jpeg,image/jpg,application/pdf" required />
+                </div>
 
-</div>
-<div style="text-align: center;"><button type="submit" class="btn btn-primary" id="test"><i class="fa fa-mail-forward"></i> Submit</button></div>
+            </div><!-- /.row - inside box -->
+        </div><!-- /.box-body -->
+
+    </div>
+    <div style="text-align: center;"><button type="submit" class="btn btn-primary" id="test"><i class="fa fa-mail-forward"></i> Submit</button></div>
 }
 <script type="text/javascript">
     debugger;
@@ -60,6 +60,6 @@
         {
             alert('Your Appliction Is Under Review');
         }
-        
+
     });
 </script>

@@ -4,14 +4,14 @@
 {
     @Html.AntiForgeryToken()
     <div class="box box-danger" id="loading-example">
-        <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+        <div class="box-header" style="cursor: move;background-color: #007bff;cursor: move;color: white;">
             <!-- tools box -->
             <div class="pull-right box-tools">
 
                 @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
 
             </div><!-- /. tools -->
-            <i class="fa fa-file"></i>
+
 
             <h3 class="box-title">Document Detail</h3>
         </div><!-- /.box-header -->
@@ -46,9 +46,32 @@
         </div><!-- /.box-body -->
 
     </div>
+
     <div><button type="submit" class="btn btn-primary" id="test"><i class=""></i>Save</button></div>
 }
+<div class="box box-danger" id="loading-example" style="margin-top:10px">
+    <div class="box-header" style="cursor: move;background-color: #007bff;cursor: move;color: white;">
+        <!-- tools box -->
+        <div class="pull-right box-tools">
+
+            @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
+
+        </div><!-- /. tools -->
+
+
+        <h3 class="box-title">Document List</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding" style="background-color: whitesmoke;">
+        <div class="row" id="Doucment">
+            
+
+        </div><!-- /.row - inside box -->
+    </div><!-- /.box-body -->
+
+</div>
 <script type="text/javascript">
+    var d = loadData("@Url.Action("_PartialgetCPDocument", "Partner")", {});
+    $('#Doucment').html(d);
     debugger;
     var a = $("#fileuploaded").val();
     var b = $("#fileuploaded1").val();

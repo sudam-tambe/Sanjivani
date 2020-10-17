@@ -4,61 +4,81 @@
     ViewBag.Title = "CPCChannelPartner";
     Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
 }
-<style>
-    .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
-        background-color: #b92a37;
-    }
-</style>
-<div class="alert alert-info alert-dismissable" id="msg" style="display:none">
-    <i class="fa fa-info"></i>
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <b>Alert!</b> <span id="span">Info alert preview. This alert is dismissable.</span>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Channal Partner Customer</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Channal Partner Customer</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </div>
 
-<section class="content-header">
-    <h1>Channal Partner Customer</h1>
-    <div class="row">
-        <section class="content">
 
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
             <div class="col-md-12">
                 <!-- Custom Tabs -->
-                <div class="nav-tabs-custom">
-                    @Html.HiddenFor(model => model.CustId)
-                    <ul class="nav nav-tabs" id="tabUL">
-                        <li id="one" class="active"><a href="#tab_1" data-toggle="tab">Personal Detail</a></li>
-                        <li id="two" class=""><a href="#tab_2" data-toggle="tab">Bank Detail</a></li>
-                        <li id="three" class=""><a href="#tab_3" data-toggle="tab">Document Detail</a></li>
-                        <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                    </ul>
-                    <div class="tab-content">
-
-                        <div class="tab-pane active" id="tab_1">
-
-                        </div><!-- /.tab-pane -->
-
-
-                        <div class="tab-pane" id="tab_2">
-
-                        </div><!-- /.tab-pane -->
-                        <div class="tab-pane" id="tab_3">
-
-                        </div><!-- /.tab-pane -->
-                        <!-- /.tab-pane -->
-
-                    </div><!-- /.tab-content -->
-                </div><!-- nav-tabs-custom -->
+                @Html.HiddenFor(model => model.CustId)
             </div>
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                            @*<li class="nav-item" id="one">
+                                <a class="nav-link active" data-toggle="pill" href="#tab_1" role="tab" aria-controls="custom-tabs-one-home" aria-selected="false">Personal Detail</a>
+                            </li>
+                            <li class="nav-item" id="two">
+                                <a class="nav-link " data-toggle="pill" href="#tab_2" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="true">Bank Detail</a>
+                            </li>
+                            <li class="nav-item" id="three">
+                                <a class="nav-link" data-toggle="pill" href="#tab_3" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Document Detail</a>
+                            </li>*@
+                            <li class="nav-item" id="one">
+                                <a class="nav-link active" id="T1" data-toggle="pill" href="#tab_1" role="tab" aria-controls="custom-tabs-one-home" aria-selected="false">Personal Detail</a>
+                            </li>
+                            <li class="nav-item" id="two">
+                                <a class="nav-link " id="T2" data-toggle="pill" href="#tab_2" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="true">Bank Detail</a>
+                            </li>
+                            <li class="nav-item" id="three">
+                                <a class="nav-link" id="T3" data-toggle="pill" href="#tab_3" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Document Detail</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-one-tabContent">
+                            <div class="tab-pane fade active show" id="tab_1" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
 
+                            </div>
+                            <div class="tab-pane fade" id="tab_2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
 
-        </section>
+                            </div>
+                            <div class="tab-pane fade" id="tab_3" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
     </div>
 </section>
-
-
-
 <script src="~/Content/js/countrystatecity.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Content/js/jquery.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     debugger
     var custId = $("#CustId").val();
@@ -120,7 +140,7 @@
 
     }
     function CnfirmPassword() {
-
+        debugger
         var pass = document.getElementById("pwd").value;
         var Confpass = document.getElementById("Cpwd").value;
         if (Confpass != '') {
@@ -136,6 +156,7 @@
 
     }
     function validateCaseSensitiveEmail() {
+        debugger
         var email = document.getElementById("EmailID").value;
 
 
@@ -151,6 +172,7 @@
         }
     }
     function CheckPassword(inputtxt) {
+        debugger
         var res;
         var str =
             document.getElementById("pwd").value;
@@ -161,7 +183,7 @@
             res = "TRUE";
         else {
             res = "FALSE";
-           // alert("Password Should be Strong");
+            alert("Password Should be Strong");
             $("#pwd").val('');
             $("#msg").show();
             document.getElementById("span").innerHTML = "Password Should be Strong";
@@ -198,36 +220,49 @@
         var session = '@Session["Tab"]';
 
         debugger;
+        $('.nav li').removeClass('active');
 
-$('.nav li').removeClass('active');
-debugger;
-            if (session == '2')
-            {
+        if (session == '2') {
+            $('#tab_1').html('');
+            $('#two').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_3').removeClass('active')
+          
 
-                $('#two').addClass('active')
-                $('#tab_1').removeClass('active')
-                $('#tab_3').removeClass('active')
-              
-                $('#tab_2').addClass('tab-pane active')
-            }
-            else if (session == '3')
-            {
+            $('#T2').addClass('nav-link active')
+            $('#T1').removeClass('active')
+            $('#T3').removeClass('active')
+           
 
-                $('#three').addClass('active')
-                $('#tab_1').removeClass('active')
-                $('#tab_2').removeClass('active')
-                $('#tab_3').addClass('tab-pane active')
-            }
-            else
-            {
-                $('#one').addClass('active')
-                $('#tab_2').removeClass('active')
-                $('#tab_3').removeClass('active')
-                $('#tab_1').addClass('tab-pane active')
-            }
-            //e.preventDefault();
+            $('#tab_2').addClass('tab-pane fade active show')
+        }
+        else if (session == '3') {
+
+            $('#three').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_2').removeClass('active')
+
+
+            $('#T3').addClass('nav-link active')
+            $('#T1').removeClass('active')
+            $('#T2').removeClass('active')
+            $('#tab_3').addClass('tab-pane fade active show')
+        }
+       
+        else {
+            $('#one').addClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_3').removeClass('active')
+
+            $('#T1').addClass('nav-link active')
+            $('#T2').removeClass('active')
+            $('#T3').removeClass('active')
+            $('#tab_1').addClass('tab-pane fade active show')
+        }
+        //e.preventDefault();
 
     });
+   
     function fnAllowNumeric() {
         if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {
             event.keyCode = 0;
@@ -235,5 +270,52 @@ debugger;
             return false;
         }
     }
+    $('#UserId').change(function () {
+
+        debugger;
+        var userId = $('#UserId').val();
+        var data={UserId:userId};
+        credit = 0;
+
+        var d = getJsonResult("@Url.Action("CheckUserIdExits", "CP")",data);
+        if(d.Status==400)
+        {
+           
+            alert('User Id Already Exists Please Enter Another');
+
+            $('#UserId').val('');
+            $('#UserId').focus();
+        }
+        else
+        {
+           
+        }
+
+    });
+
+    $('#EmailID').focusout(function () {
+
+        debugger;
+        var EmailId = $('#EmailID').val();
+        var data = { Email: EmailId };
+        credit = 0;
+
+        var d = getJsonResult("@Url.Action("checEmailIdExits", "CP")",data);
+        if(d.Status==400)
+        {
+           
+            alert('Email Id Already Exists Please Enter Another');
+
+            $('#EmailID').val('');
+            $('#EmailID').focus();
+        }
+        else
+        {
+           
+        }
+
+    });
+
 
 </script>
+

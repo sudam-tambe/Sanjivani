@@ -12,7 +12,7 @@ namespace SanjivaniModalView
         public string CustId { get; set; }
         public string RegiDate { get; set; }
         [Required(ErrorMessage = "Please enter User name.")]
-        public string CustomerId { get; set; }
+        //public string CustomerId { get; set; }
         public string UserId { get; set; }
         public string pwd { get; set; }
         [Required(ErrorMessage = "Please enter Confirm Password.")]

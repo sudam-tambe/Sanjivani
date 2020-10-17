@@ -1011,7 +1011,7 @@ namespace SanjivaniDataLinkLayer
                 list1.NoOfWebSiteHos = dr["NoOfWebSiteHosted"].ToString();
                 list1.CurrentEmailProvider = dr["CurrentEmailProvider"].ToString();
                 list1.CountofEmail = dr["CountOfEmail"].ToString();
-                list1.CurrentEmailProvider = dr["CurrentDomailProvider"].ToString();
+                list1.CurrentDomainProvide = dr["CurrentDomailProvider"].ToString();
                 list1.CurrentDomainCount = dr["CountOfDomain"].ToString();
                 list1.SSLCertificateCount = dr["CountOfSSL"].ToString();
                 list1.OfficeAddres = dr["OfficeAddress"].ToString();
@@ -1093,8 +1093,33 @@ namespace SanjivaniDataLinkLayer
             bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
             return Result1;
         }
+        public List<Documents1> GetCPDocument(int custId)
+        {
+            SqlCommand dinsert = new SqlCommand("usp_GetUserDocument");
+            dinsert.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
+            DataSet dtList = objcon.GetDsByCommand(dinsert);
+            List<Documents1> list = new List<Documents1>();
+            foreach (DataRow dr in dtList.Tables[0].Rows)
+            {
 
-        
+                Documents1 list1 = new Documents1();
+               
+                list1.Description = dr["Description"].ToString();
+                list1.Document = dr["Document"].ToString();
+                list.Add(list1);
+
+            }
+            return list;
+        }
+        public bool approveCP(int custId)
+        {
+            SqlCommand dinsert1 = new SqlCommand("usp_SetApproveCP");
+            dinsert1.Parameters.AddWithValue("@CustId", SqlDbType.Int).Value = custId;
+            bool Result1 = objcon.InsrtUpdtDlt(dinsert1);
+            return Result1;
+        }
+
+
     }
 }
 

@@ -5,76 +5,152 @@
     Layout = "~/Views/Shared/_LayoutSanjivani.cshtml";
 }
 
-
 <style>
-    .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
-        background-color: #b92a37;
+    label:not(.form-check-label):not(.custom-file-label) {
+        font-weight: 400;
     }
 </style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Channal Partner</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Channal Partner</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
 
-<section class="content-header">
-    <h1>
-        Channal Partner
-        <small>Control panel</small>
-    </h1>
-    
 
-</section>
 <section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Custom Tabs -->
-            @Html.HiddenFor(model=>model.CustId)
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs" id="tabUL" style="background: #3c8dbc;">
-                    <li id="one" class="active"><a href="#tab_1" data-toggle="tab" style="color:white">Personal Detail</a></li>
-                    <li id="two" class=""><a href="#tab_2" data-toggle="tab" style="color:white">Business Detail</a></li>
-                    <li id="three" class=""><a href="#tab_3" data-toggle="tab" style="color:white">Bank Detail</a></li>
-                    <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
-                    <li id="five" class=""><a href="#tab_5" data-toggle="tab" style="color:white">User Intraction</a></li>
-                    <li id="six" class=""><a href="#tab_6" data-toggle="tab" style="color:white">Channal Partner Product</a></li>
-                    <li id="six" class=""><a href="#tab_7" data-toggle="tab" style="color:white"> CP Global Help Desk Tickets</a></li>
-                    <li id="six" class=""><a href="#tab_8" data-toggle="tab" style="color:white"> CP Finance & Accounting</a></li>
-                    
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                </ul>
-                <div class="tab-content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                @Html.HiddenFor(model => model.CustId)
+                @*<div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs" id="tabUL" style="background: #3c8dbc;">
+                            <li id="one" class="active"><a href="#tab_1" data-toggle="tab" style="color:white">Personal Detail</a></li>
+                            <li id="two" class=""><a href="#tab_2" data-toggle="tab" style="color:white">Business Detail</a></li>
+                            <li id="three" class=""><a href="#tab_3" data-toggle="tab" style="color:white">Bank Detail</a></li>
+                            <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
+                            <li id="five" class=""><a href="#tab_5" data-toggle="tab" style="color:white">User Intraction</a></li>
+                            <li id="six" class=""><a href="#tab_6" data-toggle="tab" style="color:white">Channal Partner Product</a></li>
+                            <li id="six" class=""><a href="#tab_7" data-toggle="tab" style="color:white"> CP Global Help Desk Tickets</a></li>
+                            <li id="six" class=""><a href="#tab_8" data-toggle="tab" style="color:white"> CP Finance & Accounting</a></li>
 
-                    <div class="tab-pane active" id="tab_1">
+                            <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                        </ul>
+                        <div class="tab-content">
 
-                    </div><!-- /.tab-pane -->
+                            <div class="tab-pane active" id="tab_1">
+
+                            </div><!-- /.tab-pane -->
 
 
-                    <div class="tab-pane" id="tab_2">
+                            <div class="tab-pane" id="tab_2">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
+                            </div><!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_3">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_4">
+                            </div><!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_4">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_5">
+                            </div><!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_5">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_6">
+                            </div><!-- /.tab-pane -->
+                            <div class="tab-pane" id="tab_6">
 
-                    </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-                <div class="col-md-12" style="margin-top:10px">
-                    <div class="col-md-4"></div>
-                        <div class="col-md-8">
-                            <div class="col-md-2"><button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Approve</button></div>
-                            <div class="col-md-2"><button type="submit" class="btn btn-danger"><i class="fa fa-edit"></i> Reject</button></div>
-                            <div class="col-md-2"><a href="@Url.Action("DeleteCp", "Partner",new { CustId=Model.CustId})" class="btn btn-primary"><i class="fa fa-times"></i> Delete</a></div>
+                            </div><!-- /.tab-pane -->
+                        </div><!-- /.tab-content -->
+                        <div class="col-md-12" style="margin-top:10px">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8">
+                                <div class="col-md-2"><button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Approve</button></div>
+                                <div class="col-md-2"><a class="btn btn-danger" href="@Url.Action("RejectCP", "Partner",new { CustId=Model.CustId})"><i class="fa fa-edit"></i> Reject</a></div>
+                                <div class="col-md-2"><a href="@Url.Action("DeleteCp", "Partner",new { CustId=Model.CustId})" class="btn btn-primary"><i class="fa fa-times"></i> Delete</a></div>
+                            </div>
+                        </div>
+                    </div>*@<!-- nav-tabs-custom -->
+            </div>
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-tabs">
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                            <li class="nav-item" id="one">
+                                <a class="nav-link active" id="T1" data-toggle="pill" href="#tab_1" role="tab" aria-controls="custom-tabs-one-home" aria-selected="false">CP Info</a>
+                            </li>
+                            <li class="nav-item" id="two">
+                                <a class="nav-link " id="T2" data-toggle="pill" href="#tab_2" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="true">Business</a>
+                            </li>
+                            <li class="nav-item" id="three">
+                                <a class="nav-link" id="T3" data-toggle="pill" href="#tab_3" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Bank</a>
+                            </li>
+                            <li class="nav-item" id="four">
+                                <a class="nav-link" id="T4" data-toggle="pill" href="#tab_4" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Documents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="T5" data-toggle="pill" href="#tab_5" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Intraction</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="six" data-toggle="pill" href="#tab_6" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="Seven" data-toggle="pill" href="#tab_7" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">GHD Ticket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="Eight" data-toggle="pill" href="#tab_8" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">CP Billing</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-one-tabContent">
+                            <div class="tab-pane fade active show" id="tab_1" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_3" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_4" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_5" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_6" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_7" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
+                            </div>
+                            <div class="tab-pane fade" id="tab_8" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+
+                            </div>
                         </div>
                     </div>
-            </div><!-- nav-tabs-custom -->
+                    <!-- /.card -->
+                   
+                            <div class="col-md-12" style="text-align:center">
+                                <a class="btn btn-success"  style="color:white" href="@Url.Action("ApproveCp","Partner")"><i class="fa fa-check"></i> Approve</a>
+                                <a type="submit" class="btn btn-primary" style="color:white" href="@Url.Action("RejectCP","Partner")"><i class="fa fa-times"></i> Reject</a>
+                                <a type="submit" class="btn btn-danger" style="color:white" href="@Url.Action("DeleteCP","Partner")"><i class="fa fa-trash"></i> Delete</a>
+                            </div>
+                       
+                
+            </div>
         </div>
     </div>
 </section>
-
-
 <script src="~/Content/js/countrystatecity.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -85,14 +161,83 @@
     var data = { CustId: userId };
     var d = loadData("@Url.Action("_PartialCPPerstionalDtl", "Partner")", data);
     $('#tab_1').html(d);
-    var d = loadData("@Url.Action("_PartialCPBusinessDtl", "Partner")", data);
+    $('#tab_2').html('');
+    $('#tab_3').html('');
+    $('#tab_4').html('');
+    $('#tab_5').html('');
+    @*var d = loadData("@Url.Action("_PartialCPBusinessDtl", "Partner")", data);
     $('#tab_2').html(d);
     var d = loadData("@Url.Action("_PartialgetCPBankDtl", "Partner")", data);
     $('#tab_3').html(d);
     var d = loadData("@Url.Action("UserIntraction", "Partner")", data);
     $('#tab_5').html(d);
     var d = loadData("@Url.Action("_partialCPDocument", "Partner")", {});
-    $('#tab_4').html(d);
+    $('#tab_4').html(d);*@
+   
+    $(document).ready(function () {
+        var session = '@Session["Tab"]';
+
+        debugger;
+      
+        $('.nav li').removeClass('active');
+
+        if (session == '2') {
+            $('#tab_1').html('');
+            $('#two').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_3').removeClass('active')
+            $('#tab_4').removeClass('active')
+
+            $('#T2').addClass('nav-link active')
+            $('#T1').removeClass('active')
+            $('#T3').removeClass('active')
+            $('#T4').removeClass('active')
+
+            $('#tab_2').addClass('tab-pane fade active show')
+        }
+        else if (session == '3') {
+
+            $('#three').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_4').removeClass('active')
+
+
+            $('#T3').addClass('nav-link active')
+            $('#T1').removeClass('active')
+            $('#T2').removeClass('active')
+            $('#T4').removeClass('active')
+            $('#tab_3').addClass('tab-pane fade active show')
+        }
+        else if (session == '4') {
+
+            $('#four').addClass('active')
+            $('#tab_1').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_3').removeClass('active')
+
+            $('#T4').addClass('nav-link active')
+            $('#T1').removeClass('active')
+            $('#T2').removeClass('active')
+            $('#T3').removeClass('active')
+            $('#tab_4').addClass('tab-pane fade active show')
+        }
+        else {
+            $('#one').addClass('active')
+            $('#tab_4').removeClass('active')
+            $('#tab_2').removeClass('active')
+            $('#tab_3').removeClass('active')
+
+            $('#T1').addClass('nav-link active')
+            $('#T4').removeClass('active')
+            $('#T2').removeClass('active')
+            $('#T3').removeClass('active')
+            $('#tab_1').addClass('tab-pane fade active show')
+        }
+        //e.preventDefault();
+
+    });
+
 
     function fnAllowNumeric() {
         if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {
@@ -137,7 +282,7 @@
     }
     function validateCaseSensitiveEmail() {
 
-        debugger;
+
         var EmailId = $('#EmailID').val();
         if (EmailId != '')
         {
@@ -226,55 +371,11 @@
         return true;
     }
 
-    $(document).ready(function () {
-        var session = '@Session["Tab"]';
-
-        debugger;
-
-        $('.nav li').removeClass('active');
-
-        if (session == '2')
-        {
-            $('#tab_1').html('');
-            $('#two').addClass('active')
-            $('#tab_1').removeClass('active')
-            $('#tab_3').removeClass('active')
-            $('#tab_4').removeClass('active')
-            $('#tab_2').addClass('tab-pane active')
-        }
-        else if (session == '3')
-        {
-
-            $('#three').addClass('active')
-            $('#tab_1').removeClass('active')
-            $('#tab_2').removeClass('active')
-            $('#tab_4').removeClass('active')
-            $('#tab_3').addClass('tab-pane active')
-        }
-        else if (session == '4') {
-
-            $('#four').addClass('active')
-            $('#tab_1').removeClass('active')
-            $('#tab_2').removeClass('active')
-            $('#tab_3').removeClass('active')
-            $('#tab_4').addClass('tab-pane active')
-        }
-        else
-        {
-            $('#one').addClass('active')
-            $('#tab_4').removeClass('active')
-            $('#tab_2').removeClass('active')
-            $('#tab_3').removeClass('active')
-            $('#tab_1').addClass('tab-pane active')
-        }
-        //e.preventDefault();
-
-    });
 
 
     $('#UserName').change(function () {
 
-        debugger;
+
         var userId =$('#UserName').val();
         var data={UserId:userId};
         credit = 0;
@@ -298,7 +399,7 @@
 
     $('#EmailID').focusout(function () {
 
-        debugger;
+
         var EmailId = $('#EmailID').val();
         var data = { Email: EmailId };
         credit = 0;
@@ -345,7 +446,7 @@
 
     var cek = /^[a-zA-Z\ \']+$/;
     function validate(form) {
-        debugger;
+
         var name = $('#chennelpartName').val();
         if (name != '')
         {

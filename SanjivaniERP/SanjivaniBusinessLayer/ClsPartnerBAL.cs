@@ -224,7 +224,17 @@ namespace SanjivaniBusinessLayer
         {
             return objInfPub.DeleteUserIntraction(IntractionId);
         }
-        
+
+        public List<Documents1> getCpDocument(int custId)
+        {
+            return objInfPub.GetCPDocument(custId);
+        }
+
+        public bool ApproveCP(int CustId)
+        {
+            return objInfPub.approveCP(CustId);
+        }
+
 
         //public int UpdateDirectorBusinessRegister(DirectorBusinessModel model, HttpPostedFileBase[] postedFile)
         //     {

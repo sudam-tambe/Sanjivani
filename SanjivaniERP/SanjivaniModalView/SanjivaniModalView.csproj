@@ -46,6 +46,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="CPCchannelPartnerModel.cs" />
     <Compile Include="DirectorBusinessModel.cs" />
+    <Compile Include="ProductBusinessModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

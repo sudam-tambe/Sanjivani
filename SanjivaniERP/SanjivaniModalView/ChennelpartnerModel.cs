@@ -176,4 +176,9 @@ namespace SanjivaniModalView
         public int TypeHostingId { get; set; }
         public string TypeofHosting { get; set; }
     }
+    public class Documents1
+    {
+        public string Description { get; set; }
+        public string Document { get; set; }
+    }
 }

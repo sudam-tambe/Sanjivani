@@ -13,6 +13,10 @@
     .nav-tabs-custom > .nav-tabs > li.active > a, .nav-tabs-custom > .nav-tabs > li.active:hover > a {
         background-color: #b92a37;
     }
+
+    label:not(.form-check-label):not(.custom-file-label) {
+        font-weight: 400;
+    }
 </style>
 <div class="alert alert-info alert-dismissable" id="msg" style="display:none">
     <i class="fa fa-info"></i>
@@ -20,7 +24,7 @@
     <b>Alert!</b> <span id="span">Info alert preview. This alert is dismissable.</span>
 </div>
 <div class="">
-    
+
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -32,16 +36,18 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                
-                <img src="~/Content/img/slide1.jpg" alt="Los Angeles" style="width:100%;">
+
+                <img src="~/Content/Boost/dist/img/photo1.png" alt="Los Angeles" style="width:100%;">
             </div>
 
             <div class="item">
-                <img src="~/Content/img/slide2.jpg" alt="Chicago" style="width:100%;">
+
+                <img src="~/Content/Boost/dist/img/photo2.png" alt="Chicago" style="width:100%;">
             </div>
 
             <div class="item">
-                <img src="~/Content/img/slide3.jpg" alt="New york" style="width:100%;">
+
+                <img src="~/Content/Boost/dist/img/photo4.jpg" alt="New york" style="width:100%;">
             </div>
         </div>
 
@@ -56,52 +62,48 @@
         </a>
     </div>
 </div>
-<section class="content-header">
-    <h1></h1>
-    <section class="content">
-        
 
-        <div class="col-md-12">
-            <!-- Custom Tabs -->
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs" id="tabUL" style="background: #3c8dbc;">
-                    <li id="one" class="active"><a href="#tab_1" data-toggle="tab" style="color:white">Personal Detail</a></li>
-                    <li id="two" class=""><a href="#tab_2" data-toggle="tab" style="color:white">Business Detail</a></li>
-                    <li id="three" class=""><a href="#tab_3" data-toggle="tab" style="color:white">Bank Detail</a></li>
-                    <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
-                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                </ul>
-                <div class="tab-content">
 
-                    <div class="tab-pane active" id="tab_1">
+<section class="content" style="margin-top:10px">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs" id="tabUL" style="background: #3c8dbc;">
+                        <li id="one" class="active"><a href="#tab_1" data-toggle="tab" style="color:white">Personal Detail</a></li>
+                        <li id="two" class=""><a href="#tab_2" data-toggle="tab" style="color:white">Business Detail</a></li>
+                        <li id="three" class=""><a href="#tab_3" data-toggle="tab" style="color:white">Bank Detail</a></li>
+                        <li id="four" class=""><a href="#tab_4" data-toggle="tab" style="color:white">Document Detail</a></li>
+                        <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                    </ul>
+                    <div class="tab-content">
 
-                    </div><!-- /.tab-pane -->
+                        <div class="tab-pane active" id="tab_1">
 
-                
+                        </div><!-- /.tab-pane -->
+
+
                         <div class="tab-pane" id="tab_2">
 
                         </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_3">
+                        <div class="tab-pane" id="tab_3">
 
-                    </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="tab_4">
+                        </div><!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_4">
 
-                    </div><!-- /.tab-pane -->
-                    
-                </div><!-- /.tab-content -->
-            </div><!-- nav-tabs-custom -->
+                        </div><!-- /.tab-pane -->
+
+                    </div><!-- /.tab-content -->
+                </div><!-- nav-tabs-custom -->
+            </div>
         </div>
- 
-    </section>
-
+    </div>
 </section>
-
-
-
 <script src="~/Content/js/countrystatecity.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
 <script type="text/javascript">
 
     var d = loadData("@Url.Action("_partialCPPartner", "CP")", {});
@@ -113,35 +115,7 @@
     var d = loadData("@Url.Action("_partialCPDocument", "CP")", {});
     $('#tab_4').html(d);
 
-    $("#fileuploaded").change(function () {
-        var fileExtension = ['jpeg', 'jpg', 'png', 'pdf'];
-        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            alert("Only formats are allowed : " + fileExtension.join(', '));
-            $('#fileuploaded').val(null);
-        }
-    });
-    var uploadField = document.getElementById("fileuploaded");
-    uploadField.onchange = function () {
-        if (this.files[0].size > 5000000) {
-            alert("File must be less than 5MB");
-            this.value = null;
-        };
-    };
 
-    $("#fileuploaded1").change(function () {
-        var fileExtension = ['jpeg', 'jpg', 'png', 'pdf'];
-        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            alert("Only formats are allowed : " + fileExtension.join(', '));
-            $('#fileuploaded').val(null);
-        }
-    });
-    var uploadField = document.getElementById("fileuploaded1");
-    uploadField.onchange = function () {
-        if (this.files[0].size > 5000000) {
-            alert("File must be less than 5MB");
-            this.value = null;
-        };
-    };
 
     function fnAllowNumeric() {
         if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {
@@ -196,7 +170,7 @@
             var d = getJsonResult("@Url.Action("checEmailIdExits", "CP")",data);
             if(d.Status==400)
             {
-           
+
                 alert('Email Id Already Exists Please Enter Another');
 
                 $('#EmailID').val('');
@@ -219,7 +193,7 @@
                 //document.getElementById("span").innerHTML = "Please Enter Valid Email";
             }
         }
-   
+
     }
     function CheckPassword(inputtxt) {
         var res;
@@ -331,7 +305,7 @@
         var d = getJsonResult("@Url.Action("CheckUserIdExits", "CP")",data);
         if(d.Status==400)
         {
-           
+
             alert('User Id Already Exists Please Enter Another');
 
             $('#UserName').val('');
@@ -339,7 +313,7 @@
         }
         else
         {
-           
+
         }
 
     });
@@ -355,7 +329,7 @@
         var d = getJsonResult("@Url.Action("CheckEmailExists", "CP")",data);
         if(d.Status==400)
         {
-           
+
             alert('Email Id Already Exists Please Enter Another');
 
             $('#EmailID').val('');
@@ -363,7 +337,7 @@
         }
         else
         {
-           
+
         }
 
     });
@@ -407,7 +381,7 @@
             }
             return true;
         }
-        
+
     }
     $(document).ready(function () {
         $(".wideSlider").each(function () {

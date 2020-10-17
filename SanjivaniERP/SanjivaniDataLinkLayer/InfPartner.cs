@@ -58,5 +58,7 @@ namespace SanjivaniDataLinkLayer
         BankDetails _partialgetCPBankDtl(string custId);
         bool deleteCp(int custId);
         bool DeleteUserIntraction(int IntractionId);
+        List<Documents1> GetCPDocument(int custId);
+        bool approveCP(int custId);
     }
 }

@@ -46,7 +46,8 @@ namespace SanjivaniERP.Views.CP
             {
                 if (!string.IsNullOrWhiteSpace(Custid.ToString()))
                 {
-                   ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
+                    ViewBag.bank = new SelectList(objPartnerBAL.GetBank(), "BankId", "BankName");
+                    ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
                     ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
                     list = objPartnerBAL.GetCPCChannelEdit(Custid);
                     list1.CustId = list.CustId;
@@ -56,6 +57,7 @@ namespace SanjivaniERP.Views.CP
             }
             else
             {
+                ViewBag.bank = new SelectList(objPartnerBAL.GetBank(), "BankId", "BankName");
                 ViewBag.PaymentMode = new SelectList(objPartnerBAL.GetPaymentmode(), "PaymentModeId", "PaymentMode");
                 ViewBag.Accountype = new SelectList(objPartnerBAL.GetAccountType(), "AccountTypeId", "AccountType");
             }
@@ -142,5 +144,11 @@ namespace SanjivaniERP.Views.CP
             return Redirect("https://sanjivanitechnology.com");
         }
 
+        public ActionResult _PartialgetCPCDocument()
+        {
+            int CustId = Convert.ToInt32(Session["CustId"]);
+            var d = objPartnerBAL.getCpDocument(CustId);
+            return View(d);
+        }
     }
 }

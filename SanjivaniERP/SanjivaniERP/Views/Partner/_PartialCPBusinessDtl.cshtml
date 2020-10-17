@@ -5,14 +5,13 @@
 {
     @Html.AntiForgeryToken()
     <div class="box box-danger" id="loading-example">
-        <div class="box-header" style="cursor: move;background-color: steelblue;cursor: move;color: white;">
+        <div class="box-header" style="cursor: move;background-color: #007bff;cursor: move;color: white;">
             <!-- tools box -->
             <div class="pull-right box-tools">
 
                 @*<button class="btn btn-danger btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>*@
 
             </div><!-- /. tools -->
-            <i class="fa fa-calendar"></i>
 
             <h3 class="box-title">Business Detail</h3>
         </div><!-- /.box-header -->
@@ -147,16 +146,20 @@
            new { @class = "cities order-alpha dropdown form-control", @id = "cityId" })
                 </div>
                 <div class="col-md-12">
-                    <div class="col-md-1"><a class="btn btn-danger" onclick="EnableTrue()"><i class="fa fa-edit"></i> Edit</a></div>
-                    <div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button></div>
+                    <div class="col-md-3">
+
+                        <a class="btn btn-danger" onclick="EnableTrue()"><i class="fa fa-edit"></i> Edit</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
             </div><!-- /.row - inside box -->
         </div><!-- /.box-body -->
         <div class="col-md-12">
-            </div>
-           
         </div>
-   
+
+    </div>
+
 }
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -190,7 +193,7 @@
         $('#SSLCertificateCount').prop('disabled', true);
         $('#SSLCertificateCount').prop('disabled', true);
         $('#PostedCode').prop('disabled', true);
-        
+
 
     });
     function EnableTrue() {

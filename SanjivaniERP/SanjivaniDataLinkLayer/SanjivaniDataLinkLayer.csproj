@@ -47,6 +47,8 @@
     <Compile Include="DBConnection.cs" />
     <Compile Include="ImpPartner.cs" />
     <Compile Include="InfPartner.cs" />
+    <Compile Include="Product\ImpProduct.cs" />
+    <Compile Include="Product\InfProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

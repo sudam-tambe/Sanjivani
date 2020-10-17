@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Net;
 using System.Data;
 using Hangfire;
+using System.Net.Mime;
 
 namespace SanjivaniERP.Controllers
 {
@@ -33,6 +34,7 @@ namespace SanjivaniERP.Controllers
             BD.TypeofHosting = Convert.ToString(BD.TypeofHosting1);
             BD.HostingPlatform = Convert.ToString(BD.HostingPlatform1);
             BD.CustId = Convert.ToString(Session["CustId"]);
+            Session["Domain"] = BD.CurrentDomainProvide;
             bool res = objPartnerBAL.SetCPBusinessDtl(BD);
 
             Session["Tab"] = "3";
@@ -113,9 +115,43 @@ namespace SanjivaniERP.Controllers
         }
         public ActionResult ChannaPartnerList()
         {
+            DataSet ds = new DataSet();
+            //string SourceDomain = "ftp://pioneers@103.235.106.17/shop.pioneersoft.co.in";
+            //string DestinationDomain = "ftp://pioneers@103.235.106.17/";
+            //NetworkCredential credentials = new NetworkCredential("pioneers", "d@8Pg~4Ea0Dv$9C");
+            //ds = objPartnerBAL.GetFolder();
+            ////ds.Tables[0].Rows.Clear();
+            ////ds.Tables[1].Rows.Clear();
 
-            var cssFiles = Directory.GetFiles(Server.MapPath("~/Views")
-                                         );
+            //string directoryUrl = DestinationDomain + "shop.pioneersoft.co.in";
+
+            //if (!DirectoryExists(directoryUrl))
+            //{
+            //    try
+            //    {
+            //        //Console.WriteLine($"Creating {name}");
+            //        FtpWebRequest requestDir = (FtpWebRequest)WebRequest.Create(directoryUrl);
+            //        requestDir.Method = WebRequestMethods.Ftp.MakeDirectory;
+            //        requestDir.Credentials = credentials;
+            //        requestDir.GetResponse().Close();
+            //    }
+            //    catch (WebException ex)
+            //    {
+            //        FtpWebResponse response = (FtpWebResponse)ex.Response;
+            //        if (response.StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
+            //        {
+            //            // probably exists already
+            //        }
+            //        else
+            //        {
+            //            RedirectToAction("ChannaPartnerList", "Partner");
+            //        }
+            //    }
+
+
+            //}
+            //var cssFiles = Directory.GetFiles(Server.MapPath("~/Views")
+            //                             );
             var ChennelPartnerList = objPartnerBAL.GetChennelPartnerList();
             ViewBag.ChennelPartnerList = ChennelPartnerList;
             //UpLoadStoreFront();
@@ -261,7 +297,7 @@ namespace SanjivaniERP.Controllers
                             if (filename1 != null)
                             {
                                 var Type = 0;
-                                var filePath = Server.MapPath("~/Documents/Logo" + filename1);
+                                var filePath = Server.MapPath("~/Documents/Logo/" + filename1);
                                 file.SaveAs(filePath);
                                 var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename1, EventsTitleList, Type);
                             }
@@ -269,28 +305,28 @@ namespace SanjivaniERP.Controllers
                         else if (k == 1)
                         {
                             var Type = 1;
-                            var filePath = Server.MapPath("~/Documents/Pan" + filename);
+                            var filePath = Server.MapPath("~/Documents/Pan/" + filename);
                             file.SaveAs(filePath);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
                         else if (k == 2)
                         {
                             var Type = 2;
-                            var path = Path.Combine(Server.MapPath("~/Documents/RegDocument"), filename);
+                            var path = Path.Combine(Server.MapPath("~/Documents/RegDocument/"), filename);
                             file.SaveAs(path);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
                         else if (k == 3)
                         {
                             var Type = 3;
-                            var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto"), filename);
+                            var path = Path.Combine(Server.MapPath("~/Documents/ProfilePhoto/"), filename);
                             file.SaveAs(path);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
                         else if (k == 4)
                         {
                             var Type = 4;
-                            var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature"), filename);
+                            var path = Path.Combine(Server.MapPath("~/Documents/OwnerSignature/"), filename);
                             file.SaveAs(path);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
@@ -330,7 +366,7 @@ namespace SanjivaniERP.Controllers
                         else if (k == 1)
                         {
                             var Type = 1;
-                            var filePath = Server.MapPath("~/Documents/Pan/" + filename);
+                            var filePath = Path.Combine(Server.MapPath("~/Documents/Pan/"), filename);
                             file.SaveAs(filePath);
                             var UploadDocument = objPartnerBAL.SaveUploadChennelPartnerDoc(filename, EventsTitleList, Type);
                         }
@@ -366,9 +402,9 @@ namespace SanjivaniERP.Controllers
             return View();
         }
 
-        public ActionResult RejectCP(string CustId)
+        public ActionResult RejectCP()
         {
-            bool res = objPartnerBAL.RejectChannalPartner(Convert.ToInt32(CustId));
+            bool res = objPartnerBAL.RejectChannalPartner(Convert.ToInt32(Session["CustId"]));
             return RedirectToAction("ChannaPartnerList", "Partner");
         }
         public ActionResult UserIntraction(string CustId)
@@ -379,39 +415,47 @@ namespace SanjivaniERP.Controllers
             //    cd = objPartnerBAL.GetDeleteUserIntraction(Convert.ToInt32(IntractionId));
             return View();
         }
-        public ActionResult DeleteUserIntraction(int IntractionId)
+        [HttpGet]
+        public JsonResult DeleteUserIntraction(string IntractionId)
         {
-            var CustId =Convert.ToString(Session["CustId"]);
-            bool res = objPartnerBAL.GetDeleteUserIntraction(IntractionId);
-            return RedirectToAction("UserIntraction", "Partner",new { CustId= CustId });
+            var CustId = Convert.ToString(Session["CustId"]);
+            bool res = objPartnerBAL.GetDeleteUserIntraction(Convert.ToInt32(IntractionId));
+            if (res)
+            {
+                return Json(new { Status = 200 }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Status = 400 }, JsonRequestBehavior.AllowGet);
+            }
         }
         public ActionResult _PartialUserIntarction(string CustId)
         {
-            if(CustId!="")
-            ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(Convert.ToInt32(CustId));
+            if (CustId != "")
+                ViewBag.UserIntract = objPartnerBAL.GetUserIntraction(Convert.ToInt32(CustId));
             return View();
         }
 
         public ActionResult EditUserIntraction(string CustId)
         {
-          
+
             return View();
         }
 
         public ActionResult SetUserIntraction(UserIntraction UsD)
         {
-           // UsD.CustId = Convert.ToInt32(Session["CustId"]);
+            UsD.CustID = Convert.ToInt32(Session["CustId"]);
             bool res = objPartnerBAL.setUserIntarction(UsD);
             if (res)
             {
                 //int Res = Mb.UpdateMemPassword(UserId, Mp.Password);
-                return Json(new { Success = true, Messege = "Password Changed Successfully", Status = 200 });
+                return Json(new { success = false, responseText = "The attached file is not supported." }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(new { Success = false, Messege = "Please Enter Valid Old Password", Status = 400 });
             }
-            return View();
+
         }
         public ActionResult _PartialCPPerstionalDtl(string CustId)
         {
@@ -424,7 +468,7 @@ namespace SanjivaniERP.Controllers
             }
             return View();
         }
-        
+
         public ActionResult _PartialCPBusinessDtl(string CustId)
         {
 
@@ -435,6 +479,7 @@ namespace SanjivaniERP.Controllers
             if (CustId != "")
             {
                 var d = objPartnerBAL._partialGetCPBusinessDtl(CustId);
+                Session["Domain"] = d.CurrentDomainProvide;
                 return View(d);
             }
             else
@@ -458,14 +503,28 @@ namespace SanjivaniERP.Controllers
             else
                 return View();
         }
-        public ActionResult DeleteCp(int CustId)
+        public ActionResult DeleteCp()
         {
-            bool res = objPartnerBAL.DeleteCP(CustId);
+            bool res = objPartnerBAL.DeleteCP(Convert.ToInt32(Session["CustId"]));
             return RedirectToAction("ChannaPartnerList", "Partner");
         }
         public ActionResult _partialCPDocument(string CustId)
         {
             return View();
+        }
+        public ActionResult _PartialgetCPDocument()
+        {
+            int CustId = Convert.ToInt32(Session["CustId"]);
+            var d = objPartnerBAL.getCpDocument(CustId);
+            return View(d);
+        }
+        public ActionResult ApproveCp()
+        {
+            Session["Completemsg"] = "No";
+            Session["Dothis"] = "1";
+            bool res = objPartnerBAL.ApproveCP(Convert.ToInt32(Session["CustId"]));
+            // Session["Domain"] = model.ObjBusinessDetails.CurrentDomainProvide;
+            return RedirectToAction("UpL", "Partner");
         }
     }
 }
